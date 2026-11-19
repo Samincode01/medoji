@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FDFDFD;
+  --foreground: #132F25;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, Cambria, serif;
+  --font-bengali: var(--font-noto-bengali), "Noto Sans Bengali", system-ui, sans-serif;
+
+  --color-canvas: #FDFDFD;
+  --color-surface: #FFFFFF;
+  --color-tint: #F0F5EF;
+  --color-panel: #17352A;
+  --color-primary: #174433;
+  --color-primary-hover: #103629;
+  --color-primary-active: #0A281D;
+  --color-selected: #E1F0E6;
+  --color-heading: #132F25;
+  --color-body: #42534A;
+  --color-muted: #52665A;
+  --color-border: #DCE7DF;
+  --color-border-strong: #7A9182;
+  --color-accent: #19A069;
+  --color-wordmark: #015238;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FDFDFD;
+  color: #42534A;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-bengali {
+  font-family: var(--font-noto-bengali), system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.font-editorial-serif {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FDFDFD;
+}
+::-webkit-scrollbar-thumb {
+  background: #DCE7DF;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7A9182;
 }
