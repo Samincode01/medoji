@@ -142,18 +142,18 @@ export default function Navbar() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3 ">
 
             {/* Language Toggle */}
             <div
-              className="inline-flex items-center rounded-full border border-[#DCE7DF] bg-white p-0.5 shadow-xs"
+              className="inline-flex items-center rounded-full border border-[#DCE7DF] bg-white p-0.5 shadow-xs cursor-pointer"
               role="group"
               aria-label="Language selection"
             >
               <button
                 type="button"
                 onClick={() => setLanguage("EN")}
-                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] ${
+                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] cursor-pointer ${
                   language === "EN"
                     ? "bg-[#174433] text-white shadow-xs"
                     : "text-[#52665A] hover:text-[#174433]"
@@ -166,7 +166,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setLanguage("BN")}
-                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] ${
+                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] cursor-pointer ${
                   language === "BN"
                     ? "bg-[#174433] text-white shadow-xs"
                     : "text-[#52665A] hover:text-[#174433]"
