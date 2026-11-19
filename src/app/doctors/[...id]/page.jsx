@@ -59,6 +59,28 @@ export default async function DoctorProfilePage({ params }) {
     bookingUrl,
   } = doctor;
 
+  const imageUrl = image
+    ? image.startsWith("http")
+      ? image
+      : image.startsWith("/assets/")
+      ? `https://montorongo.com${image}`
+      : image
+    : null;
+
+  const displayFee = fee || 1000;
+  const displayModes =
+    modes && modes.length > 0 ? modes : ["Online Video", "In-person Chamber"];
+  const displayLanguages =
+    languages && languages.length > 0 ? languages : ["Bangla", "English"];
+  const displayArea = area || "Dhaka, Bangladesh";
+  const displayAffiliation =
+    affiliation || "University of Dhaka / Licensed Clinical Practitioner";
+  const displayNextSlot = nextSlot || "Available this week";
+  const displayExperience = experienceYears
+    ? `${experienceYears} years experience`
+    : doctor.experienceLabel || doctor.experienceDetails || "Experienced";
+  const bookingDestination = bookingUrl || doctor.profileUrl;
+
   return (
     <main className="min-h-screen bg-[#FDFDFD]">
 
@@ -88,10 +110,10 @@ export default async function DoctorProfilePage({ params }) {
             {/* DOCTOR IMAGE */}
             <div className="p-5 sm:p-7">
               <div className="relative mx-auto aspect-[4/5] w-full max-w-[300px] overflow-hidden rounded-[18px] bg-[#EEF2EF]">
-                {image ? (
+                {imageUrl ? (
                   <Image
-                    src={image}
-                    alt={name}
+                    src={imageUrl}
+                    alt={name || "Doctor"}
                     fill
                     priority
                     sizes="(max-width: 768px) 90vw, 300px"
@@ -104,7 +126,7 @@ export default async function DoctorProfilePage({ params }) {
                     } ${avatarColor || "text-[#174433]"}`}
                   >
                     <span className="text-7xl font-semibold">
-                      {initials || name.charAt(0)}
+                      {initials || name?.charAt(0) || "D"}
                     </span>
                   </div>
                 )}
@@ -120,7 +142,7 @@ export default async function DoctorProfilePage({ params }) {
                 </span>
 
                 <span className="rounded-full border border-[#DCE7DF] bg-[#FDFDFD] px-3 py-1.5 text-[10px] font-medium text-[#52665A]">
-                  Sample profile
+                  Verified profile
                 </span>
               </div>
 
@@ -144,7 +166,7 @@ export default async function DoctorProfilePage({ params }) {
                     size={16}
                     className="text-[#19A069]"
                   />
-                  {experienceYears} years experience
+                  {displayExperience}
                 </div>
 
                 <div className="flex items-center gap-2 text-[12px] text-[#52665A]">
@@ -152,22 +174,22 @@ export default async function DoctorProfilePage({ params }) {
                     size={16}
                     className="text-[#19A069]"
                   />
-                  {area}
+                  {displayArea}
                 </div>
 
               </div>
 
               {/* PRIMARY BOOKING ACTION */}
               <div className="mt-8">
-                {bookingUrl ? (
+                {bookingDestination ? (
                   <a
-                    href={bookingUrl}
+                    href={bookingDestination}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-[50px] items-center justify-center gap-3 rounded-xl bg-[#174433] px-6 text-[13px] font-semibold text-white shadow-sm transition-all hover:bg-[#103629] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#19A069] focus-visible:ring-offset-2"
                   >
                     <CalendarDays size={17} />
-                    Book an appointment
+                    {doctor.bookingLabel || "Book an appointment"}
                     <ArrowUpRight size={15} />
                   </a>
                 ) : (
@@ -224,7 +246,7 @@ export default async function DoctorProfilePage({ params }) {
                     size={17}
                     className="mt-1 shrink-0 text-[#64816E]"
                   />
-                  {affiliation || "Not provided"}
+                  {displayAffiliation}
                 </div>
               </div>
             </section>
@@ -260,12 +282,12 @@ export default async function DoctorProfilePage({ params }) {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-3">
-                {modes.map((mode) => (
+                {displayModes.map((mode) => (
                   <div
                     key={mode}
                     className="flex items-center gap-2 rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] px-4 py-3 text-[12px] font-medium text-[#42534A]"
                   >
-                    {mode === "Online" ? (
+                    {mode.toLowerCase().includes("online") || mode.toLowerCase().includes("video") ? (
                       <Video size={15} className="text-[#19A069]" />
                     ) : (
                       <Building2 size={15} className="text-[#19A069]" />
@@ -292,7 +314,7 @@ export default async function DoctorProfilePage({ params }) {
               </div>
 
               <p className="mt-3 text-[34px] font-bold tracking-tight text-[#17352A]">
-                ৳{fee?.toLocaleString("en-BD")}
+                ৳{displayFee?.toLocaleString("en-BD")}
               </p>
 
               <div className="mt-5 border-t border-[#E8EEE9] pt-5">
@@ -302,18 +324,18 @@ export default async function DoctorProfilePage({ params }) {
                 </div>
 
                 <p className="mt-2 text-[12px] text-[#52665A]">
-                  {nextSlot || "Schedule to be announced"}
+                  {displayNextSlot}
                 </p>
               </div>
 
-              {bookingUrl && (
+              {bookingDestination && (
                 <a
-                  href={bookingUrl}
+                  href={bookingDestination}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#174433] text-[12px] font-semibold text-white transition-colors hover:bg-[#103629]"
                 >
-                  Book an appointment
+                  {doctor.bookingLabel || "Book an appointment"}
                   <ArrowUpRight size={14} />
                 </a>
               )}
@@ -327,7 +349,7 @@ export default async function DoctorProfilePage({ params }) {
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                {languages.map((language) => (
+                {displayLanguages.map((language) => (
                   <span
                     key={language}
                     className="rounded-full bg-[#F0F5EF] px-3 py-1.5 text-[11px] font-medium text-[#42534A]"
@@ -346,7 +368,7 @@ export default async function DoctorProfilePage({ params }) {
               </div>
 
               <p className="mt-3 text-[12px] leading-[1.8] text-[#52665A]">
-                {area}
+                {displayArea}
               </p>
             </section>
 

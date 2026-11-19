@@ -1,18 +1,36 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
 
 export default function DoctorCard({ doctor }) {
+  if (!doctor) return null;
+
   const {
     id,
     name,
     title,
     qualifications,
     experience,
+    experienceYears,
+    experienceLabel,
+    experienceDetails,
     image,
     verified,
   } = doctor;
+
+  const expText =
+    experienceLabel ||
+    experienceDetails ||
+    (experience ? `${experience} years experience` : "") ||
+    (experienceYears ? `${experienceYears}+ years experienced` : "");
+
+  const imageUrl = image
+    ? image.startsWith("http")
+      ? image
+      : image.startsWith("/assets/")
+      ? `https://montorongo.com${image}`
+      : image
+    : null;
 
   return (
     <Link
@@ -24,10 +42,10 @@ export default function DoctorCard({ doctor }) {
 
         {/* DOCTOR PORTRAIT */}
         <div className="relative aspect-[1/1.02] w-full overflow-hidden rounded-[15px] bg-[#EEF2EF]">
-          {image ? (
+          {imageUrl ? (
             <Image
-              src={image}
-              alt={name}
+              src={imageUrl}
+              alt={name || "Doctor"}
               fill
               sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 280px"
               className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.035]"
@@ -35,7 +53,7 @@ export default function DoctorCard({ doctor }) {
           ) : (
             <div className="flex h-full w-full items-center justify-center">
               <span className="text-5xl font-semibold text-[#8CA596]">
-                {name?.charAt(0)}
+                {name?.charAt(0) || "D"}
               </span>
             </div>
           )}
@@ -52,7 +70,7 @@ export default function DoctorCard({ doctor }) {
         <div className="flex flex-1 flex-col items-center px-2 pb-2 pt-4 text-center">
 
           {/* PROFESSIONAL TITLE */}
-          <p className="font-bengali text-[17px] font-semibold leading-[1.6] text-[#17352A]">
+          <p className="font-bengali text-[17px] font-semibold leading-[1.6] text-[#174433]">
             {title}
           </p>
 
@@ -63,7 +81,7 @@ export default function DoctorCard({ doctor }) {
 
           {/* EXPERIENCE & QUALIFICATIONS */}
           <p className="mt-1.5 line-clamp-2 text-[12px] leading-[1.7] text-[#66776C]">
-            {experience ? `${experience} years experience, ` : ""}
+            {expText ? `${expText}, ` : ""}
             {qualifications}
           </p>
 

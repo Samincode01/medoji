@@ -35,17 +35,20 @@ export default function DoctorsDirectoryPage() {
   });
 
   const filteredDoctors = SAMPLE_DOCTORS.filter((doc) => {
+    const term = searchTerm.toLowerCase();
     const matchesSearch =
-      doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.specialty.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.area.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.title.toLowerCase().includes(searchTerm.toLowerCase());
+      !term ||
+      (doc.name || "").toLowerCase().includes(term) ||
+      (doc.specialty || "").toLowerCase().includes(term) ||
+      (doc.area || "").toLowerCase().includes(term) ||
+      (doc.title || "").toLowerCase().includes(term);
 
     const matchesSpecialty =
       selectedSpecialty === "all" || doc.specialtyId === selectedSpecialty;
 
     const matchesMode =
-      selectedMode === "all" || doc.modes.includes(selectedMode);
+      selectedMode === "all" ||
+      (Array.isArray(doc.modes) && doc.modes.includes(selectedMode));
 
     return matchesSearch && matchesSpecialty && matchesMode;
   });
