@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -10,11 +9,11 @@ import {
   MapPinned,
   ArrowUpRight,
   ArrowRight,
-  Plus,
   Layers3,
 } from "lucide-react";
+import { useLanguage } from "@/i18n/useLanguage";
 
-const ITEMS = [
+const BASE_ITEMS = [
   {
     id: "01",
     category: "DIAGNOSTICS",
@@ -77,11 +76,11 @@ const ITEMS = [
   },
 ];
 
-function DiagnosticsVisual() {
+function DiagnosticsVisual({ isBangla }) {
   return (
     <div className="relative flex min-h-[290px] items-center justify-center">
       <span className="absolute left-5 top-5 text-[9px] font-bold tracking-[0.16em] text-[#829287]">
-        DIAGNOSTIC WORKFLOW / 01
+        {isBangla ? "ডায়াগনস্টিক ওয়ার্কফ্লো / ০১" : "DIAGNOSTIC WORKFLOW / 01"}
       </span>
 
       <div className="relative z-10 grid w-full max-w-[410px] grid-cols-[1fr_48px_1fr] items-center gap-2 px-5 sm:px-8">
@@ -90,10 +89,10 @@ function DiagnosticsVisual() {
             <Activity size={21} strokeWidth={1.5} />
           </div>
           <p className="mt-5 text-[11px] font-semibold text-[#17352A]">
-            Sample collection
+            {isBangla ? "স্যাম্পল সংগ্রহ" : "Sample collection"}
           </p>
           <p className="mt-1 text-[9px] text-[#829287]">
-            Diagnostic partner
+            {isBangla ? "ডায়াগনস্টিক পার্টনার" : "Diagnostic partner"}
           </p>
         </div>
 
@@ -115,190 +114,118 @@ function DiagnosticsVisual() {
             <Layers3 size={21} strokeWidth={1.5} />
           </div>
           <p className="mt-5 text-[11px] font-semibold text-[#17352A]">
-            Digital report
+            {isBangla ? "ডিজিটাল রিপোর্ট" : "Digital report"}
           </p>
           <p className="mt-1 text-[9px] text-[#829287]">
-            Ready to review
+            {isBangla ? "পর্যালোচনার জন্য প্রস্তুত" : "Ready to review"}
           </p>
         </div>
       </div>
 
       <div className="absolute bottom-5 left-5 flex items-center gap-2 text-[9px] text-[#829287]">
         <span className="h-2 w-2 rounded-full bg-[#19A069]" />
-        Connected diagnostic journey
+        {isBangla ? "সংযুক্ত ডায়াগনস্টিক যাত্রা" : "Connected diagnostic journey"}
       </div>
     </div>
   );
 }
 
-function VitalsVisual() {
+function VitalsVisual({ isBangla }) {
   const bars = [28, 42, 35, 55, 44, 67, 51, 76, 58, 69, 47, 61];
 
   return (
     <div className="relative flex min-h-[290px] flex-col justify-center p-6 sm:p-9">
       <span className="absolute left-5 top-5 text-[9px] font-bold tracking-[0.16em] text-[#829287]">
-        HOME HEALTH / 02
+        {isBangla ? "হোম হেলথ ও ভাইটালস / ০২" : "HOME HEALTH / 02"}
       </span>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="border border-[#DCE7DF] bg-white p-4">
-          <div className="flex items-center gap-2 text-[#64816E]">
-            <Activity size={14} />
-            <span className="text-[10px]">Blood pressure</span>
+      <div className="relative z-10 mx-auto w-full max-w-[390px] border border-[#DCE7DF] bg-white p-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-[#EDF1ED] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#19A069] animate-pulse" />
+            <p className="text-[11px] font-semibold text-[#17352A]">
+              {isBangla ? "রক্তচাপ ও পালস ট্র্যাকিং" : "Blood Pressure & Pulse"}
+            </p>
           </div>
-          <p className="mt-4 text-[25px] font-semibold text-[#17352A]">
-            -- / --
-          </p>
-          <p className="mt-1 text-[9px] text-[#829287]">Example reading</p>
+          <span className="text-[9px] font-mono text-[#829287]">120/80 mmHg</span>
         </div>
 
-        <div className="border border-[#DCE7DF] bg-white p-4">
-          <div className="flex items-center gap-2 text-[#64816E]">
-            <Activity size={14} />
-            <span className="text-[10px]">Glucose</span>
-          </div>
-          <p className="mt-4 text-[25px] font-semibold text-[#17352A]">
-            --.-
-          </p>
-          <p className="mt-1 text-[9px] text-[#829287]">Example reading</p>
-        </div>
-      </div>
-
-      <div className="mt-4 border border-[#DCE7DF] bg-white p-4">
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-semibold text-[#52665A]">
-            Measurement history
-          </span>
-          <span className="text-[8px] tracking-wider text-[#829287]">
-            ILLUSTRATIVE
-          </span>
-        </div>
-
-        <div className="mt-5 flex h-[52px] items-end gap-2">
-          {bars.map((height, index) => (
-            <motion.div
-              key={index}
-              initial={{ height: 0 }}
-              animate={{ height: `${height}%` }}
-              transition={{
-                duration: 0.45,
-                delay: index * 0.035,
-                ease: "easeOut",
-              }}
-              className="flex-1 bg-[#8AB99A]"
-            />
+        <div className="mt-5 flex h-20 items-end justify-between gap-1.5 px-1">
+          {bars.map((h, i) => (
+            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+              <div
+                style={{ height: `${h}%` }}
+                className={`w-full rounded-t-xs transition-all ${
+                  i === bars.length - 1 ? "bg-[#19A069]" : "bg-[#D5E5DA]"
+                }`}
+              />
+            </div>
           ))}
         </div>
       </div>
+
+      <div className="absolute bottom-5 left-5 flex items-center gap-2 text-[9px] text-[#829287]">
+        <span className="h-2 w-2 rounded-full bg-[#19A069]" />
+        {isBangla ? "দৈনন্দিন স্বাস্থ্য মাপজোখ সংরক্ষণ" : "Everyday vital trend metrics"}
+      </div>
     </div>
   );
 }
 
-function NetworkVisual() {
-  const nodes = [
-    { x: "8%", y: "19%", icon: Building2, label: "Hospitals" },
-    { x: "70%", y: "19%", icon: Activity, label: "Clinicians" },
-    { x: "8%", y: "72%", icon: Cpu, label: "Technology" },
-    { x: "70%", y: "72%", icon: Plus, label: "Care partners" },
-  ];
-
-  const lines = [
-    "M210 130 L80 70",
-    "M210 130 L340 70",
-    "M210 130 L80 205",
-    "M210 130 L340 205",
-  ];
-
+function NetworkVisual({ isBangla }) {
   return (
-    <div className="relative flex min-h-[290px] items-center justify-center overflow-hidden">
+    <div className="relative flex min-h-[290px] items-center justify-center p-6 sm:p-8">
       <span className="absolute left-5 top-5 text-[9px] font-bold tracking-[0.16em] text-[#829287]">
-        CLINICAL NETWORK / 03
+        {isBangla ? "ক্লিনিক্যাল নেটওয়ার্ক / ০৩" : "CLINICAL NETWORK / 03"}
       </span>
 
-      <svg
-        viewBox="0 0 420 260"
-        className="absolute inset-0 h-full w-full"
-        fill="none"
-        aria-hidden="true"
-      >
-        {lines.map((path, index) => (
-          <motion.path
-            key={path}
-            d={path}
-            stroke="#91B69A"
-            strokeWidth="1.5"
-            strokeDasharray="5 5"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{
-              duration: 0.7,
-              delay: index * 0.12,
-            }}
-          />
-        ))}
-      </svg>
-
-      <div className="relative z-10 flex h-[76px] w-[76px] flex-col items-center justify-center bg-[#174433] text-white shadow-lg">
-        <Layers3 size={25} strokeWidth={1.5} />
-        <span className="mt-1 text-[8px] font-bold tracking-wider">
-          MEDOJI
-        </span>
+      <div className="relative z-10 flex w-full max-w-[390px] flex-col gap-3">
+        <div className="flex items-center justify-between border border-[#DCE7DF] bg-white p-3.5 shadow-2xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center bg-[#E1F0E6] text-[#174433]">
+              <Building2 size={16} />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold text-[#132F25]">
+                {isBangla ? "রেফারেল নেটওয়ার্ক" : "Specialist Referrals"}
+              </p>
+              <p className="text-[9px] text-[#52665A]">
+                {isBangla ? "অনুমোদিত তথ্য আদান-প্রদান" : "Secure clinical pathways"}
+              </p>
+            </div>
+          </div>
+          <span className="rounded-full bg-[#E1F0E6] px-2 py-0.5 text-[9px] font-bold text-[#174433]">
+            {isBangla ? "সংযুক্ত" : "Connected"}
+          </span>
+        </div>
       </div>
 
-      {nodes.map(({ x, y, icon: Icon, label }, index) => (
-        <motion.div
-          key={label}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.35, delay: 0.15 + index * 0.1 }}
-          className="absolute z-10 flex w-[88px] flex-col items-center gap-2"
-          style={{ left: x, top: y }}
-        >
-          <div className="flex h-10 w-10 items-center justify-center border border-[#DCE7DF] bg-white text-[#26704F] shadow-sm">
-            <Icon size={18} strokeWidth={1.5} />
-          </div>
-          <span className="text-center text-[9px] font-medium text-[#52665A]">
-            {label}
-          </span>
-        </motion.div>
-      ))}
+      <div className="absolute bottom-5 left-5 flex items-center gap-2 text-[9px] text-[#829287]">
+        <span className="h-2 w-2 rounded-full bg-[#19A069]" />
+        {isBangla ? "হাসপাতাল ও চিকিৎসকের মেলবন্ধন" : "Coordinated hospital & practitioner pathways"}
+      </div>
     </div>
   );
 }
 
-function ExpansionVisual() {
+function ExpansionVisual({ isBangla }) {
   const stages = [
-    {
-      number: "01",
-      name: "Greater Dhaka",
-      status: "Initial focus",
-      active: true,
-    },
-    {
-      number: "02",
-      name: "Major cities",
-      status: "Next stage",
-      active: false,
-    },
-    {
-      number: "03",
-      name: "Regional access",
-      status: "Future roadmap",
-      active: false,
-    },
+    { number: "01", name: isBangla ? "ঢাকা মেট্রোপলিটন" : "Greater Dhaka", status: isBangla ? "চলমান" : "Active", active: true },
+    { number: "02", name: isBangla ? "বিভাগীয় শহরসমূহ" : "Major Cities", status: isBangla ? "পরবর্তী ধাপ" : "Next", active: false },
+    { number: "03", name: isBangla ? "সারাদেশে পার্টনারশিপ" : "Regional Expansion", status: isBangla ? "পরিকল্পিত" : "Planned", active: false },
   ];
 
   return (
-    <div className="relative flex min-h-[290px] flex-col justify-center px-6 py-12 sm:px-10">
+    <div className="relative flex min-h-[290px] flex-col justify-center p-6 sm:p-9">
       <span className="absolute left-5 top-5 text-[9px] font-bold tracking-[0.16em] text-[#829287]">
-        GEOGRAPHIC EXPANSION / 04
+        {isBangla ? "সেবা সম্প্রসারণ / ০৪" : "EXPANSION / 04"}
       </span>
 
-      <div className="space-y-5">
+      <div className="relative z-10 mx-auto w-full max-w-[390px] space-y-4">
         {stages.map((stage, index) => (
-          <div key={stage.number} className="relative flex items-center gap-4">
+          <div key={stage.number} className="relative flex items-center gap-3">
             {index !== stages.length - 1 && (
-              <div className="absolute left-[17px] top-10 h-[38px] w-px bg-[#C8D9CC]" />
+              <div className="absolute left-[17px] top-10 h-[28px] w-px bg-[#C8D9CC]" />
             )}
 
             <div
@@ -308,10 +235,10 @@ function ExpansionVisual() {
                   : "border border-[#C8D9CC] bg-white text-[#829287]"
               }`}
             >
-              {stage.number}
+              {isBangla ? (index === 0 ? "০১" : index === 1 ? "০২" : "০৩") : stage.number}
             </div>
 
-            <div className="flex-1 border-b border-[#E2EAE3] pb-3">
+            <div className="flex-1 border-b border-[#E2EAE3] pb-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-[12px] font-semibold text-[#17352A]">
                   {stage.name}
@@ -338,9 +265,22 @@ const VISUALS = {
 export default function EcosystemSection() {
   const [activeId, setActiveId] = useState("01");
   const reduceMotion = useReducedMotion();
+  const { t, isBangla, formatNumber } = useLanguage();
 
-  const active = ITEMS.find((item) => item.id === activeId) || ITEMS[0];
-  const ActiveIcon = active.icon;
+  const localizedItems = t("ecosystem.items");
+  const items = BASE_ITEMS.map((item, index) => {
+    const loc = Array.isArray(localizedItems) ? localizedItems[index] : null;
+    return {
+      ...item,
+      category: loc?.category || item.category,
+      phase: loc?.phase || item.phase,
+      title: loc?.title || item.title,
+      description: loc?.description || item.description,
+      features: loc?.features || item.features,
+    };
+  });
+
+  const active = items.find((item) => item.id === activeId) || items[0];
   const ActiveVisual = VISUALS[active.visual];
 
   const transition = reduceMotion
@@ -362,22 +302,20 @@ export default function EcosystemSection() {
             <div className="mb-5 flex items-center gap-3">
               <span className="h-px w-8 bg-[#19A069]" />
               <span className="text-[10px] font-bold tracking-[0.2em] text-[#174433]">
-                THE MEDOJI ECOSYSTEM
+                {t("ecosystem.eyebrow")}
               </span>
             </div>
 
             <h2 className="max-w-[700px] text-[38px] leading-[1.1] font-semibold tracking-[-0.05em] text-[#132F25] sm:text-[48px] lg:text-[56px]">
-              More connected care.
-              <span className="block font-serif font-normal italic text-[#26704F]">
-                Beyond one appointment.
+              {isBangla ? "একটি প্ল্যাটফর্মে," : "More connected care."}
+              <span className="block font-editorial-serif font-normal italic text-[#26704F]">
+                {isBangla ? "স্বাস্থ্যসেবার বহুমাত্রিক সুযোগ।" : "Beyond one appointment."}
               </span>
             </h2>
           </div>
 
           <p className="max-w-[390px] text-[13px] leading-[1.9] text-[#52665A] lg:pb-2">
-            We are working towards a healthcare ecosystem that brings
-            professionals, diagnostics, technology and clinical partners
-            closer together.
+            {t("ecosystem.description")}
           </p>
         </div>
 
@@ -387,15 +325,15 @@ export default function EcosystemSection() {
           <div className="flex flex-col border-b border-[#DCE7DF] lg:border-r lg:border-b-0">
             <div className="flex items-center justify-between px-6 py-5">
               <span className="text-[9px] font-bold tracking-[0.16em] text-[#829287]">
-                EXPLORE THE PILLARS
+                {isBangla ? "মূল স্তম্ভসমূহ" : "EXPLORE THE PILLARS"}
               </span>
               <span className="text-[10px] tabular-nums text-[#829287]">
-                {active.id} / 04
+                {isBangla ? `${formatNumber(parseInt(active.id, 10))} / ৪` : `${active.id} / 04`}
               </span>
             </div>
 
             <div className="px-3 pb-3 sm:px-4">
-              {ITEMS.map((item) => {
+              {items.map((item) => {
                 const Icon = item.icon;
                 const selected = activeId === item.id;
 
@@ -405,7 +343,7 @@ export default function EcosystemSection() {
                     type="button"
                     onClick={() => setActiveId(item.id)}
                     aria-pressed={selected}
-                    className={`group relative flex w-full items-center gap-4 border-t border-[#EDF1ED] px-3 py-5 text-left transition-colors duration-200 sm:px-4 ${
+                    className={`group relative flex w-full items-center gap-4 border-t border-[#EDF1ED] px-3 py-5 text-left transition-colors duration-200 sm:px-4 cursor-pointer ${
                       selected ? "bg-[#F0F5EF]" : "hover:bg-[#FAFCFA]"
                     }`}
                   >
@@ -462,7 +400,7 @@ export default function EcosystemSection() {
             <div className="mt-auto border-t border-[#EDF1ED] px-6 py-5">
               <div className="flex items-center gap-2 text-[10px] font-medium text-[#64816E]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#19A069]" />
-                Designed for Bangladesh
+                {isBangla ? "বাংলাদেশের জন্য পরিকল্পিত" : "Designed for Bangladesh"}
               </div>
             </div>
           </div>
@@ -491,7 +429,7 @@ export default function EcosystemSection() {
                   transition={transition}
                   className="relative z-10 min-h-[290px] w-full"
                 >
-                  <ActiveVisual />
+                  <ActiveVisual isBangla={isBangla} />
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -539,18 +477,20 @@ export default function EcosystemSection() {
 
               <div className="mt-7 flex items-center justify-between border-t border-[#E5ECE5] pt-5">
                 <span className="text-[9px] font-semibold tracking-[0.13em] text-[#829287]">
-                  PILLAR {active.id} OF 04
+                  {isBangla
+                    ? `স্তম্ভ ${formatNumber(parseInt(active.id, 10))} / ৪`
+                    : `PILLAR ${active.id} OF 04`}
                 </span>
 
                 <div className="flex items-center gap-1.5">
-                  {ITEMS.map((item) => (
+                  {items.map((item) => (
                     <button
                       key={item.id}
                       type="button"
                       onClick={() => setActiveId(item.id)}
                       aria-label={`View ${item.category}`}
                       aria-pressed={activeId === item.id}
-                      className={`h-1.5 transition-all duration-300 ${
+                      className={`h-1.5 transition-all duration-300 cursor-pointer ${
                         activeId === item.id
                           ? "w-7 bg-[#26704F]"
                           : "w-3 bg-[#D5E1D7] hover:bg-[#91B69A]"
@@ -566,13 +506,13 @@ export default function EcosystemSection() {
         {/* ROADMAP NOTE */}
         <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-[650px] text-[10px] leading-5 text-[#829287]">
-            Ecosystem capabilities shown here represent planned development
-            and partnerships. They should not be interpreted as currently
-            available services.
+            {isBangla
+              ? "এখানে প্রদর্শিত ইকোসিস্টেমের সেবাসমূহ আমাদের পরিকল্পিত সম্প্রসারণের অংশ। এগুলো পর্যায়ক্রমে চালু করা হবে।"
+              : "Ecosystem capabilities shown here represent planned development and partnerships. They should not be interpreted as currently available services."}
           </p>
 
           <span className="shrink-0 text-[9px] font-bold tracking-[0.14em] text-[#64816E]">
-            CONNECTING CARE IN BANGLADESH
+            {isBangla ? "বাংলাদেশে স্বাস্থ্যসেবাকে সংযুক্ত করছে মেডোজি" : "CONNECTING CARE IN BANGLADESH"}
           </span>
         </div>
       </div>

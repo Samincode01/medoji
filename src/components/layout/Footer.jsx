@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { HeartPulse, ShieldAlert, Globe, PhoneCall } from "lucide-react";
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function Footer() {
+  const { t, isBangla } = useLanguage();
+
   return (
     <footer className="w-full bg-[#17352A] text-[#FFFFFF] border-t border-[#254D3D]">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
@@ -23,21 +28,19 @@ export default function Footer() {
             </Link>
 
             <p className="mt-4 text-[14px] text-[#E1F0E6]/85 leading-[1.65] max-w-[400px]">
-              Medoji AI is building Bangladesh&apos;s connected healthcare platform—uniting
-              verified doctor consultations, confidential mental health counselling,
-              genuine prescription fulfilment, and bilingual care navigation.
+              {t("footer.tagline")}
             </p>
 
             <div className="mt-6 flex items-center gap-2 text-xs text-[#A3BFB0]">
               <Globe size={14} className="text-[#19A069]" />
-              <span>Proudly architected for Dhaka &amp; Bangladesh</span>
+              <span>{t("footer.location")}</span>
             </div>
           </div>
 
           {/* Links Column 1: Care & Discovery (2 Cols) */}
           <div className="lg:col-span-2 sm:col-span-1">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#FFFFFF]">
-              Care Discovery
+              {t("footer.careDiscovery")}
             </h4>
             <ul className="mt-4 space-y-2.5 text-xs sm:text-[13px]">
               <li>
@@ -45,7 +48,7 @@ export default function Footer() {
                   href="/doctors"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Find a Doctor
+                  {t("footer.links.findDoctor")}
                 </Link>
               </li>
               <li>
@@ -53,7 +56,7 @@ export default function Footer() {
                   href="/doctors"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Mental Health
+                  {t("footer.links.mentalHealth")}
                 </Link>
               </li>
               <li>
@@ -61,7 +64,7 @@ export default function Footer() {
                   href="/doctors"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Online Video Care
+                  {t("footer.links.onlineVideo")}
                 </Link>
               </li>
               <li>
@@ -69,7 +72,7 @@ export default function Footer() {
                   href="/doctors"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  In-Person Visits
+                  {t("footer.links.inPerson")}
                 </Link>
               </li>
             </ul>
@@ -78,7 +81,7 @@ export default function Footer() {
           {/* Links Column 2: Digital Services (2 Cols) */}
           <div className="lg:col-span-2 sm:col-span-1">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#FFFFFF]">
-              Digital Services
+              {t("footer.digitalServices")}
             </h4>
             <ul className="mt-4 space-y-2.5 text-xs sm:text-[13px]">
               <li>
@@ -86,7 +89,7 @@ export default function Footer() {
                   href="/#ai-tools"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Medoji AI Assistant
+                  {t("footer.links.aiAssistant")}
                 </Link>
               </li>
               <li>
@@ -94,7 +97,7 @@ export default function Footer() {
                   href="/#pharmacy"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Prescription Upload
+                  {t("footer.links.prescriptionUpload")}
                 </Link>
               </li>
               <li>
@@ -102,7 +105,7 @@ export default function Footer() {
                   href="/#pharmacy"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Pharmacy Pilot
+                  {t("footer.links.pharmacyPilot")}
                 </Link>
               </li>
               <li>
@@ -110,7 +113,7 @@ export default function Footer() {
                   href="/#ecosystem"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Care Continuity
+                  {t("footer.links.careContinuity")}
                 </Link>
               </li>
             </ul>
@@ -119,7 +122,7 @@ export default function Footer() {
           {/* Links Column 3: Ecosystem & Trust (3 Cols) */}
           <div className="lg:col-span-3 sm:col-span-1">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#FFFFFF]">
-              Healthcare Ecosystem
+              {t("footer.healthcareEcosystem")}
             </h4>
             <ul className="mt-4 space-y-2.5 text-xs sm:text-[13px]">
               <li>
@@ -127,7 +130,7 @@ export default function Footer() {
                   href="/#ecosystem"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Diagnostics &amp; Labs
+                  {t("footer.links.diagnostics")}
                 </Link>
               </li>
               <li>
@@ -135,7 +138,7 @@ export default function Footer() {
                   href="/#ecosystem"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Device Integration
+                  {t("footer.links.devices")}
                 </Link>
               </li>
               <li>
@@ -143,7 +146,7 @@ export default function Footer() {
                   href="/#ecosystem"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Partner Hospital Network
+                  {t("footer.links.partnerHospital")}
                 </Link>
               </li>
               <li>
@@ -151,7 +154,7 @@ export default function Footer() {
                   href="/#ecosystem"
                   className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
                 >
-                  Rollout Roadmap
+                  {t("footer.links.roadmap")}
                 </Link>
               </li>
             </ul>
@@ -163,20 +166,24 @@ export default function Footer() {
           <div className="flex items-start sm:items-center gap-3">
             <ShieldAlert size={20} className="text-[#19A069] shrink-0 mt-0.5 sm:mt-0" />
             <p className="text-xs text-[#E1F0E6]/90 leading-[1.55]">
-              <strong className="text-white">Emergency Notice:</strong> Medoji is not an emergency response service. If you or a loved one is experiencing severe chest pain, breathing difficulty, or trauma, call <span className="text-[#FFFFFF] font-bold underline">999</span> immediately or visit the nearest emergency room.
+              <strong className="text-white">{t("footer.emergencyTitle")} </strong>
+              {t("footer.emergencyText")}
             </p>
           </div>
 
-          <div className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#17352A] px-3 py-1.5 text-xs font-bold text-[#E1F0E6] border border-[#254D3D]">
+          <a
+            href="tel:999"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#17352A] px-3 py-1.5 text-xs font-bold text-[#E1F0E6] border border-[#254D3D] hover:bg-[#204536] transition-colors"
+          >
             <PhoneCall size={13} className="text-[#19A069]" />
-            <span>National Emergency: 999</span>
-          </div>
+            <span>{t("footer.emergencyBtn")}</span>
+          </a>
         </div>
 
         {/* Bottom Bar: Copyright & Attribution */}
         <div className="mt-10 pt-8 border-t border-[#254D3D] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#A3BFB0]">
-          <p>© 2026 Medoji AI Technologies. All rights reserved.</p>
-          <p>Care Discovery · Pharmacy Pilot · Staged AI Guidance</p>
+          <p>{t("footer.copyright")}</p>
+          <p>{t("footer.rights")}</p>
         </div>
       </div>
     </footer>

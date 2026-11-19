@@ -2,6 +2,7 @@ import { Inter, Noto_Sans_Bengali, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/layout/Footer";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -51,9 +52,11 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${notoSansBengali.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#FDFDFD] text-[#42534A] selection:bg-[#E1F0E6] selection:text-[#174433]">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

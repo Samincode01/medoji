@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -12,9 +11,11 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import heroCareImg from "@/images/hero-care.png";
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
+  const { t, isBangla } = useLanguage();
 
   const fadeUp = {
     hidden: {
@@ -38,7 +39,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={heroCareImg}
-          alt="Healthcare doctor and patient in consultation"
+          alt={isBangla ? "চিকিৎসক ও রোগীর পরামর্শ পর্ব" : "Healthcare doctor and patient in consultation"}
           fill
           priority
           sizes="100vw"
@@ -68,7 +69,7 @@ export default function Hero() {
             >
               <span className="h-2 w-2 rounded-full bg-[#19A069] animate-pulse" />
               <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] text-[#174433]">
-                DESIGNED FOR BANGLADESH
+                {t("hero.eyebrow")}
               </span>
             </motion.div>
 
@@ -83,10 +84,10 @@ export default function Hero() {
               }}
               className="mt-5 text-[40px] sm:text-[48px] lg:text-[70px] font-bold tracking-tight text-[#132F25] leading-[1.08]"
             >
-              Healthcare,
+              {t("hero.titleLine1")}
               <br />
               <span className="font-editorial-serif italic font-normal text-[#174433]">
-                More connected.
+                {t("hero.titleLine2")}
               </span>
             </motion.h1>
 
@@ -101,10 +102,10 @@ export default function Hero() {
               }}
               className="mt-4 font-bengali text-[17px] sm:text-[19px] font-medium text-[#174433] leading-[1.6]"
             >
-              চিকিৎসা, কাউন্সেলিং ও ফলোআপ—সব এক জায়গায়।
+              {t("hero.banglaTagline")}
             </motion.p>
 
-            {/* English Description */}
+            {/* Description */}
             <motion.p
               variants={fadeUp}
               initial="hidden"
@@ -115,8 +116,7 @@ export default function Hero() {
               }}
               className="mt-3 text-[16px] sm:text-[18px] text-[#42534A] leading-[1.55] max-w-[520px]"
             >
-              Find a doctor or counsellor, follow up on care, and manage
-              prescriptions in one place.
+              {t("hero.description")}
             </motion.p>
 
             {/* Actions: Primary and Secondary Buttons */}
@@ -134,7 +134,7 @@ export default function Hero() {
                 href="/doctors"
                 className="group inline-flex h-[50px] items-center justify-center gap-2 rounded-xl bg-[#174433] px-6 text-[15px] font-semibold text-[#FFFFFF] shadow-sm transition-all duration-200 hover:bg-[#103629] active:bg-[#0A281D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2"
               >
-                <span>Find a professional</span>
+                <span>{t("hero.primaryCta")}</span>
                 <ArrowRight
                   size={17}
                   className="transition-transform duration-200 group-hover:translate-x-0.5"
@@ -146,7 +146,7 @@ export default function Hero() {
                 className="inline-flex h-[50px] items-center justify-center gap-2 rounded-xl border border-[#7A9182]/50 bg-[#FFFFFF] px-6 text-[15px] font-semibold text-[#174433] shadow-2xs transition-all duration-200 hover:bg-[#F0F5EF] hover:border-[#174433] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2"
               >
                 <Sparkles size={16} className="text-[#19A069]" />
-                <span>Explore Medoji AI</span>
+                <span>{t("hero.secondaryCta")}</span>
               </Link>
             </motion.div>
 
@@ -163,21 +163,21 @@ export default function Hero() {
             >
               <div className="flex items-center gap-1.5 font-medium">
                 <HeartHandshake size={15} className="text-[#19A069]" />
-                <span>Online & in-person visits</span>
+                <span>{t("hero.proofVisits")}</span>
               </div>
 
               <span className="text-[#DCE7DF] hidden sm:inline">•</span>
 
               <div className="flex items-center gap-1.5 font-medium">
                 <Pill size={15} className="text-[#19A069]" />
-                <span>Pharmacist review</span>
+                <span>{t("hero.proofPharmacy")}</span>
               </div>
 
               <span className="text-[#DCE7DF] hidden sm:inline">•</span>
 
               <div className="flex items-center gap-1.5 font-medium">
                 <ShieldCheck size={15} className="text-[#19A069]" />
-                <span>Verified patient privacy</span>
+                <span>{t("hero.proofPrivacy")}</span>
               </div>
             </motion.div>
 

@@ -1,8 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function DoctorCard({ doctor }) {
+  const { t, isBangla, formatNumber } = useLanguage();
+
   if (!doctor) return null;
 
   const {
@@ -18,11 +23,19 @@ export default function DoctorCard({ doctor }) {
     verified,
   } = doctor;
 
-  const expText =
-    experienceLabel ||
-    experienceDetails ||
-    (experience ? `${experience} years experience` : "") ||
-    (experienceYears ? `${experienceYears}+ years experienced` : "");
+  const expYearsCount = experienceYears || (experience ? parseInt(experience, 10) : null);
+  let expText = "";
+  if (isBangla && expYearsCount && !isNaN(expYearsCount)) {
+    expText = `${formatNumber(expYearsCount)}+ বছরের বেশি অভিজ্ঞতা`;
+  } else if (experienceLabel || experienceDetails) {
+    expText = experienceLabel || experienceDetails;
+  } else if (experience) {
+    expText = isBangla
+      ? `${formatNumber(experience)} বছরের অভিজ্ঞতা`
+      : `${experience} years experience`;
+  } else if (experienceYears) {
+    expText = `${experienceYears}+ years experienced`;
+  }
 
   const imageUrl = image
     ? image.startsWith("http")
@@ -35,7 +48,7 @@ export default function DoctorCard({ doctor }) {
   return (
     <Link
       href={`/doctors/${id}`}
-      aria-label={`View profile of ${name}`}
+      aria-label={isBangla ? `${name}-এর প্রোফাইল দেখুন` : `View profile of ${name}`}
       className="group block h-full rounded-[20px] outline-none focus-visible:ring-2 focus-visible:ring-[#19A069] focus-visible:ring-offset-4"
     >
       <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-[#E7ECE8] bg-white p-3.5 shadow-[0_3px_14px_rgba(19,47,37,0.04)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#B8CCBE] group-hover:shadow-[0_14px_35px_rgba(19,47,37,0.10)]">
@@ -60,7 +73,10 @@ export default function DoctorCard({ doctor }) {
 
           {/* VERIFIED INDICATOR */}
           {verified && (
-            <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border border-white/80 bg-white/95 text-[#198052] shadow-sm">
+            <div
+              className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border border-white/80 bg-white/95 text-[#198052] shadow-sm"
+              title={t("doctorCard.verified")}
+            >
               <BadgeCheck size={18} strokeWidth={2} />
             </div>
           )}
@@ -87,7 +103,7 @@ export default function DoctorCard({ doctor }) {
 
           {/* VIEW PROFILE */}
           <div className="mt-auto flex items-center gap-1.5 pt-4 text-[11px] font-semibold text-[#26704F]">
-            View profile
+            {t("doctorCard.viewProfile")}
             <ArrowUpRight
               size={14}
               className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

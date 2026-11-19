@@ -4,23 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   Search,
-  Filter,
   CheckCircle2,
   Stethoscope,
   Video,
   MapPin,
-  Calendar,
   X,
-  Phone,
-  User,
-  Clock,
   ShieldCheck,
   ArrowLeft,
 } from "lucide-react";
 import DoctorCard from "@/components/doctors/DoctorCard";
 import { SAMPLE_DOCTORS, SAMPLE_SPECIALTIES } from "@/data/doctors";
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function DoctorsDirectoryPage() {
+  const { t, isBangla, formatNumber } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("all");
   const [selectedMode, setSelectedMode] = useState("all"); // "all", "Online", "In person"
@@ -70,6 +67,17 @@ export default function DoctorsDirectoryPage() {
     });
   };
 
+  const getSpecialtyLabel = (spec) => {
+    if (spec.id === "all") return t("careDiscovery.specialties.all");
+    if (spec.id === "mental") return t("careDiscovery.specialties.mental");
+    return spec.label;
+  };
+
+  const providerCountText =
+    filteredDoctors.length === 1
+      ? t("directory.providersCountSingle")
+      : t("directory.providersCount", { count: filteredDoctors.length });
+
   return (
     <div className="w-full bg-[#FDFDFD] py-10 sm:py-14 min-h-screen">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
@@ -80,27 +88,25 @@ export default function DoctorsDirectoryPage() {
             className="flex items-center gap-1 hover:text-[#174433] transition-colors"
           >
             <ArrowLeft size={13} />
-            <span>Home</span>
+            <span>{t("directory.breadcrumbHome")}</span>
           </Link>
           <span>/</span>
-          <span className="text-[#132F25] font-semibold">Doctor Directory</span>
+          <span className="text-[#132F25] font-semibold">{t("directory.breadcrumbDirectory")}</span>
         </div>
 
         {/* Directory Header */}
         <div className="max-w-[780px]">
           <div className="inline-flex items-center gap-2 rounded-full bg-[#E1F0E6] px-3 py-1 text-xs font-semibold text-[#174433]">
             <Stethoscope size={14} className="text-[#19A069]" />
-            <span>VERIFIED HEALTHCARE DIRECTORY</span>
+            <span>{t("directory.badge")}</span>
           </div>
 
           <h1 className="mt-3 text-[32px] sm:text-[42px] font-bold tracking-tight text-[#132F25] leading-[1.15]">
-            Find a doctor or counsellor in Bangladesh.
+            {t("directory.heading")}
           </h1>
 
           <p className="mt-3 text-[15px] sm:text-[16px] text-[#42534A] leading-[1.6]">
-            Browse BMDC-verified physicians and licensed clinical psychologists.
-            Transparent consultation fees, clear visit modes, and direct
-            availability without hidden hospital service fees.
+            {t("directory.description")}
           </p>
         </div>
 
@@ -117,14 +123,14 @@ export default function DoctorsDirectoryPage() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by doctor name, specialty, or Dhaka area..."
+                placeholder={t("directory.searchPlaceholder")}
                 className="w-full rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] pl-10 pr-4 py-2.5 text-xs sm:text-[14px] text-[#132F25] placeholder:text-[#7A9182] focus:border-[#174433] focus:outline-none focus:ring-1 focus:ring-[#174433]"
               />
               {searchTerm && (
                 <button
                   type="button"
                   onClick={() => setSearchTerm("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A9182] hover:text-[#132F25]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A9182] hover:text-[#132F25] cursor-pointer"
                 >
                   <X size={15} />
                 </button>
@@ -136,19 +142,19 @@ export default function DoctorsDirectoryPage() {
               <select
                 value={selectedMode}
                 onChange={(e) => setSelectedMode(e.target.value)}
-                aria-label="Filter by consultation mode"
-                className="w-full rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] px-3.5 py-2.5 text-xs sm:text-[14px] text-[#132F25] focus:border-[#174433] focus:outline-none focus:ring-1 focus:ring-[#174433]"
+                aria-label={t("directory.modeAll")}
+                className="w-full rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] px-3.5 py-2.5 text-xs sm:text-[14px] text-[#132F25] focus:border-[#174433] focus:outline-none focus:ring-1 focus:ring-[#174433] cursor-pointer"
               >
-                <option value="all">All Consultation Modes</option>
-                <option value="Online">Online Video Consultation</option>
-                <option value="In person">In-Person Clinic Visit</option>
+                <option value="all">{t("directory.modeAll")}</option>
+                <option value="Online">{t("directory.modeOnline")}</option>
+                <option value="In person">{t("directory.modeInPerson")}</option>
               </select>
             </div>
 
             {/* Clear Filters / Count */}
             <div className="md:col-span-3 flex items-center justify-between md:justify-end gap-3 text-xs">
               <span className="font-semibold text-[#174433]">
-                {filteredDoctors.length} {filteredDoctors.length === 1 ? "provider" : "providers"} available
+                {providerCountText}
               </span>
               {(searchTerm || selectedSpecialty !== "all" || selectedMode !== "all") && (
                 <button
@@ -158,9 +164,9 @@ export default function DoctorsDirectoryPage() {
                     setSelectedSpecialty("all");
                     setSelectedMode("all");
                   }}
-                  className="font-medium text-[#9D242C] hover:underline"
+                  className="font-medium text-[#9D242C] hover:underline cursor-pointer"
                 >
-                  Reset filters
+                  {t("directory.resetFilters")}
                 </button>
               )}
             </div>
@@ -174,13 +180,13 @@ export default function DoctorsDirectoryPage() {
                 <button
                   key={spec.id}
                   onClick={() => setSelectedSpecialty(spec.id)}
-                  className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
+                  className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                     isSelected
                       ? "bg-[#174433] text-white font-semibold shadow-xs"
                       : "bg-[#F0F5EF] text-[#52665A] hover:bg-[#E1F0E6] hover:text-[#174433]"
                   }`}
                 >
-                  {spec.label}
+                  {getSpecialtyLabel(spec)}
                 </button>
               );
             })}
@@ -206,10 +212,10 @@ export default function DoctorsDirectoryPage() {
           ) : (
             <div className="col-span-full rounded-2xl border border-dashed border-[#DCE7DF] bg-[#FFFFFF] p-12 text-center">
               <p className="text-[15px] font-semibold text-[#132F25]">
-                No verified practitioners match your query.
+                {t("directory.noResultsTitle")}
               </p>
               <p className="text-xs text-[#52665A] mt-1">
-                Try searching for a broader term like &quot;Medicine&quot;, &quot;Cardiology&quot;, or &quot;Counselling&quot;.
+                {t("directory.noResultsDesc")}
               </p>
               <button
                 type="button"
@@ -218,9 +224,9 @@ export default function DoctorsDirectoryPage() {
                   setSelectedSpecialty("all");
                   setSelectedMode("all");
                 }}
-                className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#174433] px-4 py-2 text-xs font-semibold text-white hover:bg-[#103629]"
+                className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#174433] px-4 py-2 text-xs font-semibold text-white hover:bg-[#103629] cursor-pointer"
               >
-                Clear all filters
+                {t("directory.clearFilters")}
               </button>
             </div>
           )}
@@ -231,11 +237,12 @@ export default function DoctorsDirectoryPage() {
           <div className="flex items-center gap-3">
             <ShieldCheck size={20} className="text-[#19A069] shrink-0" />
             <p>
-              <strong className="text-[#132F25]">BMDC Credential Policy:</strong> All registered practitioners undergo primary source verification against the Bangladesh Medical and Dental Council (BMDC) register before being listed on Medoji AI.
+              <strong className="text-[#132F25]">{t("directory.policyTitle")} </strong>
+              {t("directory.policyText")}
             </p>
           </div>
           <span className="shrink-0 font-mono text-[11px] text-[#174433] font-semibold bg-[#FFFFFF] px-2.5 py-1 rounded-md border border-[#DCE7DF]">
-            Care Pilot v1.0
+            {t("directory.pilotTag")}
           </span>
         </div>
       </div>
@@ -252,11 +259,6 @@ export default function DoctorsDirectoryPage() {
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-[#DCE7DF] pb-4">
               <div className="flex items-center gap-3 min-w-0">
-                <div
-                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl font-bold ${activeDoctor.avatarBg} ${activeDoctor.avatarColor}`}
-                >
-                  {activeDoctor.initials}
-                </div>
                 <div className="min-w-0">
                   <h3
                     id="booking-modal-title"
@@ -265,7 +267,7 @@ export default function DoctorsDirectoryPage() {
                     {activeDoctor.name}
                   </h3>
                   <p className="truncate text-xs text-[#52665A]">
-                    {activeDoctor.title} · ৳{activeDoctor.fee}
+                    {activeDoctor.title} · ৳{formatNumber(activeDoctor.fee)}
                   </p>
                 </div>
               </div>
@@ -273,7 +275,7 @@ export default function DoctorsDirectoryPage() {
               <button
                 type="button"
                 onClick={closeBookingModal}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0F5EF] text-[#52665A] hover:bg-[#E1F0E6] hover:text-[#174433] transition-colors font-bold text-sm"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0F5EF] text-[#52665A] hover:bg-[#E1F0E6] hover:text-[#174433] transition-colors font-bold text-sm cursor-pointer"
               >
                 ✕
               </button>
@@ -285,22 +287,30 @@ export default function DoctorsDirectoryPage() {
                   <CheckCircle2 size={32} />
                 </div>
                 <h4 className="mt-4 text-[18px] font-bold text-[#132F25]">
-                  Booking Request Recorded
+                  {t("directory.modal.successTitle")}
                 </h4>
                 <p className="mt-2 text-xs sm:text-[13px] text-[#52665A] max-w-sm mx-auto leading-[1.6]">
-                  Thank you, <strong className="text-[#132F25]">{formData.name}</strong>. Your consultation request for <strong className="text-[#132F25]">{activeDoctor.name}</strong> ({formData.mode}) has been received. Our clinical coordinator will confirm your exact slot via phone (<strong className="text-[#132F25]">{formData.phone}</strong>).
+                  {t("directory.modal.successDesc", {
+                    name: formData.name,
+                    doctor: activeDoctor.name,
+                    mode: formData.mode,
+                    phone: formData.phone,
+                  })}
                 </p>
 
                 <div className="mt-4 rounded-xl bg-[#F0F5EF] p-3 text-[11px] text-[#52665A]">
-                  <span className="font-semibold text-[#174433]">Pilot Note:</span> Direct Google Form booking integration redirects seamlessly here once the external booking form URL is attached.
+                  <span className="font-semibold text-[#174433]">
+                    {isBangla ? "পাইলট নোট:" : "Pilot Note:"}
+                  </span>{" "}
+                  {t("directory.modal.successPilotNote")}
                 </div>
 
                 <button
                   type="button"
                   onClick={closeBookingModal}
-                  className="mt-6 inline-flex h-[42px] items-center justify-center rounded-xl bg-[#174433] px-6 text-xs font-semibold text-white hover:bg-[#103629]"
+                  className="mt-6 inline-flex h-[42px] items-center justify-center rounded-xl bg-[#174433] px-6 text-xs font-semibold text-white hover:bg-[#103629] cursor-pointer"
                 >
-                  Return to Directory
+                  {t("directory.modal.returnBtn")}
                 </button>
               </div>
             ) : (
@@ -308,38 +318,42 @@ export default function DoctorsDirectoryPage() {
                 <div className="rounded-xl bg-[#F0F5EF] p-3.5 flex items-center justify-between text-xs">
                   <div>
                     <span className="font-semibold text-[#132F25] block">
-                      Consultation Fee
+                      {t("directory.modal.feeLabel")}
                     </span>
                     <span className="text-[11px] text-[#52665A]">
-                      Payable after schedule confirmation
+                      {t("directory.modal.feeNote")}
                     </span>
                   </div>
                   <span className="text-[18px] font-bold text-[#174433]">
-                    ৳{activeDoctor.fee}
+                    ৳{formatNumber(activeDoctor.fee)}
                   </span>
                 </div>
 
                 {/* Preferred Mode */}
                 <div>
                   <label className="block text-xs font-semibold text-[#132F25] mb-1.5">
-                    Consultation Mode
+                    {t("directory.modal.modeLabel")}
                   </label>
                   <div className="grid grid-cols-2 gap-2">
-                    {activeDoctor.modes.map((mode) => (
+                    {(activeDoctor.modes || ["Online"]).map((mode) => (
                       <button
                         key={mode}
                         type="button"
                         onClick={() =>
                           setFormData((prev) => ({ ...prev, mode }))
                         }
-                        className={`flex items-center justify-center gap-2 rounded-xl border p-2.5 text-xs font-semibold transition-all ${
+                        className={`flex items-center justify-center gap-2 rounded-xl border p-2.5 text-xs font-semibold transition-all cursor-pointer ${
                           formData.mode === mode
                             ? "border-[#174433] bg-[#E1F0E6] text-[#174433]"
                             : "border-[#DCE7DF] bg-[#FFFFFF] text-[#52665A] hover:bg-[#FDFDFD]"
                         }`}
                       >
                         {mode === "Online" ? <Video size={14} /> : <MapPin size={14} />}
-                        <span>{mode} Visit</span>
+                        <span>
+                          {mode === "Online"
+                            ? t("directory.modal.onlineVisit")
+                            : t("directory.modal.inPersonVisit")}
+                        </span>
                       </button>
                     ))}
                   </div>
@@ -348,7 +362,7 @@ export default function DoctorsDirectoryPage() {
                 {/* Patient Name */}
                 <div>
                   <label className="block text-xs font-semibold text-[#132F25] mb-1">
-                    Patient Full Name
+                    {t("directory.modal.nameLabel")}
                   </label>
                   <input
                     type="text"
@@ -357,7 +371,7 @@ export default function DoctorsDirectoryPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, name: e.target.value }))
                     }
-                    placeholder="e.g. Tanvir Ahmed"
+                    placeholder={t("directory.modal.namePlaceholder")}
                     className="w-full rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] px-3.5 py-2 text-xs sm:text-[13px] text-[#132F25] focus:border-[#174433] focus:outline-none focus:ring-1 focus:ring-[#174433]"
                   />
                 </div>
@@ -365,7 +379,7 @@ export default function DoctorsDirectoryPage() {
                 {/* Phone Number */}
                 <div>
                   <label className="block text-xs font-semibold text-[#132F25] mb-1">
-                    Bangladesh Mobile Number
+                    {t("directory.modal.phoneLabel")}
                   </label>
                   <input
                     type="tel"
@@ -375,7 +389,7 @@ export default function DoctorsDirectoryPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, phone: e.target.value }))
                     }
-                    placeholder="e.g. 01700000000"
+                    placeholder={t("directory.modal.phonePlaceholder")}
                     className="w-full rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] px-3.5 py-2 text-xs sm:text-[13px] text-[#132F25] focus:border-[#174433] focus:outline-none focus:ring-1 focus:ring-[#174433]"
                   />
                 </div>
@@ -383,7 +397,7 @@ export default function DoctorsDirectoryPage() {
                 {/* Primary Symptom */}
                 <div>
                   <label className="block text-xs font-semibold text-[#132F25] mb-1">
-                    Brief Reason or Symptoms (Optional)
+                    {t("directory.modal.notesLabel")}
                   </label>
                   <textarea
                     rows={2}
@@ -391,7 +405,7 @@ export default function DoctorsDirectoryPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, notes: e.target.value }))
                     }
-                    placeholder="e.g. Mild fever for 2 days, chest congestion..."
+                    placeholder={t("directory.modal.notesPlaceholder")}
                     className="w-full rounded-xl border border-[#DCE7DF] bg-[#FDFDFD] px-3.5 py-2 text-xs sm:text-[13px] text-[#132F25] focus:border-[#174433] focus:outline-none focus:ring-1 focus:ring-[#174433]"
                   />
                 </div>
@@ -400,12 +414,12 @@ export default function DoctorsDirectoryPage() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full inline-flex h-[44px] items-center justify-center rounded-xl bg-[#174433] text-xs font-bold text-white transition-colors hover:bg-[#103629]"
+                    className="w-full inline-flex h-[44px] items-center justify-center rounded-xl bg-[#174433] text-xs font-bold text-white transition-colors hover:bg-[#103629] cursor-pointer"
                   >
-                    Request Consultation
+                    {t("directory.modal.submitBtn")}
                   </button>
                   <p className="text-[11px] text-[#52665A] text-center mt-2">
-                    Confirmed via phone or WhatsApp · Confidential records
+                    {t("directory.modal.submitNote")}
                   </p>
                 </div>
               </form>

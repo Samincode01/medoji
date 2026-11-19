@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -12,27 +11,30 @@ import {
   CheckCircle2,
   Plus,
 } from "lucide-react";
-
-const trustPoints = [
-  {
-    icon: CheckCircle2,
-    title: "Verified professionals",
-    description: "Credential-focused discovery",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Privacy-conscious care",
-    description: "Your information matters",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Care in two languages",
-    description: "Bangla and English",
-  },
-];
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function FinalCTA() {
   const reduceMotion = useReducedMotion();
+  const { t, isBangla } = useLanguage();
+
+  const trustIcons = [CheckCircle2, ShieldCheck, HeartHandshake];
+  const localizedTrust = t("finalCta.trustPoints");
+  const trustList = Array.isArray(localizedTrust)
+    ? localizedTrust
+    : [
+        {
+          title: "Verified professionals",
+          description: "Credential-focused discovery",
+        },
+        {
+          title: "Privacy-conscious care",
+          description: "Your information matters",
+        },
+        {
+          title: "Care in two languages",
+          description: "Bangla and English",
+        },
+      ];
 
   const transition = reduceMotion
     ? { duration: 0 }
@@ -84,28 +86,37 @@ export default function FinalCTA() {
                   <Sparkles size={13} className="text-[#9BC9AA]" />
 
                   <span className="text-[9px] font-bold tracking-[0.17em] text-[#D4E8D9]">
-                    YOUR NEXT STEP TOWARDS BETTER CARE
+                    {t("finalCta.eyebrow")}
                   </span>
                 </div>
 
                 {/* HEADLINE */}
                 <h2 className="mt-7 max-w-[650px] text-[36px] leading-[1.12] font-semibold tracking-[-0.045em] text-white sm:text-[46px] lg:text-[54px]">
-                  Healthcare should feel
-                  <span className="block font-serif font-normal italic text-[#9BC9AA]">
-                    closer to you.
-                  </span>
+                  {isBangla ? (
+                    <>
+                      চিকিৎসাসেবা শুরু হোক
+                      <span className="block font-editorial-serif font-normal italic text-[#9BC9AA]">
+                        একটি সহজ আলাপে।
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Healthcare should feel
+                      <span className="block font-editorial-serif font-normal italic text-[#9BC9AA]">
+                        closer to you.
+                      </span>
+                    </>
+                  )}
                 </h2>
 
                 {/* DESCRIPTION */}
                 <p className="mt-5 max-w-[510px] text-[13px] leading-[1.9] text-[#C0D3C7] sm:text-[14px]">
-                  Find a doctor or counsellor, explore digital healthcare
-                  tools and take a more connected approach to your care.
-                  Start with the professional you need.
+                  {t("finalCta.description")}
                 </p>
 
-                {/* BANGLA */}
+                {/* BANGLA TAGLINE */}
                 <p className="mt-4 font-bengali text-[15px] leading-[1.8] text-[#D9E9DD] sm:text-[17px]">
-                  বিশ্বস্ত চিকিৎসা সেবার পথে আপনার পরবর্তী পদক্ষেপ নিন।
+                  {t("finalCta.banglaTagline")}
                 </p>
 
                 {/* BUTTONS */}
@@ -115,7 +126,7 @@ export default function FinalCTA() {
                     href="/doctors"
                     className="group inline-flex h-[52px] items-center justify-center gap-4 rounded-xl bg-white px-6 text-[12px] font-bold text-[#17352A] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#E1F0E6] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#17352A]"
                   >
-                    Find a professional
+                    {t("finalCta.primaryCta")}
 
                     <ArrowRight
                       size={16}
@@ -129,7 +140,7 @@ export default function FinalCTA() {
                   >
                     <Sparkles size={15} className="text-[#9BC9AA]" />
 
-                    Explore Medoji AI
+                    {t("finalCta.secondaryCta")}
 
                     <ArrowUpRight
                       size={14}
@@ -152,11 +163,13 @@ export default function FinalCTA() {
                 transition={{ ...transition, delay: 0.15 }}
               >
                 <span className="text-[9px] font-bold tracking-[0.18em] text-[#9BC9AA]">
-                  THE MEDOJI APPROACH
+                  {isBangla ? "মেডোজির প্রতিশ্রুতি" : "THE MEDOJI APPROACH"}
                 </span>
 
                 <p className="mt-4 max-w-[270px] text-[21px] leading-[1.4] font-medium tracking-[-0.025em] text-white sm:text-[24px]">
-                  Care that connects people, not just appointments.
+                  {isBangla
+                    ? "শুধুমাত্র অ্যাপয়েন্টমেন্ট নয়, আন্তরিক চিকিৎসাসেবা।"
+                    : "Care that connects people, not just appointments."}
                 </p>
               </motion.div>
 
@@ -248,12 +261,12 @@ export default function FinalCTA() {
                 }}
                 className="space-y-4 border-t border-white/10 pt-6"
               >
-                {trustPoints.map((point) => {
-                  const Icon = point.icon;
+                {trustList.map((point, index) => {
+                  const Icon = trustIcons[index] || ShieldCheck;
 
                   return (
                     <motion.div
-                      key={point.title}
+                      key={index}
                       variants={reveal}
                       transition={transition}
                       className="group flex items-center gap-3"
@@ -286,7 +299,9 @@ export default function FinalCTA() {
             </span>
 
             <span className="text-[9px] tracking-wide text-[#A7C0AF]">
-              A more connected healthcare experience for Bangladesh.
+              {isBangla
+                ? "বাংলাদেশের প্রতিটি মানুষের জন্য বিশ্বস্ত ও সহজ চিকিৎসাসেবা।"
+                : "A more connected healthcare experience for Bangladesh."}
             </span>
           </div>
 

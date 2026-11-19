@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   motion,
@@ -10,7 +9,6 @@ import {
 } from "framer-motion";
 import {
   ArrowUpRight,
-  ArrowRight,
   MessageCircle,
   AudioLines,
   Stethoscope,
@@ -19,13 +17,14 @@ import {
   ShieldCheck,
   Languages,
 } from "lucide-react";
+import { useLanguage } from "@/i18n/useLanguage";
 
 const conversations = {
   EN: {
     question:
       "I've been having recurring headaches. Which specialist should I speak to?",
     answer:
-      "A primary care doctor can help assess your symptoms and guide you towards an appropriate specialist if needed.",
+      "A primary care doctor or medicine specialist can help assess your symptoms and guide you towards an appropriate specialist if needed.",
     suggestions: ["Find a doctor", "Explore specialists"],
     label: "English conversation",
   },
@@ -33,38 +32,49 @@ const conversations = {
     question:
       "আমার বারবার মাথাব্যথা হচ্ছে। কোন বিশেষজ্ঞের পরামর্শ নেওয়া উচিত?",
     answer:
-      "প্রথমে একজন মেডিসিন বিশেষজ্ঞের পরামর্শ নিতে পারেন। তিনি আপনার উপসর্গ মূল্যায়ন করে প্রয়োজন অনুযায়ী পরবর্তী পদক্ষেপ জানাতে পারবেন।",
+      "প্রথমে একজন মেডিসিন বিশেষজ্ঞের পরামর্শ নিতে পারেন। তিনি আপনার লক্ষণ মূল্যায়ন করে প্রয়োজন অনুযায়ী উপযুক্ত পরামর্শ ও সঠিক পদক্ষেপ জানাবেন।",
     suggestions: ["ডাক্তার খুঁজুন", "বিশেষজ্ঞ দেখুন"],
     label: "বাংলা কথোপকথন",
   },
 };
 
-const features = [
-  {
-    number: "01",
-    icon: Languages,
-    title: "Your language",
-    description: "Communicate naturally in Bangla or English.",
-  },
-  {
-    number: "02",
-    icon: AudioLines,
-    title: "Your voice",
-    description: "Explore a more natural voice-based experience.",
-  },
-  {
-    number: "03",
-    icon: Stethoscope,
-    title: "Your next step",
-    description: "Navigate healthcare options and find professionals.",
-  },
-];
-
 export default function AIToolsSection() {
-  const [language, setLanguage] = useState("EN");
+  const { language: globalLang, setLanguage: setGlobalLanguage, isBangla, t } = useLanguage();
+  const [activeLang, setActiveLang] = useState(isBangla ? "BN" : "EN");
   const reduceMotion = useReducedMotion();
 
-  const current = conversations[language];
+  // Sync with global language changes
+  useEffect(() => {
+    setActiveLang(globalLang === "bn" ? "BN" : "EN");
+  }, [globalLang]);
+
+  const handleLangToggle = (langCode) => {
+    setActiveLang(langCode);
+    setGlobalLanguage(langCode.toLowerCase());
+  };
+
+  const current = conversations[activeLang] || conversations.EN;
+
+  const features = [
+    {
+      number: "01",
+      icon: Languages,
+      title: t("aiTools.feature1Title"),
+      description: t("aiTools.feature1Desc"),
+    },
+    {
+      number: "02",
+      icon: AudioLines,
+      title: t("aiTools.feature2Title"),
+      description: t("aiTools.feature2Desc"),
+    },
+    {
+      number: "03",
+      icon: Stethoscope,
+      title: t("aiTools.feature3Title"),
+      description: t("aiTools.feature3Desc"),
+    },
+  ];
 
   const reveal = {
     hidden: {
@@ -100,14 +110,14 @@ export default function AIToolsSection() {
             <div className="mb-5 flex items-center gap-3">
               <span className="h-px w-8 bg-[#8CC9A7]" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8D9BC]">
-                Introducing Medoji AI
+                {t("aiTools.eyebrow")}
               </span>
             </div>
 
             <h2 className="max-w-[650px] text-[38px] leading-[1.12] font-semibold tracking-[-0.045em] sm:text-[48px] lg:text-[56px]">
-              Healthcare,
-              <span className="block font-serif font-normal italic text-[#A8D9BC]">
-                understood differently.
+              {isBangla ? "চিকিৎসাসেবা," : "Healthcare,"}
+              <span className="block font-editorial-serif font-normal italic text-[#A8D9BC]">
+                {isBangla ? "নতুন ও সহজ অভিজ্ঞতায়।" : "understood differently."}
               </span>
             </h2>
           </motion.div>
@@ -120,12 +130,12 @@ export default function AIToolsSection() {
             transition={{ delay: 0.1 }}
           >
             <p className="max-w-[380px] text-[14px] leading-[1.9] text-[#CFDED4]">
-              Healthcare conversations should feel natural. Explore a
-              more connected way to ask questions and navigate care in
-              the language you know best.
+              {t("aiTools.description")}
             </p>
             <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#A8D9BC]">
-              Bangla · English · Human-centered
+              {isBangla
+                ? "বাংলা · ইংরেজি · মানবকেন্দ্রিক দৃষ্টিভঙ্গি"
+                : "Bangla · English · Human-centered"}
             </p>
           </motion.div>
         </div>
@@ -136,7 +146,7 @@ export default function AIToolsSection() {
           {/* LEFT: CAPABILITIES */}
           <div>
             <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8CC9A7]">
-              Built around you
+              {isBangla ? "আপনার প্রয়োজন অনুসারে" : "Built around you"}
             </p>
 
             <div>
@@ -185,7 +195,7 @@ export default function AIToolsSection() {
                 href="/doctors"
                 className="group inline-flex items-center gap-4 border-b border-[#8CC9A7] pb-2 text-[13px] font-semibold text-[#E1F0E6] transition-colors hover:text-white"
               >
-                Find a healthcare professional
+                {t("aiTools.cta")}
                 <ArrowUpRight
                   size={16}
                   className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
@@ -215,7 +225,7 @@ export default function AIToolsSection() {
                       Medoji AI
                     </p>
                     <p className="mt-0.5 text-[10px] text-[#52665A]">
-                      Conversation preview
+                      {isBangla ? "কথোপকথন প্রিভিউ" : "Conversation preview"}
                     </p>
                   </div>
                 </div>
@@ -225,15 +235,15 @@ export default function AIToolsSection() {
                     <button
                       key={item}
                       type="button"
-                      onClick={() => setLanguage(item)}
-                      aria-pressed={language === item}
-                      className={`px-3 py-1.5 text-[10px] font-bold transition-colors ${
-                        language === item
+                      onClick={() => handleLangToggle(item)}
+                      aria-pressed={activeLang === item}
+                      className={`px-3 py-1.5 text-[10px] font-bold transition-colors cursor-pointer ${
+                        activeLang === item
                           ? "bg-[#174433] text-white"
                           : "text-[#52665A] hover:bg-[#F0F5EF]"
                       }`}
                     >
-                      {item}
+                      {item === "BN" ? "বাংলা" : "EN"}
                     </button>
                   ))}
                 </div>
@@ -260,7 +270,7 @@ export default function AIToolsSection() {
 
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={language}
+                    key={activeLang}
                     initial={{
                       opacity: 0,
                       y: reduceMotion ? 0 : 8,
@@ -283,7 +293,7 @@ export default function AIToolsSection() {
                       <div className="min-w-0 flex-1">
                         <div className="mb-2 flex items-center justify-between">
                           <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#52665A]">
-                            Your question
+                            {isBangla ? "আপনার প্রশ্ন" : "Your question"}
                           </span>
                           <span className="text-[10px] text-[#819187]">
                             {current.label}
@@ -292,7 +302,7 @@ export default function AIToolsSection() {
 
                         <div className="max-w-[440px] bg-[#F0F5EF] px-4 py-3.5 sm:px-5">
                           <p
-                            lang={language === "BN" ? "bn" : "en"}
+                            lang={activeLang === "BN" ? "bn" : "en"}
                             className="text-[13px] leading-[1.85] text-[#132F25]"
                           >
                             {current.question}
@@ -310,13 +320,13 @@ export default function AIToolsSection() {
                       <div className="min-w-0 flex-1">
                         <div className="mb-2 flex items-center gap-2">
                           <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#174433]">
-                            Medoji response
+                            {isBangla ? "মেডোজির উত্তর" : "Medoji response"}
                           </span>
                           <span className="h-1.5 w-1.5 rounded-full bg-[#19A069]" />
                         </div>
 
                         <p
-                          lang={language === "BN" ? "bn" : "en"}
+                          lang={activeLang === "BN" ? "bn" : "en"}
                           className="max-w-[460px] text-[13px] leading-[1.9] text-[#42534A]"
                         >
                           {current.answer}
@@ -325,28 +335,19 @@ export default function AIToolsSection() {
                         {/* SUGGESTED ACTIONS */}
                         <div className="mt-5 border-t border-[#DCE7DF] pt-4">
                           <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.16em] text-[#819187]">
-                            Possible next steps
+                            {isBangla ? "পরবর্তী পদক্ষেপ" : "Possible next steps"}
                           </p>
 
                           <div className="flex flex-wrap gap-2">
                             {current.suggestions.map((suggestion, index) => (
-                              <motion.span
+                              <Link
                                 key={suggestion}
-                                initial={{
-                                  opacity: 0,
-                                  y: reduceMotion ? 0 : 7,
-                                }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{
-                                  duration: 0.35,
-                                  delay: reduceMotion ? 0 : 0.2 + index * 0.1,
-                                }}
-                                className="inline-flex items-center gap-2 border border-[#DCE7DF] px-3 py-2 text-[10px] font-semibold text-[#174433]"
+                                href="/doctors"
+                                className="inline-flex items-center gap-2 border border-[#DCE7DF] bg-white px-3 py-2 text-[10px] font-semibold text-[#174433] hover:border-[#174433] transition-colors"
                               >
                                 {suggestion}
                                 <ArrowUpRight size={12} />
-                              </motion.span>
+                              </Link>
                             ))}
                           </div>
                         </div>
@@ -359,7 +360,7 @@ export default function AIToolsSection() {
               {/* BOTTOM INPUT PREVIEW */}
               <div className="mx-5 mb-5 flex items-center justify-between border border-[#DCE7DF] px-4 py-3 sm:mx-7 sm:mb-7">
                 <span className="text-[11px] text-[#819187]">
-                  Ask in your own language...
+                  {t("aiTools.inputPlaceholder")}
                 </span>
                 <div className="flex h-8 w-8 items-center justify-center bg-[#174433] text-white">
                   <MessageCircle size={15} />
@@ -375,8 +376,7 @@ export default function AIToolsSection() {
                 className="mt-0.5 shrink-0 text-[#A8D9BC]"
               />
               <p className="max-w-[500px] text-[10px] leading-[1.7] text-[#B9D0C1]">
-                Illustrative conversation only. AI guidance does not replace
-                professional medical advice, diagnosis or emergency care.
+                {t("aiTools.disclaimer")}
               </p>
             </div>
           </motion.div>
@@ -385,10 +385,10 @@ export default function AIToolsSection() {
         {/* SECTION FOOTER */}
         <div className="mt-10 flex items-center justify-between border-t border-white/15 pt-5">
           <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A8D9BC]">
-            MEDOJI AI · CARE, CONNECTED
+            {isBangla ? "মেডোজি এআই · সংযুক্ত স্বাস্থ্যসেবা" : "MEDOJI AI · CARE, CONNECTED"}
           </span>
           <span className="text-[10px] text-[#B9D0C1]">
-            A new way to navigate care
+            {isBangla ? "স্বাস্থ্যসেবা পাওয়ার আধুনিক ও সহজ মাধ্যম" : "A new way to navigate care"}
           </span>
         </div>
 

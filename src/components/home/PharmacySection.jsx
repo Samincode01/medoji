@@ -1,44 +1,47 @@
-
 "use client";
 
 import Image from "next/image";
 import pharmacyPrescriptionImg from "@/images/pharmacy-prescription.png";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  ArrowDown,
   ArrowUpRight,
   FileCheck2,
   ShieldCheck,
   ClipboardCheck,
   Pill,
 } from "lucide-react";
-
-const steps = [
-  {
-    number: "01",
-    icon: FileCheck2,
-    title: "Share your prescription",
-    description:
-      "Capture or upload a clear image of your doctor's prescription.",
-  },
-  {
-    number: "02",
-    icon: ClipboardCheck,
-    title: "Pharmacist review",
-    description:
-      "A pharmacist reviews the prescription and checks the requested items.",
-  },
-  {
-    number: "03",
-    icon: ShieldCheck,
-    title: "Continue with confidence",
-    description:
-      "Receive guidance on the next steps after the review process.",
-  },
-];
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function PharmacySection() {
   const reduceMotion = useReducedMotion();
+  const { t, isBangla, formatNumber } = useLanguage();
+
+  const stepIcons = [FileCheck2, ClipboardCheck, ShieldCheck];
+
+  // Retrieve localized steps array
+  const localizedSteps = t("pharmacy.steps");
+  const stepsList = Array.isArray(localizedSteps)
+    ? localizedSteps
+    : [
+        {
+          number: "01",
+          title: "Share your prescription",
+          description:
+            "Capture or upload a clear image of your doctor's prescription.",
+        },
+        {
+          number: "02",
+          title: "Pharmacist review",
+          description:
+            "A pharmacist reviews the prescription and checks the requested items.",
+        },
+        {
+          number: "03",
+          title: "Continue with confidence",
+          description:
+            "Receive guidance on the next steps after the review process.",
+        },
+      ];
 
   const reveal = {
     hidden: { opacity: 0, y: reduceMotion ? 0 : 24 },
@@ -68,21 +71,20 @@ export default function PharmacySection() {
             <div className="mb-5 flex items-center gap-3">
               <span className="h-[2px] w-8 bg-[#19A069]" />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#174433]">
-                Pharmacy · Dhaka pilot
+                {t("pharmacy.eyebrow")}
               </span>
             </div>
 
             <h2 className="text-[34px] leading-[1.15] font-semibold tracking-[-0.045em] text-[#132F25] sm:text-[44px] lg:text-[52px]">
-              Your prescription,
-              <span className="block font-serif font-normal italic text-[#26704F]">
-                handled with care.
+              {t("pharmacy.headingLine1")}
+              <span className="block font-editorial-serif font-normal italic text-[#26704F]">
+                {t("pharmacy.headingLine2")}
               </span>
             </h2>
           </div>
 
           <p className="max-w-[390px] text-[15px] leading-[1.9] text-[#52665A]">
-            A more thoughtful way to connect prescriptions with pharmacy
-            support. Share your prescription and understand the review process.
+            {t("pharmacy.description")}
           </p>
         </motion.div>
 
@@ -99,7 +101,7 @@ export default function PharmacySection() {
           >
             <Image
               src={pharmacyPrescriptionImg}
-              alt="A person photographing a prescription with a smartphone"
+              alt={isBangla ? "স্মার্টফোনে প্রেসক্রিপশনের ছবি তোলার দৃশ্য" : "A person photographing a prescription with a smartphone"}
               fill
               sizes="(max-width: 1024px) 100vw, 55vw"
               className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
@@ -110,18 +112,18 @@ export default function PharmacySection() {
             <div className="absolute left-5 top-5 sm:left-7 sm:top-7">
               <span className="inline-flex items-center gap-2 border border-white/40 bg-white/90 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#174433] backdrop-blur-sm">
                 <Pill size={13} />
-                Prescription care
+                {t("pharmacy.badge")}
               </span>
             </div>
 
             <div className="absolute bottom-6 left-6 right-6 sm:bottom-9 sm:left-9 sm:right-9">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#E1F0E6]">
-                A simpler first step
+                {t("pharmacy.imageTag")}
               </p>
               <h3 className="mt-3 max-w-[420px] text-[27px] leading-[1.2] font-semibold tracking-[-0.035em] text-white sm:text-[36px]">
-                Start with a photo.
+                {t("pharmacy.imageHeading1")}
                 <br />
-                Let care move forward.
+                {t("pharmacy.imageHeading2")}
               </h3>
             </div>
           </motion.div>
@@ -137,27 +139,29 @@ export default function PharmacySection() {
             <div>
               <div className="flex items-center justify-between border-b border-white/15 pb-6">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B9D5C5]">
-                  How it works
+                  {t("pharmacy.panelTag")}
                 </span>
                 <FileCheck2 size={21} className="text-[#8CC9A7]" />
               </div>
 
               <h3 className="mt-8 max-w-[400px] text-[29px] leading-[1.2] font-semibold tracking-[-0.035em] sm:text-[36px]">
-                Prescription support, with a human touch.
+                {t("pharmacy.panelHeading")}
               </h3>
 
               <p className="mt-4 max-w-[390px] text-[14px] leading-[1.9] text-[#D3E2D9]">
-                The process is designed to connect your prescription with
-                pharmacist review, with clarity at every step.
+                {t("pharmacy.panelDesc")}
               </p>
 
               <div className="mt-9 space-y-7">
-                {steps.map((step, index) => {
-                  const Icon = step.icon;
+                {stepsList.map((step, index) => {
+                  const Icon = stepIcons[index] || ShieldCheck;
+                  const stepNum = isBangla
+                    ? (index === 0 ? "০১" : index === 1 ? "০২" : "০৩")
+                    : step.number || `0${index + 1}`;
 
                   return (
                     <motion.div
-                      key={step.number}
+                      key={index}
                       initial={{
                         opacity: 0,
                         x: reduceMotion ? 0 : 14,
@@ -177,7 +181,7 @@ export default function PharmacySection() {
                       <div className="min-w-0">
                         <div className="flex items-center gap-3">
                           <span className="text-[10px] font-semibold tracking-[0.12em] text-[#8CC9A7]">
-                            {step.number}
+                            {stepNum}
                           </span>
                           <h4 className="text-[15px] font-semibold text-white">
                             {step.title}
@@ -199,7 +203,7 @@ export default function PharmacySection() {
                 href="#pharmacy-process"
                 className="group inline-flex items-center gap-3 text-[13px] font-semibold text-white transition-colors hover:text-[#A8D9BC]"
               >
-                Explore the process
+                {isBangla ? "প্রক্রিয়াটি বিস্তারিত দেখুন" : "Explore the process"}
                 <ArrowUpRight
                   size={17}
                   className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
@@ -207,8 +211,7 @@ export default function PharmacySection() {
               </a>
 
               <p className="mt-4 text-[11px] leading-5 text-[#A9C3B3]">
-                Pharmacy service shown as a staged Dhaka pilot. Availability
-                and live prescription submission depend on rollout.
+                {t("pharmacy.panelNotice")}
               </p>
             </div>
           </motion.div>
@@ -228,13 +231,12 @@ export default function PharmacySection() {
               <ShieldCheck size={17} />
             </span>
             <p className="max-w-[430px] text-[12px] leading-5 text-[#52665A]">
-              Prescription handling and pharmacist review are subject to
-              service availability and pilot rollout.
+              {t("pharmacy.panelNotice")}
             </p>
           </div>
 
           <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#174433]">
-            MEDOJI AI · PHARMACY
+            {isBangla ? "মেডোজি এআই · ফার্মেসি" : "MEDOJI AI · PHARMACY"}
           </span>
         </motion.div>
       </div>

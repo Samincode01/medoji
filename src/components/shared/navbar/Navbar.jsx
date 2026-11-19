@@ -1,24 +1,24 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, HeartPulse } from "lucide-react";
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Find a Doctor", href: "/doctors" },
-  { label: "Pharmacy", href: "/#pharmacy" },
-  { label: "AI Assistant", href: "/#ai-tools" },
-  { label: "Our Ecosystem", href: "/#ecosystem" },
-];
+import { useLanguage } from "@/i18n/useLanguage";
 
 export default function Navbar() {
-  const [language, setLanguage] = useState("EN");
+  const { language, setLanguage, t, isBangla } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("");
   const pathname = usePathname();
+
+  const navLinks = [
+    { key: "home", label: t("nav.home"), href: "/" },
+    { key: "findDoctor", label: t("nav.findDoctor"), href: "/doctors" },
+    { key: "pharmacy", label: t("nav.pharmacy"), href: "/#pharmacy" },
+    { key: "aiAssistant", label: t("nav.aiAssistant"), href: "/#ai-tools" },
+    { key: "ecosystem", label: t("nav.ecosystem"), href: "/#ecosystem" },
+  ];
 
   // Track URL hash changes
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function Navbar() {
               </span>
 
               <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-[#52665A]">
-                Bangladesh
+                {t("nav.country")}
               </span>
             </div>
           </Link>
@@ -117,7 +117,7 @@ export default function Navbar() {
 
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   href={item.href}
                   onClick={() => {
                     if (item.href.includes("#")) {
@@ -142,36 +142,36 @@ export default function Navbar() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3 ">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
 
             {/* Language Toggle */}
             <div
-              className="inline-flex items-center rounded-full border border-[#DCE7DF] bg-white p-0.5 shadow-xs cursor-pointer"
+              className="inline-flex items-center rounded-full border border-[#DCE7DF] bg-white p-0.5 shadow-xs"
               role="group"
-              aria-label="Language selection"
+              aria-label={t("nav.languageLabel")}
             >
               <button
                 type="button"
-                onClick={() => setLanguage("EN")}
+                onClick={() => setLanguage("en")}
                 className={`rounded-full px-2.5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] cursor-pointer ${
-                  language === "EN"
+                  language === "en"
                     ? "bg-[#174433] text-white shadow-xs"
                     : "text-[#52665A] hover:text-[#174433]"
                 }`}
-                aria-pressed={language === "EN"}
+                aria-pressed={language === "en"}
               >
                 EN
               </button>
 
               <button
                 type="button"
-                onClick={() => setLanguage("BN")}
+                onClick={() => setLanguage("bn")}
                 className={`rounded-full px-2.5 py-1.5 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] cursor-pointer ${
-                  language === "BN"
+                  language === "bn"
                     ? "bg-[#174433] text-white shadow-xs"
                     : "text-[#52665A] hover:text-[#174433]"
                 }`}
-                aria-pressed={language === "BN"}
+                aria-pressed={language === "bn"}
               >
                 বাংলা
               </button>
@@ -182,18 +182,16 @@ export default function Navbar() {
               href="/login"
               className="inline-flex h-10 items-center justify-center rounded-full bg-[#174433] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#0F3527] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2 sm:px-5"
             >
-              Login
+              {t("nav.login")}
             </Link>
 
             {/* Mobile Menu Toggle */}
             <button
               type="button"
               onClick={() => setMenuOpen((prev) => !prev)}
-              aria-label={
-                menuOpen ? "Close navigation menu" : "Open navigation menu"
-              }
+              aria-label={menuOpen ? t("nav.menuClose") : t("nav.menuOpen")}
               aria-expanded={menuOpen}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#DCE7DF] bg-white text-[#174433] transition-colors hover:bg-[#F0F5EF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#DCE7DF] bg-white text-[#174433] transition-colors hover:bg-[#F0F5EF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] md:hidden cursor-pointer"
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -212,7 +210,7 @@ export default function Navbar() {
 
                 return (
                   <Link
-                    key={item.label}
+                    key={item.key}
                     href={item.href}
                     onClick={() => {
                       setMenuOpen(false);
