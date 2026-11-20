@@ -21,10 +21,10 @@ export default function Footer() {
     {
       title: t("footer.careDiscovery"),
       links: [
-        { label: t("footer.links.findDoctor"), href: "/doctors" },
-        { label: t("footer.links.mentalHealth"), href: "/doctors" },
-        { label: t("footer.links.onlineVideo"), href: "/doctors" },
-        { label: t("footer.links.inPerson"), href: "/doctors" },
+        { label: t("footer.links.findDoctor"), href: "/specialist" },
+        { label: t("footer.links.mentalHealth"), href: "/specialist" },
+        { label: t("footer.links.onlineVideo"), href: "/specialist" },
+        { label: t("footer.links.inPerson"), href: "/specialist" },
       ],
     },
     {

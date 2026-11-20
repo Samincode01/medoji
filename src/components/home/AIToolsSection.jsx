@@ -126,7 +126,7 @@ export default function AIToolsSection() {
             </p>
 
             <Link
-              href="/doctors"
+              href="/specialist"
               className="group mt-8 inline-flex h-[48px] items-center gap-4 rounded-lg bg-[#174433] px-6 text-[12px] font-semibold text-white transition-colors hover:bg-[#0F3527]"
             >
               {t("aiTools.cta")}
@@ -271,7 +271,7 @@ export default function AIToolsSection() {
               </span>
 
               <Link
-                href="/doctors"
+                href="/specialist"
                 className="group inline-flex items-center gap-2 text-[11px] font-semibold text-[#174433] hover:text-[#19A069]"
               >
                 {isBangla ? "বিশেষজ্ঞ খুঁজুন" : "Find a Specialist"}

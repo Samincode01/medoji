@@ -38,21 +38,29 @@ export default function DoctorsDirectoryPage() {
 
   // Filter professionals
   const filteredDoctors = SAMPLE_DOCTORS.filter((doc) => {
-    const term = searchTerm.toLowerCase();
+    const term = searchTerm.trim().toLowerCase();
 
     const matchesSearch =
       !term ||
       (doc.name || "").toLowerCase().includes(term) ||
       (doc.specialty || "").toLowerCase().includes(term) ||
+      (doc.qualifications || "").toLowerCase().includes(term) ||
       (doc.area || "").toLowerCase().includes(term) ||
       (doc.title || "").toLowerCase().includes(term);
 
     const matchesType =
-      selectedType === "all" || doc.category === selectedType;
+      selectedType === "all" ||
+      doc.category === selectedType ||
+      doc.specialtyId === selectedType ||
+      (selectedType === "doctor" && doc.category === "physical") ||
+      (selectedType === "doctors" && doc.category === "physical") ||
+      (selectedType === "psychologist" && doc.category === "mental") ||
+      (selectedType === "psychologists" && doc.category === "mental");
 
     const matchesSpecialty =
       selectedSpecialty === "all" ||
-      doc.specialtyId === selectedSpecialty;
+      doc.specialtyId === selectedSpecialty ||
+      doc.category === selectedSpecialty;
 
     const matchesMode =
       selectedMode === "all" ||
@@ -124,7 +132,7 @@ export default function DoctorsDirectoryPage() {
   const professionalTypes = [
     {
       value: "all",
-      label: isBangla ? "সব বিশেষজ্ঞ" : "All professionals",
+      label: isBangla ? "সব" : "All",
     },
     {
       value: "physical",
@@ -353,7 +361,7 @@ export default function DoctorsDirectoryPage() {
                 </h3>
 
                 <p className="truncate text-xs text-[#52665A]">
-                  {activeDoctor.title} · ৳{formatNumber(activeDoctor.fee)}
+                  {activeDoctor.title} {activeDoctor.fee ? `· ৳${formatNumber(activeDoctor.fee)}` : ""}
                 </p>
               </div>
 
@@ -417,7 +425,7 @@ export default function DoctorsDirectoryPage() {
                   </div>
 
                   <span className="text-[18px] font-bold text-[#174433]">
-                    ৳{formatNumber(activeDoctor.fee)}
+                    {activeDoctor.fee ? `৳${formatNumber(activeDoctor.fee)}` : (isBangla ? "বিনামূল্যে (ডেমো)" : "Free (Demo)")}
                   </span>
                 </div>
 

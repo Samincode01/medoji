@@ -29,6 +29,18 @@ const nextConfig = {
       },
     },
   },
+  async rewrites() {
+    return [
+      {
+        source: "/doctors",
+        destination: "/specialist",
+      },
+      {
+        source: "/doctors/:path*",
+        destination: "/specialist/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

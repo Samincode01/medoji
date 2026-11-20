@@ -15,35 +15,39 @@ export default function DoctorCard({ doctor }) {
     id,
     name,
     title,
+    category,
     qualifications,
-    experience,
     experienceYears,
     experienceLabel,
     experienceDetails,
     image,
     verified,
+    initials,
   } = doctor;
 
-  // Experience formatting
-  const expYearsCount =
-    experienceYears ??
-    (experience ? parseInt(experience, 10) : null);
+  // PROFESSIONAL TITLE
+  const displayTitle =
+    title ||
+    (category === "mental"
+      ? isBangla
+        ? "মনোবিজ্ঞানী"
+        : "Psychologist"
+      : isBangla
+        ? "চিকিৎসক"
+        : "Doctor");
 
+  // EXPERIENCE FORMATTING
   let expText = "";
 
-  if (experienceLabel || experienceDetails) {
+  if (experienceYears !== null && experienceYears !== undefined) {
+    expText = isBangla
+      ? `${formatNumber(experienceYears)}+ বছরের অভিজ্ঞতা`
+      : `${experienceYears}+ years experience`;
+  } else if (experienceLabel || experienceDetails) {
     expText = experienceLabel || experienceDetails;
-  } else if (expYearsCount !== null && !Number.isNaN(expYearsCount)) {
-    expText = isBangla
-      ? `${formatNumber(expYearsCount)}+ বছরের অভিজ্ঞতা`
-      : `${expYearsCount}+ years experience`;
-  } else if (experience) {
-    expText = isBangla
-      ? `${experience} বছরের অভিজ্ঞতা`
-      : `${experience} years experience`;
   }
 
-  // Image URL handling
+  // IMAGE URL HANDLING
   const imageUrl = image
     ? image.startsWith("http")
       ? image
@@ -69,7 +73,7 @@ export default function DoctorCard({ doctor }) {
           {imageUrl ? (
             <Image
               src={imageUrl}
-              alt={name || "Doctor"}
+              alt={name || "Healthcare professional"}
               fill
               sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 280px"
               className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.035]"
@@ -77,7 +81,7 @@ export default function DoctorCard({ doctor }) {
           ) : (
             <div className="flex h-full w-full items-center justify-center">
               <span className="text-5xl font-semibold text-[#8CA596]">
-                {name?.charAt(0) || "D"}
+                {initials || name?.charAt(0) || "D"}
               </span>
             </div>
           )}
@@ -98,7 +102,7 @@ export default function DoctorCard({ doctor }) {
 
           {/* PROFESSIONAL TITLE */}
           <p className="font-bengali text-[17px] font-semibold leading-[1.6] text-[#174433]">
-            {title}
+            {displayTitle}
           </p>
 
           {/* NAME */}
@@ -108,10 +112,7 @@ export default function DoctorCard({ doctor }) {
 
           {/* EXPERIENCE & QUALIFICATIONS */}
           <p className="mt-1.5 line-clamp-2 text-[12px] leading-[1.7] text-[#66776C]">
-            {[
-              expText,
-              qualifications,
-            ]
+            {[expText, qualifications]
               .filter(Boolean)
               .join(", ")}
           </p>

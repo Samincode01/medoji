@@ -66,7 +66,7 @@ export default function DoctorProfileView({ doctor }) {
   const displayExperience =
     experienceLabel || experienceDetails
       ? experienceLabel || experienceDetails
-      : experienceYears
+      : experienceYears !== null && experienceYears !== undefined
         ? isBangla
           ? `${formatNumber(experienceYears)}+ বছরের অভিজ্ঞতা`
           : `${experienceYears}+ years experience`
@@ -80,6 +80,7 @@ export default function DoctorProfileView({ doctor }) {
   const hasArea = Boolean(area);
   const hasAffiliation = Boolean(affiliation);
   const hasNextSlot = Boolean(nextSlot);
+  const hasQualifications = Boolean(qualifications);
 
   // CATEGORY-BASED BOOKING LINK
   const bookingDestination = BOOKING_LINKS[category] || null;
@@ -137,7 +138,7 @@ export default function DoctorProfileView({ doctor }) {
       <div className="border-b border-[#DCE7DF] bg-[#F0F5EF]">
         <div className="mx-auto max-w-[1150px] px-5 py-5 sm:px-8">
           <Link
-            href="/specialst"
+            href="/specialist"
             className="group inline-flex items-center gap-2 text-[13px] font-medium text-[#52665A] transition-colors hover:text-[#174433]"
           >
             <ArrowLeft
@@ -159,7 +160,7 @@ export default function DoctorProfileView({ doctor }) {
                 {imageUrl ? (
                   <Image
                     src={imageUrl}
-                    alt={name || "Doctor"}
+                    alt={name || "Healthcare professional"}
                     fill
                     priority
                     sizes="(max-width: 768px) 90vw, 300px"
@@ -209,7 +210,7 @@ export default function DoctorProfileView({ doctor }) {
                 {name}
               </h1>
 
-              {qualifications && (
+              {hasQualifications && (
                 <p className="mt-4 max-w-[570px] text-[13px] leading-[1.9] text-[#52665A]">
                   {qualifications}
                 </p>
@@ -289,7 +290,7 @@ export default function DoctorProfileView({ doctor }) {
                 </div>
               </div>
 
-              {qualifications && (
+              {hasQualifications && (
                 <p className="mt-5 text-[13px] leading-[1.9] text-[#52665A]">
                   {qualifications}
                 </p>
@@ -373,51 +374,49 @@ export default function DoctorProfileView({ doctor }) {
           {/* RIGHT SIDEBAR */}
           <aside className="space-y-5">
             {/* CONSULTATION FEE */}
-            {hasFee && (
-              <section className="rounded-[20px] border border-[#DCE7DF] bg-white p-6">
-                <div className="flex items-center gap-2">
-                  <Wallet
-                    size={17}
-                    className="text-[#19A069]"
-                  />
-                  <p className="text-[10px] font-bold tracking-[0.14em] text-[#829287]">
-                    {t("doctorProfile.feeTitle")}
+            <section className="rounded-[20px] border border-[#DCE7DF] bg-white p-6">
+              <div className="flex items-center gap-2">
+                <Wallet
+                  size={17}
+                  className="text-[#19A069]"
+                />
+                <p className="text-[10px] font-bold tracking-[0.14em] text-[#829287]">
+                  {t("doctorProfile.feeTitle")}
+                </p>
+              </div>
+
+              <p className="mt-3 text-[34px] font-bold tracking-tight text-[#17352A]">
+                {hasFee ? `৳${formatNumber(fee)}` : (isBangla ? "বিনামূল্যে (ডেমো)" : "Free (Demo)")}
+              </p>
+
+              {hasNextSlot && (
+                <div className="mt-5 border-t border-[#E8EEE9] pt-5">
+                  <div className="flex items-center gap-2 text-[12px] font-semibold text-[#17352A]">
+                    <Clock3
+                      size={15}
+                      className="text-[#19A069]"
+                    />
+                    {t("doctorProfile.nextAvailability")}
+                  </div>
+
+                  <p className="mt-2 text-[12px] text-[#52665A]">
+                    {displayNextSlot}
                   </p>
                 </div>
+              )}
 
-                <p className="mt-3 text-[34px] font-bold tracking-tight text-[#17352A]">
-                  ৳{formatNumber(fee)}
-                </p>
-
-                {hasNextSlot && (
-                  <div className="mt-5 border-t border-[#E8EEE9] pt-5">
-                    <div className="flex items-center gap-2 text-[12px] font-semibold text-[#17352A]">
-                      <Clock3
-                        size={15}
-                        className="text-[#19A069]"
-                      />
-                      {t("doctorProfile.nextAvailability")}
-                    </div>
-
-                    <p className="mt-2 text-[12px] text-[#52665A]">
-                      {displayNextSlot}
-                    </p>
-                  </div>
-                )}
-
-                {bookingDestination && (
-                  <a
-                    href={bookingDestination}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#174433] text-[12px] font-semibold text-white transition-colors hover:bg-[#103629]"
-                  >
-                    {bookingBtnText}
-                    <ArrowUpRight size={14} />
-                  </a>
-                )}
-              </section>
-            )}
+              {bookingDestination && (
+                <a
+                  href={bookingDestination}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#174433] text-[12px] font-semibold text-white transition-colors hover:bg-[#103629]"
+                >
+                  {bookingBtnText}
+                  <ArrowUpRight size={14} />
+                </a>
+              )}
+            </section>
 
             {/* LANGUAGES */}
             {hasLanguages && (

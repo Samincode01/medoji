@@ -39,6 +39,7 @@ export const translations = {
       cardCount: "({count})",
       specialties: {
         all: "All Professionals",
+        physical: "General Medicine",
         mental: "Mental Health & Counselling",
       },
       emptyHeading: "No sample practitioners listed under this category yet.",
@@ -416,6 +417,7 @@ export const translations = {
       cardCount: "({count} জন)",
       specialties: {
         all: "সকল বিশেষজ্ঞ",
+        physical: "জেনারেল মেডিসিন",
         mental: "মানসিক স্বাস্থ্য ও কাউন্সেলিং",
       },
       emptyHeading: "এই বিভাগে এখনো কোনো বিশেষজ্ঞের তালিকা যুক্ত হয়নি।",

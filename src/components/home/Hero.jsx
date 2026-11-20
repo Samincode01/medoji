@@ -131,7 +131,7 @@ export default function Hero() {
               className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5"
             >
               <Link
-                href="/doctors"
+                href="/specialist"
                 className="group inline-flex h-[50px] items-center justify-center gap-2 rounded-xl bg-[#174433] px-6 text-[15px] font-semibold text-[#FFFFFF] shadow-sm transition-all duration-200 hover:bg-[#103629] active:bg-[#0A281D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2"
               >
                 <span>{t("hero.primaryCta")}</span>

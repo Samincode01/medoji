@@ -162,7 +162,7 @@ export default function FinalCTA() {
               className="mt-9 flex flex-col gap-3 sm:flex-row"
             >
               <Link
-                href="/doctors"
+                href="/specialist"
                 className="group inline-flex h-[54px] items-center justify-center gap-5 rounded-xl bg-[#174433] px-7 text-[13px] font-semibold text-white transition-colors duration-300 hover:bg-[#0F3527] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#174433] focus-visible:ring-offset-2"
               >
                 {t("finalCta.primaryCta")}

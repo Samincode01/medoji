@@ -20,6 +20,7 @@ export default function CareDiscovery() {
 
   const getSpecialtyLabel = (spec) => {
     if (spec.id === "all") return t("careDiscovery.specialties.all");
+    if (spec.id === "physical") return t("careDiscovery.specialties.physical");
     if (spec.id === "mental") return t("careDiscovery.specialties.mental");
     return spec.label;
   };
@@ -49,7 +50,7 @@ export default function CareDiscovery() {
           </div>
 
           <Link
-            href="/doctors"
+            href="/specialist"
             className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#174433] hover:text-[#103629] group transition-colors self-start md:self-end pb-1"
           >
             <span>
@@ -127,7 +128,7 @@ export default function CareDiscovery() {
           </div>
 
           <Link
-            href="/doctors"
+            href="/specialist"
             className="inline-flex shrink-0 items-center justify-center rounded-xl bg-[#174433] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#103629]"
           >
             {t("careDiscovery.assuranceBtn")}

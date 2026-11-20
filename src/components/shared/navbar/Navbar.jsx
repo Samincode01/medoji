@@ -66,8 +66,8 @@ export default function Navbar() {
       return pathname === "/" && activeHash === hash;
     }
 
-    if (href === "/doctors") {
-      return pathname.startsWith("/doctors");
+    if (href === "/specialist" || href === "/doctors") {
+      return pathname.startsWith("/specialist") || pathname.startsWith("/doctors");
     }
 
     return false;

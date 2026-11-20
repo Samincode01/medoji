@@ -103,7 +103,7 @@ export default function ServicesSection() {
                 {t("services.pillar1.meta")}
               </span>
               <Link
-                href="/doctors"
+                href="/specialist"
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#174433] hover:text-[#103629]"
               >
                 {t("services.pillar1.cta")} <ArrowRight size={14} />
@@ -154,7 +154,7 @@ export default function ServicesSection() {
 
             <div className="mt-8 pt-6 border-t border-[#DCE7DF]/80">
               <Link
-                href="/doctors"
+                href="/specialist"
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#174433] hover:text-[#103629]"
               >
                 {t("services.pillar2.cta")} <ArrowRight size={14} />

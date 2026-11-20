@@ -9,6 +9,10 @@ export const SAMPLE_SPECIALTIES = [
     "label": "All Professionals"
   },
   {
+    "id": "physical",
+    "label": "General Medicine"
+  },
+  {
     "id": "mental",
     "label": "Mental Health & Counselling"
   }
@@ -404,5 +408,83 @@ export const SAMPLE_DOCTORS = [
     },
     "verified": true,
     "initials": "NA"
+  },
+  {
+    "id": "demo-doctor-01",
+    "name": "Dr. Arafat Rahman",
+    "title": "General Physician",
+    "specialty": "General Medicine",
+    "specialtyId": "physical",
+    "category": "physical",
+    "qualifications": "MBBS (Demo Qualification)",
+    "experienceYears": 5,
+    "experienceLabel": "5 years experience",
+    "image": null,
+    "profileUrl": "",
+    "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
+    "bookingUrl": "",
+    "affiliation": "",
+    "languages": [
+      "Bangla",
+      "English"
+    ],
+    "fee": null,
+    "modes": [
+      "Online",
+      "In person"
+    ],
+    "area": "",
+    "nextSlot": "",
+    "bio": "Demo doctor profile for testing the Medoji AI doctor directory.",
+    "education": [],
+    "professionalExperience": [],
+    "services": [],
+    "consultationDetails": "",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "address": ""
+    },
+    "verified": false,
+    "initials": "AR"
+  },
+  {
+    "id": "demo-doctor-02",
+    "name": "Dr. Nusrat Jahan",
+    "title": "Medical Officer",
+    "specialty": "General Medicine",
+    "specialtyId": "physical",
+    "category": "physical",
+    "qualifications": "MBBS (Demo Qualification)",
+    "experienceYears": 3,
+    "experienceLabel": "3 years experience",
+    "image": null,
+    "profileUrl": "",
+    "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
+    "bookingUrl": "",
+    "affiliation": "",
+    "languages": [
+      "Bangla",
+      "English"
+    ],
+    "fee": null,
+    "modes": [
+      "Online",
+      "In person"
+    ],
+    "area": "",
+    "nextSlot": "",
+    "bio": "Demo doctor profile for testing the Medoji AI doctor directory.",
+    "education": [],
+    "professionalExperience": [],
+    "services": [],
+    "consultationDetails": "",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "address": ""
+    },
+    "verified": false,
+    "initials": "NJ"
   }
 ];
