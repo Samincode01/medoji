@@ -1,189 +1,151 @@
+
 "use client";
 
 import Link from "next/link";
-import { HeartPulse, ShieldAlert, Globe, PhoneCall } from "lucide-react";
+import {
+  HeartPulse,
+  ArrowUpRight,
+  ShieldAlert,
+  PhoneCall,
+  MapPin,
+} from "lucide-react";
 import { useLanguage } from "@/i18n/useLanguage";
+
+const linkStyle =
+  "group inline-flex items-center gap-1 text-[13px] text-[#C3D5CB] transition-colors duration-200 hover:text-white";
 
 export default function Footer() {
   const { t, isBangla } = useLanguage();
 
+  const columns = [
+    {
+      title: t("footer.careDiscovery"),
+      links: [
+        { label: t("footer.links.findDoctor"), href: "/doctors" },
+        { label: t("footer.links.mentalHealth"), href: "/doctors" },
+        { label: t("footer.links.onlineVideo"), href: "/doctors" },
+        { label: t("footer.links.inPerson"), href: "/doctors" },
+      ],
+    },
+    {
+      title: t("footer.digitalServices"),
+      links: [
+        { label: t("footer.links.aiAssistant"), href: "/#ai-tools" },
+        { label: t("footer.links.prescriptionUpload"), href: "/#pharmacy" },
+        { label: t("footer.links.pharmacyPilot"), href: "/#pharmacy" },
+        { label: t("footer.links.careContinuity"), href: "/#ecosystem" },
+      ],
+    },
+    {
+      title: t("footer.healthcareEcosystem"),
+      links: [
+        { label: t("footer.links.diagnostics"), href: "/#ecosystem" },
+        { label: t("footer.links.devices"), href: "/#ecosystem" },
+        { label: t("footer.links.partnerHospital"), href: "/#ecosystem" },
+        { label: t("footer.links.roadmap"), href: "/#ecosystem" },
+      ],
+    },
+  ];
+
   return (
-    <footer className="w-full bg-[#17352A] text-[#FFFFFF] border-t border-[#254D3D]">
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-        {/* Main Footer Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
-          {/* Brand & Overview Column (5 Cols) */}
-          <div className="lg:col-span-5">
+    <footer className="relative overflow-hidden bg-[#17352A] text-white">
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+
+        {/* Main brand area */}
+        <div className="grid grid-cols-1 gap-12 pb-14 pt-16 md:grid-cols-12 md:gap-10 lg:pb-20 lg:pt-20">
+
+          <div className="md:col-span-5 lg:col-span-5">
             <Link
               href="/"
+              aria-label="M edoji AI Home"
               className="inline-flex items-center gap-3"
-              aria-label="Medoji AI Home"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E1F0E6]">
-                <HeartPulse size={22} className="text-[#174433]" strokeWidth={2.2} />
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#E1F0E6] text-[#174433]">
+                <HeartPulse size={23} strokeWidth={2.1} />
               </span>
-              <span className="text-[22px] font-bold tracking-tight text-[#FFFFFF]">
+
+              <span className="text-[25px] font-bold tracking-[-0.06em]">
                 Medoji<span className="text-[#19A069]"> AI</span>
               </span>
             </Link>
 
-            <p className="mt-4 text-[14px] text-[#E1F0E6]/85 leading-[1.65] max-w-[400px]">
+            <h2 className="mt-7 max-w-[390px] text-[30px] font-medium leading-[1.2] tracking-[-0.04em] text-white sm:text-[36px]">
+              {isBangla
+                ? "স্বাস্থ্যসেবা হোক আরও কাছের, আরও সহজ।"
+                : "A more connected way to care."}
+            </h2>
+
+            <p className="mt-4 max-w-[360px] text-[13px] leading-[1.8] text-[#C3D5CB]">
               {t("footer.tagline")}
             </p>
 
-            <div className="mt-6 flex items-center gap-2 text-xs text-[#A3BFB0]">
-              <Globe size={14} className="text-[#19A069]" />
-              <span>{t("footer.location")}</span>
+            <div className="mt-6 inline-flex items-center gap-2 text-[12px] text-[#A3BFB0]">
+              <MapPin size={14} className="text-[#19A069]" />
+              {t("footer.location")}
             </div>
           </div>
 
-          {/* Links Column 1: Care & Discovery (2 Cols) */}
-          <div className="lg:col-span-2 sm:col-span-1">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#FFFFFF]">
-              {t("footer.careDiscovery")}
-            </h4>
-            <ul className="mt-4 space-y-2.5 text-xs sm:text-[13px]">
-              <li>
-                <Link
-                  href="/doctors"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.findDoctor")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/doctors"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.mentalHealth")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/doctors"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.onlineVideo")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/doctors"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.inPerson")}
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Navigation */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:col-span-7 md:pt-2 lg:col-span-7 lg:pl-10">
+            {columns.map((column) => (
+              <div key={column.title}>
+                <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.13em] text-[#8FAE9D]">
+                  {column.title}
+                </h3>
 
-          {/* Links Column 2: Digital Services (2 Cols) */}
-          <div className="lg:col-span-2 sm:col-span-1">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#FFFFFF]">
-              {t("footer.digitalServices")}
-            </h4>
-            <ul className="mt-4 space-y-2.5 text-xs sm:text-[13px]">
-              <li>
-                <Link
-                  href="/#ai-tools"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.aiAssistant")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#pharmacy"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.prescriptionUpload")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#pharmacy"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.pharmacyPilot")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#ecosystem"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.careContinuity")}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Links Column 3: Ecosystem & Trust (3 Cols) */}
-          <div className="lg:col-span-3 sm:col-span-1">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#FFFFFF]">
-              {t("footer.healthcareEcosystem")}
-            </h4>
-            <ul className="mt-4 space-y-2.5 text-xs sm:text-[13px]">
-              <li>
-                <Link
-                  href="/#ecosystem"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.diagnostics")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#ecosystem"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.devices")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#ecosystem"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.partnerHospital")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#ecosystem"
-                  className="text-[#E1F0E6] hover:text-[#FFFFFF] hover:underline underline-offset-4 transition-colors"
-                >
-                  {t("footer.links.roadmap")}
-                </Link>
-              </li>
-            </ul>
+                <ul className="space-y-3.5">
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href} className={linkStyle}>
+                        {link.label}
+                        <ArrowUpRight
+                          size={12}
+                          className="opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+                        />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Emergency & Medical Safety Bar */}
-        <div className="mt-12 rounded-2xl border border-[#254D3D] bg-[#102B21] p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-start sm:items-center gap-3">
-            <ShieldAlert size={20} className="text-[#19A069] shrink-0 mt-0.5 sm:mt-0" />
-            <p className="text-xs text-[#E1F0E6]/90 leading-[1.55]">
-              <strong className="text-white">{t("footer.emergencyTitle")} </strong>
-              {t("footer.emergencyText")}
-            </p>
+        {/* Emergency information */}
+        <div className="flex flex-col gap-5 border-y border-[#416050] py-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <ShieldAlert
+              size={19}
+              className="mt-0.5 shrink-0 text-[#65C795]"
+            />
+
+            <div>
+              <p className="text-[13px] font-semibold text-white">
+                {t("footer.emergencyTitle")}
+              </p>
+              <p className="mt-1 max-w-[600px] text-[12px] leading-[1.7] text-[#B8CEC1]">
+                {t("footer.emergencyText")}
+              </p>
+            </div>
           </div>
 
           <a
             href="tel:999"
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#17352A] px-3 py-1.5 text-xs font-bold text-[#E1F0E6] border border-[#254D3D] hover:bg-[#204536] transition-colors"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-full border border-[#648675] px-5 text-[12px] font-semibold text-white transition-colors duration-200 hover:border-[#8FC7A8] hover:bg-[#244B3B] sm:self-center"
           >
-            <PhoneCall size={13} className="text-[#19A069]" />
-            <span>{t("footer.emergencyBtn")}</span>
+            <PhoneCall size={14} className="text-[#65C795]" />
+            {t("footer.emergencyBtn")}
           </a>
         </div>
 
-        {/* Bottom Bar: Copyright & Attribution */}
-        <div className="mt-10 pt-8 border-t border-[#254D3D] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#A3BFB0]">
+        {/* Bottom bar */}
+        <div className="flex flex-col gap-3 py-7 text-[11px] text-[#A3BFB0] sm:flex-row sm:items-center sm:justify-between">
           <p>{t("footer.copyright")}</p>
-          <p>{t("footer.rights")}</p>
+
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#19A069]" />
+            <span>{t("footer.rights")}</span>
+          </div>
         </div>
       </div>
     </footer>

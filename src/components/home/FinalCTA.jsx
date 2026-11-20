@@ -1,15 +1,14 @@
-"use client";
 
+"use client";
+import medojiCare from "@/images/medojicare.png";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  Sparkles,
+  CheckCircle2,
   ShieldCheck,
   HeartHandshake,
-  CheckCircle2,
-  Plus,
 } from "lucide-react";
 import { useLanguage } from "@/i18n/useLanguage";
 
@@ -17,295 +16,269 @@ export default function FinalCTA() {
   const reduceMotion = useReducedMotion();
   const { t, isBangla } = useLanguage();
 
-  const trustIcons = [CheckCircle2, ShieldCheck, HeartHandshake];
+  const trustIcons = [
+    CheckCircle2,
+    ShieldCheck,
+    HeartHandshake,
+  ];
+
+  const fallbackTrust = [
+    {
+      title: "Verified professionals",
+      description: "Credential-focused discovery",
+    },
+    {
+      title: "Privacy-conscious care",
+      description: "Your information matters",
+    },
+    {
+      title: "Care in two languages",
+      description: "Bangla and English",
+    },
+  ];
+
   const localizedTrust = t("finalCta.trustPoints");
+
   const trustList = Array.isArray(localizedTrust)
     ? localizedTrust
-    : [
-        {
-          title: "Verified professionals",
-          description: "Credential-focused discovery",
-        },
-        {
-          title: "Privacy-conscious care",
-          description: "Your information matters",
-        },
-        {
-          title: "Care in two languages",
-          description: "Bangla and English",
-        },
-      ];
+    : fallbackTrust;
 
-  const transition = reduceMotion
-    ? { duration: 0 }
-    : { duration: 0.65, ease: [0.22, 1, 0.36, 1] };
+  const ease = [0.22, 1, 0.36, 1];
 
-  const reveal = {
-    hidden: reduceMotion
-      ? { opacity: 0 }
-      : { opacity: 0, y: 18 },
-    visible: { opacity: 1, y: 0 },
+  const fadeUp = {
+    hidden: {
+      opacity: 0,
+      y: reduceMotion ? 0 : 28,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: reduceMotion ? 0 : 0.8,
+        ease,
+      },
+    },
   };
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+    <section className="relative overflow-hidden bg-[#F0F5EF]">
 
-        {/* MAIN CTA */}
-        <div className="relative isolate overflow-hidden rounded-[24px] bg-[#17352A] shadow-[0_24px_70px_rgba(23,53,42,0.13)] sm:rounded-[30px]">
+      <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-16 lg:py-28">
 
-          {/* BACKGROUND DECORATION */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
-            <div className="absolute -right-32 -top-40 h-[440px] w-[440px] rounded-full border border-white/[0.07]" />
+        {/* MAIN EDITORIAL LAYOUT */}
+        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
 
-            <div className="absolute -right-12 -top-20 h-[310px] w-[310px] rounded-full border border-white/[0.07]" />
+          {/* LEFT CONTENT */}
+          <div className="relative z-10">
 
-            <div className="absolute right-12 top-10 h-[170px] w-[170px] rounded-full border border-white/[0.05]" />
+            {/* EYEBROW */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              variants={fadeUp}
+              className="flex items-center gap-3"
+            >
+              <span className="h-[2px] w-8 bg-[#19A069]" />
 
-            <div className="absolute -bottom-32 left-[25%] h-[280px] w-[280px] rounded-full bg-[#19A069]/10 blur-[90px]" />
+              <span className="text-[10px] font-bold tracking-[0.2em] text-[#52665A]">
+                {t("finalCta.eyebrow")}
+              </span>
+            </motion.div>
 
-            <div className="absolute -right-20 bottom-0 h-[250px] w-[250px] rounded-full bg-[#19A069]/10 blur-[90px]" />
-
-            <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-[#19A069]/50 to-transparent" />
-          </div>
-
-          <div className="relative z-10 grid lg:grid-cols-[1.15fr_0.85fr]">
-
-            {/* LEFT CONTENT */}
-            <div className="px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-[76px]">
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={reveal}
-                transition={transition}
-              >
-                {/* EYEBROW */}
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#6CA58A]/35 bg-[#204536] px-4 py-2">
-                  <Sparkles size={13} className="text-[#9BC9AA]" />
-
-                  <span className="text-[9px] font-bold tracking-[0.17em] text-[#D4E8D9]">
-                    {t("finalCta.eyebrow")}
-                  </span>
-                </div>
-
-                {/* HEADLINE */}
-                <h2 className="mt-7 max-w-[650px] text-[36px] leading-[1.12] font-semibold tracking-[-0.045em] text-white sm:text-[46px] lg:text-[54px]">
-                  {isBangla ? (
-                    <>
-                      চিকিৎসাসেবা শুরু হোক
-                      <span className="block font-editorial-serif font-normal italic text-[#9BC9AA]">
-                        একটি সহজ আলাপে।
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      Healthcare should feel
-                      <span className="block font-editorial-serif font-normal italic text-[#9BC9AA]">
-                        closer to you.
-                      </span>
-                    </>
-                  )}
-                </h2>
-
-                {/* DESCRIPTION */}
-                <p className="mt-5 max-w-[510px] text-[13px] leading-[1.9] text-[#C0D3C7] sm:text-[14px]">
-                  {t("finalCta.description")}
-                </p>
-
-                {/* BANGLA TAGLINE */}
-                <p className="mt-4 font-bengali text-[15px] leading-[1.8] text-[#D9E9DD] sm:text-[17px]">
-                  {t("finalCta.banglaTagline")}
-                </p>
-
-                {/* BUTTONS */}
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-
-                  <Link
-                    href="/doctors"
-                    className="group inline-flex h-[52px] items-center justify-center gap-4 rounded-xl bg-white px-6 text-[12px] font-bold text-[#17352A] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#E1F0E6] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#17352A]"
-                  >
-                    {t("finalCta.primaryCta")}
-
-                    <ArrowRight
-                      size={16}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </Link>
-
-                  <Link
-                    href="/#ai-tools"
-                    className="group inline-flex h-[52px] items-center justify-center gap-3 rounded-xl border border-[#668575]/50 bg-white/[0.04] px-6 text-[12px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#9BC9AA] hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9BC9AA]"
-                  >
-                    <Sparkles size={15} className="text-[#9BC9AA]" />
-
-                    {t("finalCta.secondaryCta")}
-
-                    <ArrowUpRight
-                      size={14}
-                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </Link>
-
-                </div>
-              </motion.div>
-            </div>
-
-            {/* RIGHT VISUAL */}
-            <div className="relative flex min-h-[390px] flex-col justify-between overflow-hidden border-t border-white/10 px-7 py-9 sm:px-10 lg:min-h-full lg:border-l lg:border-t-0 lg:px-10 lg:py-12">
-
-              {/* INTRO */}
-              <motion.div
-                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ ...transition, delay: 0.15 }}
-              >
-                <span className="text-[9px] font-bold tracking-[0.18em] text-[#9BC9AA]">
-                  {isBangla ? "মেডোজির প্রতিশ্রুতি" : "THE MEDOJI APPROACH"}
-                </span>
-
-                <p className="mt-4 max-w-[270px] text-[21px] leading-[1.4] font-medium tracking-[-0.025em] text-white sm:text-[24px]">
-                  {isBangla
-                    ? "শুধুমাত্র অ্যাপয়েন্টমেন্ট নয়, আন্তরিক চিকিৎসাসেবা।"
-                    : "Care that connects people, not just appointments."}
-                </p>
-              </motion.div>
-
-              {/* ORGANIC CONNECTION VISUAL */}
-              <div className="relative my-10 flex h-[155px] items-center justify-center lg:my-5">
-
-                {/* CONNECTION LINES */}
-                <svg
-                  viewBox="0 0 360 150"
-                  className="absolute inset-0 h-full w-full"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  {[
-                    "M180 75 L55 25",
-                    "M180 75 L305 25",
-                    "M180 75 L55 125",
-                    "M180 75 L305 125",
-                  ].map((path, index) => (
-                    <motion.path
-                      key={index}
-                      d={path}
-                      stroke="#79B38D"
-                      strokeWidth="1.2"
-                      strokeDasharray="4 5"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      whileInView={{ pathLength: 1, opacity: 0.8 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: reduceMotion ? 0 : 0.8,
-                        delay: reduceMotion ? 0 : 0.2 + index * 0.1,
-                      }}
-                    />
-                  ))}
-                </svg>
-
-                {/* CENTRAL MEDOJI SYMBOL */}
-                <motion.div
-                  initial={{ scale: 0.75, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={transition}
-                  className="relative z-10 flex h-[78px] w-[78px] items-center justify-center rounded-full border border-[#83B497]/50 bg-[#214C39] text-[#C7E4D0] shadow-[0_10px_35px_rgba(0,0,0,0.16)]"
-                >
-                  <Plus size={32} strokeWidth={1.4} />
-
-                  <span className="absolute -bottom-7 text-[8px] font-bold tracking-[0.18em] text-[#A9CDB5]">
-                    MEDOJI
-                  </span>
-                </motion.div>
-
-                {/* CONNECTED NODES */}
-                {[
-                  { left: "8%", top: "5%" },
-                  { right: "8%", top: "5%" },
-                  { left: "8%", bottom: "5%" },
-                  { right: "8%", bottom: "5%" },
-                ].map((position, index) => (
-                  <motion.span
-                    key={index}
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      duration: reduceMotion ? 0 : 0.4,
-                      delay: reduceMotion ? 0 : 0.35 + index * 0.1,
-                    }}
-                    style={position}
-                    className="absolute flex h-10 w-10 items-center justify-center rounded-full border border-[#6D9E7E]/50 bg-[#214735] shadow-md"
-                  >
-                    <span className="h-2 w-2 rounded-full bg-[#9BC9AA]" />
-                  </motion.span>
-                ))}
-
-              </div>
-
-              {/* TRUST POINTS */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: {
-                      staggerChildren: reduceMotion ? 0 : 0.12,
-                    },
+            {/* HEADLINE */}
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.35 }}
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: reduceMotion ? 0 : 0.13,
                   },
-                }}
-                className="space-y-4 border-t border-white/10 pt-6"
+                },
+              }}
+              className={`mt-8 max-w-[650px] text-[40px] font-semibold leading-[1.13] tracking-[-0.045em] text-[#132F25] sm:text-[54px] lg:text-[64px] ${
+                isBangla ? "font-bengali" : ""
+              }`}
+            >
+              <motion.span
+                variants={fadeUp}
+                className="block"
               >
-                {trustList.map((point, index) => {
-                  const Icon = trustIcons[index] || ShieldCheck;
+                {isBangla
+                  ? "স্বাস্থ্যসেবা হোক"
+                  : "Healthcare should"}
+              </motion.span>
 
-                  return (
-                    <motion.div
-                      key={index}
-                      variants={reveal}
-                      transition={transition}
-                      className="group flex items-center gap-3"
-                    >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#719A7E]/35 bg-[#204536] text-[#A8CEB3] transition-colors duration-300 group-hover:bg-[#2B6047]">
-                        <Icon size={17} strokeWidth={1.6} />
-                      </div>
+              <motion.span
+                variants={fadeUp}
+                className="block"
+              >
+                {isBangla ? "আরও কাছের।" : "feel closer"}
+              </motion.span>
 
-                      <div>
-                        <p className="text-[11px] font-semibold text-[#E7F0E9]">
-                          {point.title}
-                        </p>
+              {!isBangla && (
+                <motion.span
+                  variants={fadeUp}
+                  className="block font-editorial-serif font-normal italic text-[#19A069]"
+                >
+                  to you.
+                </motion.span>
+              )}
+            </motion.h2>
 
-                        <p className="mt-0.5 text-[9px] text-[#A7C0AF]">
-                          {point.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </motion.div>
+            {/* DESCRIPTION */}
+            <motion.p
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className={`mt-7 max-w-[510px] text-[14px] leading-[1.95] text-[#42534A] sm:text-[16px] ${
+                isBangla ? "font-bengali" : ""
+              }`}
+            >
+              {t("finalCta.description")}
+            </motion.p>
 
-            </div>
+            {/* BANGLA TAGLINE */}
+            <motion.p
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="mt-4 max-w-[510px] font-bengali text-[15px] leading-[1.9] text-[#52665A] sm:text-[17px]"
+            >
+              {t("finalCta.banglaTagline")}
+            </motion.p>
+
+            {/* BUTTONS */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="mt-9 flex flex-col gap-3 sm:flex-row"
+            >
+              <Link
+                href="/doctors"
+                className="group inline-flex h-[54px] items-center justify-center gap-5 rounded-xl bg-[#174433] px-7 text-[13px] font-semibold text-white transition-colors duration-300 hover:bg-[#0F3527] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#174433] focus-visible:ring-offset-2"
+              >
+                {t("finalCta.primaryCta")}
+
+                <ArrowRight
+                  size={17}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </Link>
+
+              <Link
+                href="/#ai-tools"
+                className="group inline-flex h-[54px] items-center justify-center gap-3 px-5 text-[13px] font-semibold text-[#174433] transition-colors duration-300 hover:text-[#19A069] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#174433]"
+              >
+                {t("finalCta.secondaryCta")}
+
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </Link>
+            </motion.div>
+
+            {/* SMALL SUPPORTING LINE */}
+            <motion.p
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="mt-12 text-[10px] font-semibold tracking-[0.15em] text-[#718276]"
+            >
+              MEDOJI AI · BANGLADESH
+            </motion.p>
           </div>
 
-          {/* BOTTOM BRAND STRIP */}
-          <div className="relative z-10 flex flex-col gap-2 border-t border-white/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-14">
-            <span className="text-[9px] font-bold tracking-[0.18em] text-[#9BC9AA]">
-              MEDOJI AI
-            </span>
+          {/* RIGHT PHOTOGRAPH */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              clipPath: reduceMotion
+                ? "inset(0)"
+                : "inset(12% 0 0 12%)",
+            }}
+            whileInView={{
+              opacity: 1,
+              clipPath: "inset(0)",
+            }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 1.1,
+              ease,
+            }}
+            className="relative min-h-[360px] overflow-hidden rounded-tl-[110px] rounded-br-[110px] sm:min-h-[480px] lg:min-h-[570px]"
+          >
+            <img
+               src={medojiCare.src}
+              alt={
+                isBangla
+                  ? "চিকিৎসক ও রোগীর আন্তরিক পরামর্শ"
+                  : "A doctor providing personal care to a patient"
+              }
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
 
-            <span className="text-[9px] tracking-wide text-[#A7C0AF]">
-              {isBangla
-                ? "বাংলাদেশের প্রতিটি মানুষের জন্য বিশ্বস্ত ও সহজ চিকিৎসাসেবা।"
-                : "A more connected healthcare experience for Bangladesh."}
-            </span>
-          </div>
-
+            {/* Subtle photographic treatment */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#102B20]/35 via-transparent to-transparent" />
+          </motion.div>
         </div>
+
+        {/* TRUST POINTS */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: reduceMotion ? 0 : 0.15,
+              },
+            },
+          }}
+          className="mt-16 grid gap-8 border-t border-[#DCE7DF] pt-9 sm:grid-cols-3 lg:mt-20 lg:pt-10"
+        >
+          {trustList.map((point, index) => {
+            const Icon = trustIcons[index] || ShieldCheck;
+
+            return (
+              <motion.div
+                key={index}
+                variants={fadeUp}
+                className="flex items-start gap-4"
+              >
+                <Icon
+                  size={20}
+                  strokeWidth={1.6}
+                  className="mt-0.5 shrink-0 text-[#19A069]"
+                />
+
+                <div>
+                  <h3 className="text-[13px] font-semibold text-[#17352A]">
+                    {point.title}
+                  </h3>
+
+                  <p className="mt-1 text-[12px] leading-relaxed text-[#52665A]">
+                    {point.description}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
       </div>
     </section>
   );

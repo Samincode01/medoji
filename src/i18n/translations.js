@@ -7,7 +7,7 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
-      findDoctor: "Find a Doctor",
+      findDoctor: "Find a Specialist",
       pharmacy: "Pharmacy",
       aiAssistant: "AI Assistant",
       ecosystem: "Our Ecosystem",

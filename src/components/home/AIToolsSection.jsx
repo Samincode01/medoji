@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,13 +10,9 @@ import {
 } from "framer-motion";
 import {
   ArrowUpRight,
-  MessageCircle,
-  AudioLines,
-  Stethoscope,
+  ArrowRight,
   Sparkles,
-  UserRound,
   ShieldCheck,
-  Languages,
 } from "lucide-react";
 import { useLanguage } from "@/i18n/useLanguage";
 
@@ -24,374 +21,269 @@ const conversations = {
     question:
       "I've been having recurring headaches. Which specialist should I speak to?",
     answer:
-      "A primary care doctor or medicine specialist can help assess your symptoms and guide you towards an appropriate specialist if needed.",
-    suggestions: ["Find a doctor", "Explore specialists"],
-    label: "English conversation",
+      "A medicine specialist can help assess your symptoms and guide you towards the appropriate care if needed.",
+    label: "YOUR QUESTION",
+    response: "MEDOJI AI",
   },
   BN: {
     question:
       "আমার বারবার মাথাব্যথা হচ্ছে। কোন বিশেষজ্ঞের পরামর্শ নেওয়া উচিত?",
     answer:
-      "প্রথমে একজন মেডিসিন বিশেষজ্ঞের পরামর্শ নিতে পারেন। তিনি আপনার লক্ষণ মূল্যায়ন করে প্রয়োজন অনুযায়ী উপযুক্ত পরামর্শ ও সঠিক পদক্ষেপ জানাবেন।",
-    suggestions: ["ডাক্তার খুঁজুন", "বিশেষজ্ঞ দেখুন"],
-    label: "বাংলা কথোপকথন",
+      "একজন মেডিসিন বিশেষজ্ঞ আপনার লক্ষণ মূল্যায়ন করে প্রয়োজন অনুযায়ী উপযুক্ত পরামর্শ দিতে পারবেন।",
+    label: "আপনার প্রশ্ন",
+    response: "মেডোজি এআই",
   },
 };
 
 export default function AIToolsSection() {
-  const { language: globalLang, setLanguage: setGlobalLanguage, isBangla, t } = useLanguage();
-  const [activeLang, setActiveLang] = useState(isBangla ? "BN" : "EN");
+  const {
+    language: globalLang,
+    setLanguage: setGlobalLanguage,
+    isBangla,
+    t,
+  } = useLanguage();
+
+  const [activeLang, setActiveLang] = useState(
+    isBangla ? "BN" : "EN"
+  );
+
   const reduceMotion = useReducedMotion();
 
-  // Sync with global language changes
   useEffect(() => {
     setActiveLang(globalLang === "bn" ? "BN" : "EN");
   }, [globalLang]);
 
-  const handleLangToggle = (langCode) => {
-    setActiveLang(langCode);
-    setGlobalLanguage(langCode.toLowerCase());
+  const changeLanguage = (lang) => {
+    setActiveLang(lang);
+    setGlobalLanguage(lang.toLowerCase());
   };
 
-  const current = conversations[activeLang] || conversations.EN;
+  const current = conversations[activeLang];
 
-  const features = [
-    {
-      number: "01",
-      icon: Languages,
-      title: t("aiTools.feature1Title"),
-      description: t("aiTools.feature1Desc"),
-    },
-    {
-      number: "02",
-      icon: AudioLines,
-      title: t("aiTools.feature2Title"),
-      description: t("aiTools.feature2Desc"),
-    },
-    {
-      number: "03",
-      icon: Stethoscope,
-      title: t("aiTools.feature3Title"),
-      description: t("aiTools.feature3Desc"),
-    },
-  ];
-
-  const reveal = {
-    hidden: {
-      opacity: 0,
-      y: reduceMotion ? 0 : 20,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.65,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+  const ease = [0.22, 1, 0.36, 1];
 
   return (
     <section
       id="ai-tools"
-      className="relative overflow-hidden bg-[#17352A] py-16 text-white sm:py-20 lg:py-24"
+      className="overflow-hidden bg-[#F0F5EF]"
     >
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+      <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 sm:py-16 lg:py-[76px]">
 
-        {/* SECTION HEADER */}
-        <div className="grid gap-6 border-b border-white/15 pb-9 lg:grid-cols-[1fr_0.65fr] lg:items-end lg:pb-12">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
 
+          {/* LEFT: INTRODUCTION */}
           <motion.div
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            initial={{
+              opacity: 0,
+              y: reduceMotion ? 0 : 22,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.7,
+              ease,
+            }}
           >
-            <div className="mb-5 flex items-center gap-3">
-              <span className="h-px w-8 bg-[#8CC9A7]" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8D9BC]">
+            <div className="flex items-center gap-3">
+              <span className="h-[2px] w-8 bg-[#19A069]" />
+
+              <span className="text-[10px] font-bold tracking-[0.19em] text-[#52665A]">
                 {t("aiTools.eyebrow")}
               </span>
             </div>
 
-            <h2 className="max-w-[650px] text-[38px] leading-[1.12] font-semibold tracking-[-0.045em] sm:text-[48px] lg:text-[56px]">
-              {isBangla ? "চিকিৎসাসেবা," : "Healthcare,"}
-              <span className="block font-editorial-serif font-normal italic text-[#A8D9BC]">
-                {isBangla ? "নতুন ও সহজ অভিজ্ঞতায়।" : "understood differently."}
-              </span>
+            <h2
+              className={`mt-7 max-w-[510px] text-[39px] font-semibold leading-[1.12] tracking-[-0.045em] text-[#132F25] sm:text-[48px] lg:text-[55px] ${
+                isBangla ? "font-bengali" : ""
+              }`}
+            >
+              {isBangla ? (
+                <>
+                  স্বাস্থ্যবিষয়ক
+                  <span className="block font-editorial-serif font-normal italic text-[#19A069]">
+                    প্রশ্নের সহজ উত্তর।
+                  </span>
+                </>
+              ) : (
+                <>
+                  A little more
+                  <span className="block font-editorial-serif font-normal italic text-[#19A069]">
+                    clarity in care.
+                  </span>
+                </>
+              )}
             </h2>
-          </motion.div>
 
-          <motion.div
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ delay: 0.1 }}
-          >
-            <p className="max-w-[380px] text-[14px] leading-[1.9] text-[#CFDED4]">
+            <p
+              className={`mt-5 max-w-[440px] text-[13px] leading-[1.9] text-[#52665A] sm:text-[14px] ${
+                isBangla ? "font-bengali" : ""
+              }`}
+            >
               {t("aiTools.description")}
             </p>
-            <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#A8D9BC]">
-              {isBangla
-                ? "বাংলা · ইংরেজি · মানবকেন্দ্রিক দৃষ্টিভঙ্গি"
-                : "Bangla · English · Human-centered"}
+
+            <Link
+              href="/doctors"
+              className="group mt-8 inline-flex h-[48px] items-center gap-4 rounded-lg bg-[#174433] px-6 text-[12px] font-semibold text-white transition-colors hover:bg-[#0F3527]"
+            >
+              {t("aiTools.cta")}
+
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+
+            <p className="mt-6 flex items-center gap-2 text-[10px] text-[#718276]">
+              <ShieldCheck size={14} className="text-[#19A069]" />
+              {t("aiTools.disclaimer")}
             </p>
           </motion.div>
-        </div>
 
-        {/* MAIN COMPOSITION */}
-        <div className="grid gap-12 pt-9 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-16 lg:pt-12">
-
-          {/* LEFT: CAPABILITIES */}
-          <div>
-            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8CC9A7]">
-              {isBangla ? "আপনার প্রয়োজন অনুসারে" : "Built around you"}
-            </p>
-
-            <div>
-              {features.map((feature, index) => {
-                const Icon = feature.icon;
-
-                return (
-                  <motion.div
-                    key={feature.number}
-                    variants={reveal}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group flex gap-4 border-t border-white/15 py-5 last:border-b"
-                  >
-                    <span className="pt-1 text-[10px] font-semibold tracking-widest text-[#8CC9A7]">
-                      {feature.number}
-                    </span>
-
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center border border-[#8CC9A7]/30 text-[#A8D9BC] transition-colors duration-300 group-hover:bg-[#E1F0E6] group-hover:text-[#174433]">
-                      <Icon size={17} strokeWidth={1.6} />
-                    </div>
-
-                    <div>
-                      <h3 className="text-[15px] font-semibold text-white">
-                        {feature.title}
-                      </h3>
-                      <p className="mt-1 text-[12px] leading-5 text-[#B9D0C1]">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <motion.div
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="mt-7"
-            >
-              <Link
-                href="/doctors"
-                className="group inline-flex items-center gap-4 border-b border-[#8CC9A7] pb-2 text-[13px] font-semibold text-[#E1F0E6] transition-colors hover:text-white"
-              >
-                {t("aiTools.cta")}
-                <ArrowUpRight
-                  size={16}
-                  className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-                />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* RIGHT: AI CONVERSATION EXPERIENCE */}
+          {/* RIGHT: CONVERSATION PREVIEW */}
           <motion.div
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="relative"
+            initial={{
+              opacity: 0,
+              x: reduceMotion ? 0 : 28,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.85,
+              ease,
+            }}
+            className="relative min-w-0"
           >
-            <div className="border border-[#668674]/40 bg-[#FDFDFD] text-[#132F25]">
 
-              {/* CONVERSATION TOP BAR */}
-              <div className="flex items-center justify-between border-b border-[#DCE7DF] px-5 py-4 sm:px-7">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center bg-[#E1F0E6] text-[#174433]">
-                    <Sparkles size={18} />
-                  </div>
-                  <div>
-                    <p className="text-[13px] font-bold text-[#132F25]">
-                      Medoji AI
-                    </p>
-                    <p className="mt-0.5 text-[10px] text-[#52665A]">
-                      {isBangla ? "কথোপকথন প্রিভিউ" : "Conversation preview"}
-                    </p>
-                  </div>
+            {/* HEADER */}
+            <div className="flex items-center justify-between border-b border-[#D4E0D6] pb-5">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#174433] text-white">
+                  <Sparkles size={17} />
                 </div>
 
-                <div className="flex items-center gap-1 border border-[#DCE7DF] bg-white p-1">
-                  {["EN", "BN"].map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => handleLangToggle(item)}
-                      aria-pressed={activeLang === item}
-                      className={`px-3 py-1.5 text-[10px] font-bold transition-colors cursor-pointer ${
-                        activeLang === item
-                          ? "bg-[#174433] text-white"
-                          : "text-[#52665A] hover:bg-[#F0F5EF]"
+                <div>
+                  <p className="text-[13px] font-bold text-[#17352A]">
+                    Medoji AI
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-[#718276]">
+                    {isBangla
+                      ? "স্বাস্থ্যবিষয়ক কথোপকথন"
+                      : "Healthcare conversation"}
+                  </p>
+                </div>
+              </div>
+
+              {/* LANGUAGE */}
+              <div className="flex items-center gap-3">
+                {["EN", "BN"].map((lang) => (
+                  <button
+                    key={lang}
+                    type="button"
+                    onClick={() => changeLanguage(lang)}
+                    aria-pressed={activeLang === lang}
+                    className={`pb-1 text-[11px] font-semibold transition-colors ${
+                      activeLang === lang
+                        ? "border-b-2 border-[#174433] text-[#174433]"
+                        : "text-[#87948B] hover:text-[#174433]"
+                    }`}
+                  >
+                    {lang === "BN" ? "বাংলা" : "EN"}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* QUESTION AND RESPONSE */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeLang}
+                initial={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 12,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  y: reduceMotion ? 0 : -8,
+                }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.35,
+                  ease,
+                }}
+                className="py-7 sm:py-9"
+              >
+                {/* QUESTION */}
+                <div className="ml-auto max-w-[88%]">
+                  <p className="mb-3 text-right text-[9px] font-bold tracking-[0.16em] text-[#819187]">
+                    {current.label}
+                  </p>
+
+                  <div className="rounded-tl-2xl rounded-bl-2xl rounded-br-2xl bg-white px-5 py-4 sm:px-6 sm:py-5">
+                    <p
+                      lang={activeLang === "BN" ? "bn" : "en"}
+                      className={`text-[13px] leading-[1.85] text-[#17352A] sm:text-[14px] ${
+                        activeLang === "BN" ? "font-bengali" : ""
                       }`}
                     >
-                      {item === "BN" ? "বাংলা" : "EN"}
-                    </button>
-                  ))}
+                      {current.question}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* CONVERSATION BODY */}
-              <div className="relative px-5 py-7 sm:px-8 sm:py-8">
+                {/* RESPONSE */}
+                <div className="mt-7 max-w-[92%]">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-[#19A069]" />
 
-                {/* Timeline and signature motion */}
-                <div className="absolute bottom-[76px] left-[42px] top-[58px] w-px bg-[#DCE7DF] sm:left-[55px]" />
+                    <p className="text-[9px] font-bold tracking-[0.16em] text-[#174433]">
+                      {current.response}
+                    </p>
+                  </div>
 
-                {!reduceMotion && (
-                  <motion.div
-                    className="absolute left-[40px] top-[58px] z-10 h-5 w-[3px] bg-[#19A069] sm:left-[53px]"
-                    initial={{ y: 0, opacity: 0 }}
-                    whileInView={{ y: 135, opacity: [0, 1, 0] }}
-                    viewport={{ once: true }}
-                    transition={{
-                      duration: 1.5,
-                      ease: "easeInOut",
-                    }}
-                  />
-                )}
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeLang}
-                    initial={{
-                      opacity: 0,
-                      y: reduceMotion ? 0 : 8,
-                    }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{
-                      opacity: 0,
-                      y: reduceMotion ? 0 : -8,
-                    }}
-                    transition={{ duration: 0.25 }}
-                    className="relative space-y-8"
+                  <p
+                    lang={activeLang === "BN" ? "bn" : "en"}
+                    className={`text-[14px] leading-[1.95] text-[#42534A] sm:text-[15px] ${
+                      activeLang === "BN" ? "font-bengali" : ""
+                    }`}
                   >
-
-                    {/* PATIENT MESSAGE */}
-                    <div className="relative flex gap-4 sm:gap-5">
-                      <div className="z-10 flex h-9 w-9 shrink-0 items-center justify-center border border-[#DCE7DF] bg-white text-[#174433]">
-                        <UserRound size={16} />
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="mb-2 flex items-center justify-between">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#52665A]">
-                            {isBangla ? "আপনার প্রশ্ন" : "Your question"}
-                          </span>
-                          <span className="text-[10px] text-[#819187]">
-                            {current.label}
-                          </span>
-                        </div>
-
-                        <div className="max-w-[440px] bg-[#F0F5EF] px-4 py-3.5 sm:px-5">
-                          <p
-                            lang={activeLang === "BN" ? "bn" : "en"}
-                            className="text-[13px] leading-[1.85] text-[#132F25]"
-                          >
-                            {current.question}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* AI RESPONSE */}
-                    <div className="relative flex gap-4 sm:gap-5">
-                      <div className="z-10 flex h-9 w-9 shrink-0 items-center justify-center bg-[#174433] text-white">
-                        <Sparkles size={16} />
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="mb-2 flex items-center gap-2">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#174433]">
-                            {isBangla ? "মেডোজির উত্তর" : "Medoji response"}
-                          </span>
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#19A069]" />
-                        </div>
-
-                        <p
-                          lang={activeLang === "BN" ? "bn" : "en"}
-                          className="max-w-[460px] text-[13px] leading-[1.9] text-[#42534A]"
-                        >
-                          {current.answer}
-                        </p>
-
-                        {/* SUGGESTED ACTIONS */}
-                        <div className="mt-5 border-t border-[#DCE7DF] pt-4">
-                          <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.16em] text-[#819187]">
-                            {isBangla ? "পরবর্তী পদক্ষেপ" : "Possible next steps"}
-                          </p>
-
-                          <div className="flex flex-wrap gap-2">
-                            {current.suggestions.map((suggestion, index) => (
-                              <Link
-                                key={suggestion}
-                                href="/doctors"
-                                className="inline-flex items-center gap-2 border border-[#DCE7DF] bg-white px-3 py-2 text-[10px] font-semibold text-[#174433] hover:border-[#174433] transition-colors"
-                              >
-                                {suggestion}
-                                <ArrowUpRight size={12} />
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* BOTTOM INPUT PREVIEW */}
-              <div className="mx-5 mb-5 flex items-center justify-between border border-[#DCE7DF] px-4 py-3 sm:mx-7 sm:mb-7">
-                <span className="text-[11px] text-[#819187]">
-                  {t("aiTools.inputPlaceholder")}
-                </span>
-                <div className="flex h-8 w-8 items-center justify-center bg-[#174433] text-white">
-                  <MessageCircle size={15} />
+                    {current.answer}
+                  </p>
                 </div>
-              </div>
+              </motion.div>
+            </AnimatePresence>
 
-            </div>
+            {/* BOTTOM CAPABILITY LINE */}
+            <div className="flex items-center justify-between border-t border-[#D4E0D6] pt-5">
+              <span className="text-[9px] font-semibold tracking-[0.13em] text-[#718276]">
+                {isBangla
+                  ? "বাংলা · ইংরেজি"
+                  : "BANGLA · ENGLISH"}
+              </span>
 
-            {/* SAFETY NOTE */}
-            <div className="mt-4 flex items-start gap-2">
-              <ShieldCheck
-                size={14}
-                className="mt-0.5 shrink-0 text-[#A8D9BC]"
-              />
-              <p className="max-w-[500px] text-[10px] leading-[1.7] text-[#B9D0C1]">
-                {t("aiTools.disclaimer")}
-              </p>
+              <Link
+                href="/doctors"
+                className="group inline-flex items-center gap-2 text-[11px] font-semibold text-[#174433] hover:text-[#19A069]"
+              >
+                {isBangla ? "বিশেষজ্ঞ খুঁজুন" : "Find a Specialist"}
+
+                <ArrowUpRight
+                  size={14}
+                  className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
             </div>
           </motion.div>
         </div>
-
-        {/* SECTION FOOTER */}
-        <div className="mt-10 flex items-center justify-between border-t border-white/15 pt-5">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A8D9BC]">
-            {isBangla ? "মেডোজি এআই · সংযুক্ত স্বাস্থ্যসেবা" : "MEDOJI AI · CARE, CONNECTED"}
-          </span>
-          <span className="text-[10px] text-[#B9D0C1]">
-            {isBangla ? "স্বাস্থ্যসেবা পাওয়ার আধুনিক ও সহজ মাধ্যম" : "A new way to navigate care"}
-          </span>
-        </div>
-
       </div>
     </section>
   );
