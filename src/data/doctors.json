@@ -1,9 +1,6 @@
+
 {
   "specialties": [
-    {
-      "id": "all",
-      "label": "All Professionals"
-    },
     {
       "id": "mental",
       "label": "Mental Health & Counselling"
@@ -25,15 +22,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Tomorrow · 4:00 PM",
       "bio": "",
@@ -64,15 +55,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Thu, 20 Nov · 6:00 PM",
       "bio": "",
@@ -103,15 +88,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Tomorrow · 4:00 PM",
       "bio": "",
@@ -142,15 +121,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Thu, 20 Nov · 6:00 PM",
       "bio": "",
@@ -181,15 +154,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Tomorrow · 4:00 PM",
       "bio": "",
@@ -220,15 +187,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Thu, 20 Nov · 6:00 PM",
       "bio": "",
@@ -259,15 +220,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Tomorrow · 4:00 PM",
       "bio": "",
@@ -298,15 +253,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Thu, 20 Nov · 6:00 PM",
       "bio": "",
@@ -337,15 +286,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Tomorrow · 4:00 PM",
       "bio": "",
@@ -376,15 +319,9 @@
       "bookingLabel": "অ্যাপয়েন্টমেন্ট বুক করুন",
       "bookingUrl": "",
       "affiliation": "University of Dhaka / Licensed Clinical Practitioner",
-      "languages": [
-        "Bangla",
-        "English"
-      ],
+      "languages": ["Bangla", "English"],
       "fee": 1000,
-      "modes": [
-        "Online",
-        "In person"
-      ],
+      "modes": ["Online", "In person"],
       "area": "Dhaka, Bangladesh",
       "nextSlot": "Thu, 20 Nov · 6:00 PM",
       "bio": "",

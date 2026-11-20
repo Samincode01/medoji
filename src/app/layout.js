@@ -26,11 +26,11 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata = {
-  title: "Medoji AI — Connected Healthcare Platform for Bangladesh",
+  title: "Medoji — Connected Healthcare Platform for Bangladesh",
   description:
     "Find trusted doctors and counsellors, follow up on care, and manage genuine prescriptions in one place. Designed specifically for Bangladesh.",
   keywords: [
-    "Medoji AI",
+    "Medoji",
     "Bangladesh Healthcare",
     "Doctor Appointment Bangladesh",
     "Mental Health Counselling Dhaka",

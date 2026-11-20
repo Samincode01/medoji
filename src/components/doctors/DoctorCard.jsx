@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -23,32 +24,42 @@ export default function DoctorCard({ doctor }) {
     verified,
   } = doctor;
 
-  const expYearsCount = experienceYears || (experience ? parseInt(experience, 10) : null);
+  // Experience formatting
+  const expYearsCount =
+    experienceYears ??
+    (experience ? parseInt(experience, 10) : null);
+
   let expText = "";
-  if (isBangla && expYearsCount && !isNaN(expYearsCount)) {
-    expText = `${formatNumber(expYearsCount)}+ বছরের বেশি অভিজ্ঞতা`;
-  } else if (experienceLabel || experienceDetails) {
+
+  if (experienceLabel || experienceDetails) {
     expText = experienceLabel || experienceDetails;
+  } else if (expYearsCount !== null && !Number.isNaN(expYearsCount)) {
+    expText = isBangla
+      ? `${formatNumber(expYearsCount)}+ বছরের অভিজ্ঞতা`
+      : `${expYearsCount}+ years experience`;
   } else if (experience) {
     expText = isBangla
-      ? `${formatNumber(experience)} বছরের অভিজ্ঞতা`
+      ? `${experience} বছরের অভিজ্ঞতা`
       : `${experience} years experience`;
-  } else if (experienceYears) {
-    expText = `${experienceYears}+ years experienced`;
   }
 
+  // Image URL handling
   const imageUrl = image
     ? image.startsWith("http")
       ? image
       : image.startsWith("/assets/")
-      ? `https://montorongo.com${image}`
-      : image
+        ? `https://montorongo.com${image}`
+        : image
     : null;
 
   return (
     <Link
-      href={`/doctors/${id}`}
-      aria-label={isBangla ? `${name}-এর প্রোফাইল দেখুন` : `View profile of ${name}`}
+      href={`/specialist/${id}`}
+      aria-label={
+        isBangla
+          ? `${name}-এর প্রোফাইল দেখুন`
+          : `View profile of ${name}`
+      }
       className="group block h-full rounded-[20px] outline-none focus-visible:ring-2 focus-visible:ring-[#19A069] focus-visible:ring-offset-4"
     >
       <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-[#E7ECE8] bg-white p-3.5 shadow-[0_3px_14px_rgba(19,47,37,0.04)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#B8CCBE] group-hover:shadow-[0_14px_35px_rgba(19,47,37,0.10)]">
@@ -97,8 +108,12 @@ export default function DoctorCard({ doctor }) {
 
           {/* EXPERIENCE & QUALIFICATIONS */}
           <p className="mt-1.5 line-clamp-2 text-[12px] leading-[1.7] text-[#66776C]">
-            {expText ? `${expText}, ` : ""}
-            {qualifications}
+            {[
+              expText,
+              qualifications,
+            ]
+              .filter(Boolean)
+              .join(", ")}
           </p>
 
           {/* VIEW PROFILE */}

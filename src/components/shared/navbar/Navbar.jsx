@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const navLinks = [
     { key: "home", label: t("nav.home"), href: "/" },
-    { key: "findDoctor", label: t("nav.findDoctor"), href: "/doctors" },
+    { key: "findDoctor", label: t("nav.findDoctor"), href: "/specialist" },
     { key: "pharmacy", label: t("nav.pharmacy"), href: "/#pharmacy" },
     { key: "aiAssistant", label: t("nav.aiAssistant"), href: "/#ai-tools" },
     { key: "ecosystem", label: t("nav.ecosystem"), href: "/#ecosystem" },
@@ -86,7 +86,7 @@ export default function Navbar() {
               setActiveHash("");
             }}
             className="group flex shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2"
-            aria-label="Medoji AI - Back to Homepage"
+            aria-label="Medoji - Back to Homepage"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E1F0E6] transition-transform duration-200 group-hover:scale-105">
               <HeartPulse
@@ -98,7 +98,7 @@ export default function Navbar() {
 
             <div className="flex flex-col">
               <span className="text-[22px] font-bold leading-none tracking-tight text-[#015238]">
-                Medoji<span className="text-[#19A069]"> AI</span>
+                Medoji
               </span>
 
               <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-[#52665A]">

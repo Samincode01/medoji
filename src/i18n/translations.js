@@ -25,7 +25,7 @@ export const translations = {
       description:
         "Find a doctor or counsellor, follow up on care, and manage prescriptions in one place.",
       primaryCta: "Find a professional",
-      secondaryCta: "Explore Medoji AI",
+      secondaryCta: "Explore Medoji",
       proofVisits: "Online & in-person visits",
       proofPharmacy: "Pharmacist review",
       proofPrivacy: "Verified patient privacy",
@@ -72,7 +72,7 @@ export const translations = {
         step3Title: "3. Digital Notes",
         step3Desc: "Immediate verified prescription",
         meta: "Average response time: under 15 minutes for urgent slots",
-        cta: "Find a Doctor",
+        cta: "Find a Specialist",
       },
       pillar2: {
         tag: "PILLAR 02 · MENTAL HEALTH",
@@ -170,7 +170,7 @@ export const translations = {
       ],
       panelNotice:
         "Prescription upload is a pilot experience in Dhaka. Live fulfillment depends on partner pharmacy availability.",
-      ctaDoctors: "Explore doctor directory",
+      ctaDoctors: "Explore specialist directory",
       ctaEcosystem: "Learn about our ecosystem",
     },
     ecosystem: {
@@ -242,7 +242,7 @@ export const translations = {
       description:
         "Whether you need to consult a physician for urgent fever, speak privately with a clinical counsellor, or manage recurring prescriptions, Medoji is built for your peace of mind.",
       primaryCta: "Find a professional",
-      secondaryCta: "Explore Medoji AI",
+      secondaryCta: "Explore Medoji",
       trustPoints: [
         {
           title: "Verified professionals",
@@ -260,13 +260,13 @@ export const translations = {
     },
     footer: {
       tagline:
-        "Medoji AI is building Bangladesh's connected healthcare platform—uniting verified doctor consultations, confidential mental health counselling, genuine prescription fulfilment, and bilingual care navigation.",
+        "Medoji is building Bangladesh's connected healthcare platform—uniting verified doctor consultations, confidential mental health counselling, genuine prescription fulfilment, and bilingual care navigation.",
       location: "Proudly architected for Dhaka & Bangladesh",
       careDiscovery: "Care Discovery",
       digitalServices: "Digital Services",
       healthcareEcosystem: "Healthcare Ecosystem",
       links: {
-        findDoctor: "Find a Doctor",
+        findDoctor: "Find a Specialist",
         mentalHealth: "Mental Health",
         onlineVideo: "Online Video Care",
         inPerson: "In-Person Visits",
@@ -283,14 +283,14 @@ export const translations = {
       emergencyText:
         "Medoji is not an emergency response service. If you or a loved one is experiencing severe chest pain, breathing difficulty, or trauma, call 999 immediately or visit the nearest emergency room.",
       emergencyBtn: "National Emergency: 999",
-      copyright: "© 2026 Medoji AI Technologies. All rights reserved.",
+      copyright: "© 2026 Medoji Technologies. All rights reserved.",
       rights: "Care Discovery · Pharmacy Pilot · Staged AI Guidance",
     },
     directory: {
       breadcrumbHome: "Home",
-      breadcrumbDirectory: "Doctor Directory",
+      breadcrumbDirectory: "Specialist Directory",
       badge: "VERIFIED HEALTHCARE DIRECTORY",
-      heading: "Find a doctor or counsellor in Bangladesh.",
+      heading: "Find a Specialist or counsellor in Bangladesh.",
       description:
         "Browse BMDC-verified physicians and licensed clinical psychologists. Transparent consultation fees, clear visit modes, and direct availability without hidden hospital service fees.",
       searchPlaceholder: "Search by doctor name, specialty, or Dhaka area...",
@@ -306,7 +306,7 @@ export const translations = {
       clearFilters: "Clear all filters",
       policyTitle: "BMDC Credential Policy:",
       policyText:
-        "All registered practitioners undergo primary source verification against the Bangladesh Medical and Dental Council (BMDC) register before being listed on Medoji AI.",
+        "All registered practitioners undergo primary source verification against the Bangladesh Medical and Dental Council (BMDC) register before being listed on Medoji.",
       pilotTag: "Care Pilot v1.0",
       modal: {
         title: "Consultation Booking Request",
@@ -352,11 +352,11 @@ export const translations = {
       languagesTitle: "Languages",
       areaTitle: "Consultation area",
       disclaimer:
-        "This is a representative sample profile for the Medoji AI directory. Professional information and availability should be confirmed before publishing.",
+        "This is a representative sample profile for the Medoji directory. Professional information and availability should be confirmed before publishing.",
       notProvided: "Not provided",
     },
     login: {
-      title: "Sign in to Medoji AI",
+      title: "Sign in to Medoji",
       subtitle:
         "Access your verified consultations, prescriptions, and health records.",
       identifierLabel: "Mobile Number or Email",

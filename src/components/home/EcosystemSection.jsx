@@ -306,7 +306,7 @@ export default function EcosystemSection() {
           </p>
 
           <span className="shrink-0 text-[9px] font-bold tracking-[0.14em] text-[#438365]">
-            MEDOJI AI
+            MEDOJI
           </span>
         </div>
       </div>

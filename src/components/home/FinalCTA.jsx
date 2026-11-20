@@ -194,7 +194,7 @@ export default function FinalCTA() {
               variants={fadeUp}
               className="mt-12 text-[10px] font-semibold tracking-[0.15em] text-[#718276]"
             >
-              MEDOJI AI · BANGLADESH
+              MEDOJI · BANGLADESH
             </motion.p>
           </div>
 

@@ -1,5 +1,5 @@
 /**
- * Medoji AI — Healthcare Professionals
+ * Medoji — Healthcare Professionals
  * Shared data for doctor listing cards and profile details.
  */
 
