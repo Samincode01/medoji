@@ -1,10 +1,11 @@
 "use client";
-
+import logo from "@/images/logo.png";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, HeartPulse } from "lucide-react";
 import { useLanguage } from "@/i18n/useLanguage";
+import Image from "next/image";
 
 export default function Navbar() {
   const { language, setLanguage, t, isBangla } = useLanguage();
@@ -79,33 +80,30 @@ export default function Navbar() {
         <div className="flex h-[74px] items-center justify-between gap-4">
 
           {/* Brand Logo */}
-          <Link
-            href="/"
-            onClick={() => {
-              setMenuOpen(false);
-              setActiveHash("");
-            }}
-            className="group flex shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2"
-            aria-label="Medoji - Back to Homepage"
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E1F0E6] transition-transform duration-200 group-hover:scale-105">
-              <HeartPulse
-                size={22}
-                className="text-[#174433] transition-colors"
-                strokeWidth={2.2}
-              />
-            </span>
+         {/* Brand Logo */}
+<Link
+  href="/"
+  onClick={() => {
+    setMenuOpen(false);
+    setActiveHash("");
+  }}
+  className="group flex shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087A52] focus-visible:ring-offset-2"
+  aria-label="Medoji - Back to Homepage"
+>
+  {/* Logo Image */}
 
-            <div className="flex flex-col">
-              <span className="text-[22px] font-bold leading-none tracking-tight text-[#015238]">
-                Medoji
-              </span>
-
-              <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-[#52665A]">
-                {t("nav.country")}
-              </span>
-            </div>
-          </Link>
+  {/* Brand Name */}
+  <div className="flex flex-col">
+      <Image
+    src={logo}
+    alt="Medoji logo"
+    width={180}
+    height={60}
+    priority
+    className="h-12 w-auto object-contain"
+  />
+  </div>
+</Link>
 
           {/* Desktop Navigation */}
           <nav
