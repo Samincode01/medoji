@@ -24,8 +24,8 @@ export const translations = {
       banglaTagline: "চিকিৎসা, কাউন্সেলিং ও ফলোআপ—সব এক জায়গায়।",
       description:
         "Find a doctor or counsellor, follow up on care, and manage prescriptions in one place.",
-      primaryCta: "Find a professional",
-      secondaryCta: "Explore Medoji",
+      primaryCta: "Find a Specialist",
+      secondaryCta: "How medoji works",
       proofVisits: "Online & in-person visits",
       proofPharmacy: "Pharmacist review",
       proofPrivacy: "Verified patient privacy",

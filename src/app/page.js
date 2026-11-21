@@ -9,9 +9,7 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full">
       <Hero />
-      <ImpactSection></ImpactSection>
-      <AIToolsSection />
-      <PharmacySection />
+  <ImpactSection></ImpactSection>
       <EcosystemSection />
       <FinalCTA />
     </div>
