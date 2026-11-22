@@ -59,7 +59,7 @@ export default function NotFound() {
 
         {/* FOOTER */}
         <p className="mt-20 text-xs text-[#9AA79F]">
-          © {new Date().getFullYear()} Medoji Healthcare
+          © Medoji Healthcare
         </p>
       </div>
     </main>
