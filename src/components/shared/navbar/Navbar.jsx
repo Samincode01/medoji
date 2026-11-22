@@ -16,8 +16,8 @@ export default function Navbar() {
   const navLinks = [
     { key: "home", label: t("nav.home"), href: "/" },
     { key: "findDoctor", label: t("nav.findDoctor"), href: "/specialist" },
-    { key: "pharmacy", label: t("nav.pharmacy"), href: "/#pharmacy" },
-    { key: "aiAssistant", label: t("nav.aiAssistant"), href: "/#ai-tools" },
+    { key: "pharmacy", label: t("nav.pharmacy"), href: "/pharmacy" },
+    { key: "aiAssistant", label: t("nav.aiAssistant"), href: "/ai-tools" },
     { key: "ecosystem", label: t("nav.ecosystem"), href: "/#ecosystem" },
   ];
 
