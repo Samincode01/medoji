@@ -306,7 +306,7 @@ export default function DoctorProfileView({ doctor }) {
                           </h3>
 
                           {institution && (
-                            <p className="mt-0.5 text-[13px] text-[#52665A]">
+                            <p className="mt-0.5 text-[15px] text-[#52665A]">
                               {institution}
                             </p>
                           )}
@@ -325,7 +325,7 @@ export default function DoctorProfileView({ doctor }) {
                         />
                       </div>
 
-                      <p className="text-[13px] leading-6 text-[#52665A]">
+                      <p className="text-[13px] leading-6 font-bold text-[#52665A]">
                         {affiliation}
                       </p>
                     </div>
