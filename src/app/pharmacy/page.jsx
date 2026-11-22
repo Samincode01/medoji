@@ -51,11 +51,10 @@ export default function ComingSoonPage() {
         >
           <ArrowLeft size={16} />
           {isBangla ? "হোমে ফিরে যান" : "Back to home"}
-          <ArrowUpRight size={15} />
         </Link>
 
         <p className="mt-20 text-[11px] tracking-wide text-[#9AA79F]">
-          © {new Date().getFullYear()} Medoji Healthcare
+         © Medoji Healthcare
         </p>
       </div>
     </main>

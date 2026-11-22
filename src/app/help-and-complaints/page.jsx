@@ -266,7 +266,7 @@ export default function HelpAndComplaintsPage() {
 
         {/* FOOTER */}
         <footer className="mt-10 border-t border-[#E8EEE9] pt-5 text-center text-[11px] text-[#9AA79F]">
-          © {new Date().getFullYear()} Medoji Healthcare
+         © Medoji Healthcare
         </footer>
       </div>
     </main>
