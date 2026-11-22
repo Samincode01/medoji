@@ -1,22 +1,23 @@
 
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
   ArrowUpRight,
-  Clock3,
-  MapPin,
-  Video,
-  Building2,
-  GraduationCap,
   BriefcaseMedical,
+  MapPin,
+  Copy,
+  Check,
+  GraduationCap,
+  Brain,
   Languages,
-  Stethoscope,
+  MessageCircle,
+  Laptop,
+  Building2,
   BadgeCheck,
-  Wallet,
-  CalendarDays,
 } from "lucide-react";
 import { useLanguage } from "@/i18n/useLanguage";
 
@@ -26,17 +27,21 @@ const BOOKING_LINKS = {
 };
 
 export default function DoctorProfileView({ doctor }) {
-  const { t, isBangla, formatNumber } = useLanguage();
+  const { isBangla, formatNumber, t } = useLanguage();
+  const [copied, setCopied] = useState(false);
 
   if (!doctor) return null;
 
   const {
+    id,
+    profileId,
     name,
     title,
     specialty,
     category,
     qualifications,
     affiliation,
+    education = [],
     experienceYears,
     experienceLabel,
     experienceDetails,
@@ -44,13 +49,10 @@ export default function DoctorProfileView({ doctor }) {
     fee,
     modes = [],
     area,
-    nextSlot,
     image,
     initials,
-    avatarBg,
-    avatarColor,
-    bookingLabel,
     verified,
+    bookingLabel,
   } = doctor;
 
   const imageUrl = image
@@ -62,12 +64,7 @@ export default function DoctorProfileView({ doctor }) {
     : null;
 
   const hasFee = fee !== null && fee !== undefined && fee !== "";
-  const hasModes = Array.isArray(modes) && modes.length > 0;
-  const hasLanguages = Array.isArray(languages) && languages.length > 0;
-  const hasArea = Boolean(area);
-  const hasAffiliation = Boolean(affiliation);
-  const hasNextSlot = Boolean(nextSlot);
-  const hasQualifications = Boolean(qualifications);
+  const bookingDestination = BOOKING_LINKS[category] || null;
 
   const onlineMode = modes.some((mode) =>
     /online|video/i.test(mode)
@@ -77,474 +74,452 @@ export default function DoctorProfileView({ doctor }) {
     /person|chamber/i.test(mode)
   );
 
-  const bookingDestination = BOOKING_LINKS[category] || null;
-
-  const bookingBtnText = isBangla
-    ? bookingLabel || "অ্যাপয়েন্টমেন্ট বুক করুন"
-    : "Request an Appointment";
-
   const displayExperience =
-    experienceLabel || experienceDetails
-      ? experienceLabel || experienceDetails
-      : experienceYears !== null && experienceYears !== undefined
-        ? isBangla
-          ? `${formatNumber(experienceYears)}+ বছরের অভিজ্ঞতা`
-          : `${experienceYears}+ years experience`
-        : null;
+    experienceLabel ||
+    experienceDetails ||
+    (experienceYears !== null && experienceYears !== undefined
+      ? isBangla
+        ? `${formatNumber(experienceYears)}+ বছরের অভিজ্ঞতা`
+        : `${experienceYears}+ years of experience`
+      : "");
 
-  const displayNextSlot = nextSlot
-    ? isBangla
-      ? nextSlot.replace("Tomorrow", "আগামীকাল").replace("Today", "আজ")
-      : nextSlot
-    : null;
+  const displayTitle =
+    title ||
+    (category === "mental"
+      ? isBangla
+        ? "মনোবিজ্ঞানী"
+        : "Psychologist"
+      : isBangla
+        ? "চিকিৎসক"
+        : "Doctor");
 
-  const getLocalizedMode = (modeStr) => {
-    if (!isBangla) return modeStr;
+  const localizedLanguages = languages.map((language) => {
+    if (!isBangla) return language;
 
-    const lower = modeStr.toLowerCase();
+    const value = language.toLowerCase();
 
-    if (lower.includes("online") || lower.includes("video")) {
-      return "অনলাইন ভিডিও";
+    if (value === "bangla" || value === "bengali") return "বাংলা";
+    if (value === "english") return "ইংরেজি";
+
+    return language;
+  });
+
+  const educationItems =
+    Array.isArray(education) && education.length > 0
+      ? education
+      : qualifications
+        ? [{ degree: qualifications, institution: "" }]
+        : [];
+
+  const bookingButtonText = isBangla
+    ? bookingLabel || "অ্যাপয়েন্টমেন্ট বুক করুন"
+    : "Request an appointment";
+
+  const copyProfileId = async () => {
+    if (!profileId) return;
+
+    try {
+      await navigator.clipboard.writeText(profileId);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
     }
-
-    if (lower.includes("person") || lower.includes("chamber")) {
-      return "চেম্বার ভিজিট";
-    }
-
-    return modeStr;
   };
-
-  const getLocalizedLanguage = (langStr) => {
-    if (!isBangla) return langStr;
-
-    const lower = langStr.toLowerCase();
-
-    if (lower === "bangla" || lower === "bengali") return "বাংলা";
-    if (lower === "english") return "ইংরেজি";
-
-    return langStr;
-  };
-
-  const onlineTitle = isBangla
-    ? "অনলাইন সেশন"
-    : "Online session";
 
   const onlineDescription = isBangla
-    ? "সেশন নিশ্চিত করতে অগ্রিম পেমেন্ট করতে হবে। সেশন শুরুর অন্তত ১২ ঘণ্টা আগে বাতিল করলে সম্পূর্ণ টাকা ফেরত পাবেন। পরে বাতিল করলে ৫% কেটে ৯৫% ফেরত দেওয়া হবে।"
-    : "Pay in advance to confirm your session. Cancel at least 12 hours before the start for a full refund. Later cancellations receive a 95% refund after a 5% deduction.";
-
-  const inPersonTitle = isBangla
-    ? "সরাসরি সেশন"
-    : "In-person session";
+    ? "সেশন নিশ্চিত করতে অগ্রিম পেমেন্ট করতে হবে। সেশন শুরুর অন্তত ১২ ঘণ্টা আগে বাতিল করলে সম্পূর্ণ টাকা ফেরত পাবেন।"
+    : "Advance payment is required to confirm your session. Cancel at least 12 hours before the session for a full refund.";
 
   const inPersonDescription = isBangla
     ? "সরাসরি সেশনের জন্য অগ্রিম পেমেন্টের প্রয়োজন নেই।"
     : "No advance payment is required for an in-person session.";
 
-  const confirmationTitle = isBangla
-    ? "বুকিং কীভাবে নিশ্চিত হবে"
-    : "How booking is confirmed";
-
-  const onlineConfirmation = isBangla
-    ? "অনলাইন: মেডোজি সময় নিশ্চিত করে পেমেন্টের নির্দেশনা পাঠাবে। পেমেন্ট যাচাইয়ের পর বুকিং নিশ্চিত করে Google Meet লিংক পাঠানো হবে।"
-    : "Online: Medoji checks availability and sends payment instructions. After verifying payment, Medoji confirms the booking and sends the Google Meet link.";
-
-  const inPersonConfirmation = isBangla
-    ? "সরাসরি: মেডোজি সময় নিশ্চিত করে অ্যাপয়েন্টমেন্টের বিস্তারিত জানাবে।"
-    : "In person: Medoji confirms availability and shares the appointment details.";
+  const SectionHeader = ({ children }) => (
+    <div className="border-b border-[#DCE7DF] bg-[#E8F0E5] px-5 py-3">
+      <h2 className="text-[17px] font-bold tracking-tight text-[#17352A] sm:text-[19px]">
+        {children}
+      </h2>
+    </div>
+  );
 
   return (
-    <main className="min-h-screen bg-[#FDFDFD] text-[#17352A]">
-      {/* Back navigation */}
-      <div className="border-b border-[#DCE7DF] bg-[#F0F5EF]">
-        <div className="mx-auto max-w-[1150px] px-5 py-5 sm:px-8">
-          <Link
-            href="/specialist"
-            className="group inline-flex items-center gap-2 text-[13px] font-medium text-[#52665A] transition-colors hover:text-[#174433]"
-          >
-            <ArrowLeft
-              size={16}
-              className="transition-transform group-hover:-translate-x-1"
-            />
-            {t("doctorProfile.backLink")}
-          </Link>
-        </div>
-      </div>
+    <main className="min-h-screen bg-[#FDFDFD] text-[#132F25]">
+      <div className="mx-auto max-w-[1450px] px-5 pb-16 pt-6 sm:px-8 lg:px-12">
 
-      <div className="mx-auto max-w-[1150px] px-5 pb-20 pt-8 sm:px-8 sm:pt-12">
+        {/* Back navigation */}
+        <Link
+          href="/specialist"
+          className="group mb-6 inline-flex items-center gap-3 text-[14px] font-medium text-[#17352A] transition hover:text-[#19815C]"
+        >
+          <ArrowLeft
+            size={21}
+            className="transition-transform group-hover:-translate-x-1"
+          />
+          {isBangla ? "বিশেষজ্ঞদের তালিকায় ফিরুন" : "Back to specialists"}
+        </Link>
 
-        {/* SPECIALIST PROFILE */}
-        <section className="overflow-hidden rounded-[24px] border border-[#DCE7DF] bg-white shadow-[0_8px_35px_rgba(19,47,37,0.04)]">
-          <div className="grid md:grid-cols-[300px_1fr]">
-            <div className="p-5 sm:p-7">
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-[300px] overflow-hidden rounded-[18px] bg-[#EEF2EF]">
+        {/* PROFILE HEADER */}
+        <section className="rounded-[16px] border border-[#AEBDAF] bg-white p-5 sm:p-7">
+          <div className="grid items-center gap-6 sm:grid-cols-[175px_1fr] sm:gap-9">
+
+            {/* Profile image */}
+            <div className="mx-auto w-full max-w-[160px] sm:mx-0">
+              <div className="relative aspect-square overflow-hidden rounded-[22px] bg-[#DCE9DC]">
                 {imageUrl ? (
                   <Image
                     src={imageUrl}
                     alt={name || "Healthcare professional"}
                     fill
                     priority
-                    sizes="(max-width: 768px) 90vw, 300px"
+                    sizes="160px"
                     className="object-cover object-center"
                   />
                 ) : (
-                  <div
-                    className={`flex h-full w-full items-center justify-center ${
-                      avatarBg || "bg-[#E1F0E6]"
-                    } ${avatarColor || "text-[#174433]"}`}
-                  >
-                    <span className="text-7xl font-semibold">
-                      {initials || name?.charAt(0) || "D"}
-                    </span>
+                  <div className="flex h-full w-full items-center justify-center text-[#78967D]">
+                    <div className="flex flex-col items-center">
+                      <div className="h-12 w-12 rounded-full bg-[#78967D]" />
+                      <div className="mt-2 h-10 w-24 rounded-t-full bg-[#78967D]" />
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="flex flex-col justify-center px-5 pb-7 sm:px-8 md:py-9 md:pr-10">
+            {/* Profile information */}
+            <div className="min-w-0 border-t border-[#AEBDAF] pt-5 sm:border-l sm:border-t-0 sm:py-1 sm:pl-9">
               <div className="flex flex-wrap items-center gap-2">
-                {specialty && (
-                  <span className="rounded-full bg-[#E1F0E6] px-3 py-1.5 text-[10px] font-bold tracking-wide text-[#174433]">
-                    {specialty}
-                  </span>
-                )}
+                <p className="text-[15px] font-semibold text-[#64816E]">
+                  {displayTitle}
+                </p>
 
                 {verified && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#DCE7DF] px-3 py-1.5 text-[10px] font-medium text-[#52665A]">
-                    <BadgeCheck size={13} className="text-[#198052]" />
-                    {t("doctorProfile.verifiedBadge")}
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#19815C]">
+                    <BadgeCheck size={14} />
+                    {isBangla ? "যাচাইকৃত" : "Verified"}
                   </span>
                 )}
               </div>
 
-              {title && (
-                <p className="mt-5 text-[14px] font-medium text-[#64816E]">
-                  {title}
-                </p>
-              )}
-
-              <h1 className="mt-2 text-[30px] font-semibold leading-tight tracking-[-0.04em] text-[#132F25] sm:text-[38px]">
+              <h1 className="mt-1 text-[32px] font-bold leading-tight tracking-[-0.045em] text-[#151A17] sm:text-[42px]">
                 {name}
               </h1>
 
-              {hasQualifications && (
-                <p className="mt-4 max-w-[570px] text-[13px] leading-[1.9] text-[#52665A]">
-                  {qualifications}
-                </p>
-              )}
+              <div className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-3">
+                {displayExperience && (
+                  <div className="flex items-center gap-3 text-[14px] text-[#26352B]">
+                    <BriefcaseMedical
+                      size={20}
+                      strokeWidth={1.8}
+                      className="text-[#174433]"
+                    />
+                    {displayExperience}
+                  </div>
+                )}
 
-              {(displayExperience || hasArea) && (
-                <div className="mt-6 flex flex-wrap gap-x-6 gap-y-4">
-                  {displayExperience && (
-                    <div className="flex items-center gap-2 text-[12px] text-[#52665A]">
-                      <BriefcaseMedical size={16} className="text-[#19A069]" />
-                      {displayExperience}
-                    </div>
-                  )}
+                {area && (
+                  <div className="flex items-center gap-3 text-[14px] text-[#26352B]">
+                    <MapPin
+                      size={21}
+                      strokeWidth={1.8}
+                      className="text-[#174433]"
+                    />
+                    {area}
+                  </div>
+                )}
+              </div>
 
-                  {hasArea && (
-                    <div className="flex items-center gap-2 text-[12px] text-[#52665A]">
-                      <MapPin size={16} className="text-[#19A069]" />
-                      {area}
-                    </div>
-                  )}
+              {/* Profile ID */}
+              {profileId && (
+                <div className="mt-5 inline-flex max-w-full items-center gap-3 rounded-[10px] bg-[#E8F0E5] px-4 py-3">
+                  <span className="shrink-0 text-[13px] text-[#17352A]">
+                    {isBangla ? "প্রোফাইল আইডি" : "Profile ID"}
+                  </span>
+
+                  <span className="h-6 w-px bg-[#AEBDAF]" />
+
+                  <span className="truncate text-[13px] font-bold tracking-wide text-[#17352A] sm:text-[15px]">
+                    {profileId}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={copyProfileId}
+                    aria-label={isBangla ? "আইডি কপি করুন" : "Copy profile ID"}
+                    className="ml-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-[#17352A] transition hover:bg-white"
+                  >
+                    {copied ? (
+                      <Check size={19} className="text-[#19815C]" />
+                    ) : (
+                      <Copy size={19} />
+                    )}
+                  </button>
                 </div>
               )}
             </div>
           </div>
         </section>
 
-        {/* BOOKING AND PROFILE INFORMATION */}
-        <div className="mt-12 grid items-start gap-12 lg:grid-cols-[1fr_350px] lg:gap-16">
+        {/* MAIN CONTENT */}
+        <div className="mt-7 grid items-start gap-7 lg:grid-cols-[1.45fr_1fr] xl:gap-8">
 
-          {/* MAIN CONTENT */}
-          <div className="min-w-0">
-
-            {/* BOOKING */}
-            <section id="booking">
-              <div className="mb-6">
-                <p className="text-[10px] font-bold tracking-[0.17em] text-[#19815C]">
-                  {isBangla ? "অ্যাপয়েন্টমেন্ট" : "APPOINTMENT"}
-                </p>
-
-                <h2 className="mt-2 text-[26px] font-semibold tracking-[-0.035em] text-[#17352A] sm:text-3xl">
-                  {isBangla ? "আপনার সেশন বেছে নিন" : "Choose your session"}
-                </h2>
-
-                <p className="mt-2 max-w-[530px] text-[13px] leading-6 text-[#718278]">
-                  {isBangla
-                    ? "আপনার সুবিধামতো অনলাইন অথবা সরাসরি সেশন বুক করুন।"
-                    : "Choose the consultation format that works best for you."}
-                </p>
-              </div>
-
-              <div className="divide-y divide-[#DCE7DF] border-y border-[#DCE7DF]">
-
-                {/* ONLINE OPTION */}
-                {onlineMode && (
-                  <div className="py-6">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <Video
-                          size={19}
-                          strokeWidth={1.7}
-                          className="text-[#19815C]"
-                        />
-
-                        <h3 className="text-[16px] font-semibold text-[#17352A]">
-                          {onlineTitle}
-                        </h3>
-                      </div>
-
-                      {hasFee && (
-                        <p className="text-xl font-semibold tracking-tight text-[#17352A]">
-                          ৳{formatNumber(fee)}
-                        </p>
-                      )}
-                    </div>
-
-                    <p className="mt-3 max-w-[650px] text-[13px] leading-[1.8] text-[#64766C]">
-                      {onlineDescription}
-                    </p>
-
-                    <Link
-                      href="/booking-refund-policy"
-                      className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-[#174B38] underline decoration-[#A9C4B1] underline-offset-4 transition hover:text-[#198052]"
-                    >
-                      {isBangla
-                        ? "বুকিং ও রিফান্ড নীতিমালা"
-                        : "Booking & Refund Policy"}
-                      <ArrowUpRight size={13} />
-                    </Link>
-
-                    {bookingDestination && (
-                      <div className="mt-5">
-                        <a
-                          href={bookingDestination}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#174433] px-6 py-3 text-[12px] font-semibold text-white transition hover:bg-[#103629]"
-                        >
-                          {bookingBtnText}
-                          <ArrowUpRight size={14} />
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* IN-PERSON OPTION */}
-                {inPersonMode && (
-                  <div className="py-6">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <Building2
-                          size={19}
-                          strokeWidth={1.7}
-                          className="text-[#19815C]"
-                        />
-
-                        <h3 className="text-[16px] font-semibold text-[#17352A]">
-                          {inPersonTitle}
-                        </h3>
-                      </div>
-
-                      <span className="text-[12px] font-medium text-[#64816E]">
-                        {isBangla ? "অগ্রিম পেমেন্ট নেই" : "No advance payment"}
-                      </span>
-                    </div>
-
-                    <p className="mt-3 max-w-[650px] text-[13px] leading-[1.8] text-[#64766C]">
-                      {inPersonDescription}
-                    </p>
-
-                    {bookingDestination && (
-                      <div className="mt-5">
-                        <a
-                          href={bookingDestination}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#174433] px-6 py-3 text-[12px] font-semibold text-[#174433] transition hover:bg-[#F0F5EF]"
-                        >
-                          {bookingBtnText}
-                          <ArrowUpRight size={14} />
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {!onlineMode && !inPersonMode && (
-                  <p className="py-6 text-[13px] text-[#64766C]">
-                    {isBangla
-                      ? "অ্যাপয়েন্টমেন্টের জন্য আমাদের সঙ্গে যোগাযোগ করুন।"
-                      : "Please contact us for appointment options."}
-                  </p>
-                )}
-              </div>
-
-              {/* BOOKING CONFIRMATION */}
-              {(onlineMode || inPersonMode) && (
-                <div className="mt-6">
-                  <h3 className="text-[14px] font-semibold text-[#17352A]">
-                    {confirmationTitle}
-                  </h3>
-
-                  <div className="mt-3 space-y-3 text-[12px] leading-[1.8] text-[#718278]">
-                    {onlineMode && <p>{onlineConfirmation}</p>}
-                    {inPersonMode && <p>{inPersonConfirmation}</p>}
-                  </div>
-                </div>
-              )}
-            </section>
+          {/* LEFT COLUMN */}
+          <div className="min-w-0 space-y-5">
 
             {/* EDUCATION */}
-            {(hasQualifications || hasAffiliation) && (
-              <section className="mt-12 border-t border-[#DCE7DF] pt-8">
-                <div className="flex items-center gap-3">
-                  <GraduationCap
-                    size={20}
-                    strokeWidth={1.7}
-                    className="text-[#19815C]"
-                  />
+            {(educationItems.length > 0 || affiliation) && (
+              <section className="overflow-hidden rounded-[15px] border border-[#AEBDAF] bg-white">
+                <SectionHeader>
+                  {isBangla
+                    ? "শিক্ষাগত যোগ্যতা"
+                    : "Education & qualifications"}
+                </SectionHeader>
 
-                  <h2 className="text-[17px] font-semibold text-[#17352A]">
-                    {t("doctorProfile.eduTitle")}
-                  </h2>
+                <div className="px-5 sm:px-6">
+                  {educationItems.map((item, index) => {
+                    const degree =
+                      typeof item === "string"
+                        ? item
+                        : item.degree || item.qualification || item.title;
+
+                    const institution =
+                      typeof item === "object"
+                        ? item.institution || item.university || ""
+                        : "";
+
+                    return (
+                      <div
+                        key={`${degree}-${index}`}
+                        className="flex gap-4 py-4"
+                      >
+                        <div className="flex w-14 shrink-0 items-center justify-center border-r border-[#AEBDAF] pr-4">
+                          <GraduationCap
+                            size={25}
+                            strokeWidth={1.7}
+                            className="text-[#174433]"
+                          />
+                        </div>
+
+                        <div className="min-w-0">
+                          <h3 className="text-[14px] font-bold leading-6 text-[#171B18] sm:text-[16px]">
+                            {degree}
+                          </h3>
+
+                          {institution && (
+                            <p className="mt-0.5 text-[13px] text-[#52665A]">
+                              {institution}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {affiliation && (
+                    <div className="flex gap-4 border-t border-[#DCE7DF] py-4">
+                      <div className="flex w-14 shrink-0 items-center justify-center border-r border-[#AEBDAF] pr-4">
+                        <GraduationCap
+                          size={25}
+                          strokeWidth={1.7}
+                          className="text-[#174433]"
+                        />
+                      </div>
+
+                      <p className="text-[13px] leading-6 text-[#52665A]">
+                        {affiliation}
+                      </p>
+                    </div>
+                  )}
                 </div>
+              </section>
+            )}
 
-                {hasQualifications && (
-                  <p className="mt-4 max-w-[700px] text-[13px] leading-[1.9] text-[#64766C]">
-                    {qualifications}
-                  </p>
-                )}
+            {/* EXPERIENCE & EXPERTISE */}
+            <section className="overflow-hidden rounded-[15px] border border-[#AEBDAF] bg-white">
+              <SectionHeader>
+                {isBangla
+                  ? "অভিজ্ঞতা ও বিশেষজ্ঞতা"
+                  : "Experience & expertise"}
+              </SectionHeader>
 
-                {hasAffiliation && (
-                  <div className="mt-4">
-                    <p className="text-[10px] font-bold tracking-[0.12em] text-[#829287]">
-                      {t("doctorProfile.affiliationLabel")}
-                    </p>
+              <div className="px-5 sm:px-6">
+                {displayExperience && (
+                  <div className="flex items-center gap-4 border-b border-[#DCE7DF] py-4">
+                    <div className="flex w-14 shrink-0 items-center justify-center border-r border-[#AEBDAF] pr-4">
+                      <BriefcaseMedical
+                        size={24}
+                        strokeWidth={1.7}
+                        className="text-[#174433]"
+                      />
+                    </div>
 
-                    <p className="mt-2 text-[13px] leading-6 text-[#52665A]">
-                      {affiliation}
+                    <p className="text-[14px] text-[#26352B] sm:text-[15px]">
+                      {displayExperience}
                     </p>
                   </div>
                 )}
-              </section>
-            )}
 
-            {/* SPECIALTY */}
-            {specialty && (
-              <section className="mt-9 border-t border-[#DCE7DF] pt-8">
-                <div className="flex items-center gap-3">
-                  <Stethoscope
-                    size={19}
-                    strokeWidth={1.7}
-                    className="text-[#19815C]"
-                  />
+                {specialty && (
+                  <div className="flex items-center gap-4 py-4">
+                    <div className="flex w-14 shrink-0 items-center justify-center border-r border-[#AEBDAF] pr-4">
+                      <Brain
+                        size={24}
+                        strokeWidth={1.7}
+                        className="text-[#174433]"
+                      />
+                    </div>
 
-                  <h2 className="text-[17px] font-semibold text-[#17352A]">
-                    {t("doctorProfile.expertiseTitle")}
-                  </h2>
-                </div>
+                    <p className="text-[14px] text-[#26352B] sm:text-[15px]">
+                      {specialty}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </section>
 
-                <p className="mt-3 text-[13px] text-[#64766C]">
-                  {specialty}
-                </p>
-              </section>
-            )}
+            {/* LANGUAGES */}
+            {localizedLanguages.length > 0 && (
+              <section className="overflow-hidden rounded-[15px] border border-[#AEBDAF] bg-white">
+                <SectionHeader>
+                  {isBangla ? "ভাষাসমূহ" : "Languages"}
+                </SectionHeader>
 
-            {/* CONSULTATION MODES */}
-            {hasModes && (
-              <section className="mt-9 border-t border-[#DCE7DF] pt-8">
-                <div className="flex items-center gap-3">
-                  <Video
-                    size={19}
-                    strokeWidth={1.7}
-                    className="text-[#19815C]"
-                  />
+                <div className="flex items-center gap-4 px-5 py-5 sm:px-6">
+                  <div className="flex w-14 shrink-0 items-center justify-center border-r border-[#AEBDAF] pr-4">
+                    <MessageCircle
+                      size={24}
+                      strokeWidth={1.7}
+                      className="text-[#174433]"
+                    />
+                  </div>
 
-                  <h2 className="text-[17px] font-semibold text-[#17352A]">
-                    {t("doctorProfile.optionsTitle")}
-                  </h2>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
-                  {modes.map((mode) => (
-                    <span
-                      key={mode}
-                      className="flex items-center gap-2 text-[12px] text-[#64766C]"
-                    >
-                      {mode.toLowerCase().includes("online") ||
-                      mode.toLowerCase().includes("video") ? (
-                        <Video size={15} className="text-[#19815C]" />
-                      ) : (
-                        <Building2 size={15} className="text-[#19815C]" />
-                      )}
-                      {getLocalizedMode(mode)}
-                    </span>
-                  ))}
+                  <p className="text-[14px] text-[#26352B] sm:text-[15px]">
+                    {localizedLanguages.join(", ")}
+                  </p>
                 </div>
               </section>
             )}
           </div>
 
-          {/* RIGHT SIDEBAR */}
-          <aside className="lg:sticky lg:top-8">
+          {/* RIGHT COLUMN — BOOKING */}
+          <aside className="overflow-hidden rounded-[16px] border border-[#AEBDAF] bg-white">
+            <div className="bg-[#17603C] px-6 py-4">
+              <h2 className="text-[21px] font-bold tracking-tight text-white">
+                {isBangla ? "সেশন বুক করুন" : "Book a session"}
+              </h2>
+            </div>
 
-            {/* AVAILABILITY */}
-            {hasNextSlot && (
-              <div className="border-b border-[#DCE7DF] pb-6">
-                <div className="flex items-center gap-2 text-[13px] font-semibold text-[#17352A]">
-                  <Clock3 size={17} className="text-[#19815C]" />
-                  {t("doctorProfile.nextAvailability")}
-                </div>
+            <div className="space-y-5 p-5 sm:p-6">
 
-                <p className="mt-3 pl-6 text-[12px] text-[#64766C]">
-                  {displayNextSlot}
-                </p>
-              </div>
-            )}
+              {/* ONLINE SESSION */}
+              {onlineMode && (
+                <div className="rounded-[14px] border border-[#AEBDAF] p-4 sm:p-5">
+                  <div className="flex items-center gap-4">
+                    <div className="flex w-16 shrink-0 items-center justify-center border-r border-[#AEBDAF] py-2 pr-4">
+                      <Laptop
+                        size={34}
+                        strokeWidth={1.7}
+                        className="text-[#174433]"
+                      />
+                    </div>
 
-            {/* LANGUAGES */}
-            {hasLanguages && (
-              <div className="border-b border-[#DCE7DF] py-6">
-                <div className="flex items-center gap-2 text-[13px] font-semibold text-[#17352A]">
-                  <Languages size={17} className="text-[#19815C]" />
-                  {t("doctorProfile.languagesTitle")}
-                </div>
+                    <div className="min-w-0">
+                      <h3 className="text-[17px] font-bold text-[#171B18]">
+                        {isBangla ? "অনলাইন সেশন" : "Online session"}
+                      </h3>
 
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 pl-6">
-                  {languages.map((lang) => (
-                    <span
-                      key={lang}
-                      className="text-[12px] text-[#64766C]"
+                      {hasFee && (
+                        <p className="mt-0.5 text-[16px] font-bold text-[#17603C]">
+                          ৳{formatNumber(fee)}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {bookingDestination && (
+                    <a
+                      href={bookingDestination}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-[10px] bg-[#17603C] px-4 py-3 text-center text-[13px] font-bold text-white transition hover:bg-[#10472D]"
                     >
-                      {getLocalizedLanguage(lang)}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+                      {bookingButtonText}
+                      <ArrowUpRight size={16} />
+                    </a>
+                  )}
 
-            {/* LOCATION */}
-            {hasArea && (
-              <div className="py-6">
-                <div className="flex items-center gap-2 text-[13px] font-semibold text-[#17352A]">
-                  <MapPin size={17} className="text-[#19815C]" />
-                  {t("doctorProfile.areaTitle")}
-                </div>
+                  <p className="mt-3 text-[11px] leading-5 text-[#718278]">
+                    {onlineDescription}
+                  </p>
 
-                <p className="mt-3 pl-6 text-[12px] leading-[1.8] text-[#64766C]">
-                  {area}
+                  <Link
+                    href="/booking-refund-policy"
+                    className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-[#17603C] underline underline-offset-4"
+                  >
+                    {isBangla
+                      ? "বুকিং ও রিফান্ড নীতিমালা"
+                      : "Booking & Refund Policy"}
+                    <ArrowUpRight size={12} />
+                  </Link>
+                </div>
+              )}
+
+              {/* IN-PERSON SESSION */}
+              {inPersonMode && (
+                <div className="rounded-[14px] border border-[#AEBDAF] p-4 sm:p-5">
+                  <div className="flex items-center gap-4">
+                    <div className="flex w-16 shrink-0 items-center justify-center border-r border-[#AEBDAF] py-2 pr-4">
+                      <MapPin
+                        size={34}
+                        strokeWidth={1.7}
+                        className="text-[#174433]"
+                      />
+                    </div>
+
+                    <div className="min-w-0">
+                      <h3 className="text-[17px] font-bold text-[#171B18]">
+                        {isBangla ? "সরাসরি সেশন" : "In-person session"}
+                      </h3>
+
+                      <p className="mt-0.5 text-[14px] font-medium text-[#26352B]">
+                        {isBangla
+                          ? "অগ্রিম পেমেন্ট নেই"
+                          : "No advance payment"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {bookingDestination && (
+                    <a
+                      href={bookingDestination}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-[10px] border-2 border-[#174433] px-4 py-3 text-center text-[13px] font-bold text-[#174433] transition hover:bg-[#E8F0E5]"
+                    >
+                      {bookingButtonText}
+                      <ArrowUpRight size={16} />
+                    </a>
+                  )}
+
+                  <p className="mt-3 text-[11px] leading-5 text-[#718278]">
+                    {inPersonDescription}
+                  </p>
+                </div>
+              )}
+
+              {!onlineMode && !inPersonMode && (
+                <p className="py-5 text-[13px] leading-6 text-[#64766C]">
+                  {isBangla
+                    ? "অ্যাপয়েন্টমেন্টের জন্য আমাদের সঙ্গে যোগাযোগ করুন।"
+                    : "Please contact us for available appointment options."}
                 </p>
-              </div>
-            )}
+              )}
+            </div>
           </aside>
         </div>
 
         {/* DISCLAIMER */}
-        <p className="mt-12 border-t border-[#DCE7DF] pt-6 text-center text-[10px] leading-5 text-[#829287]">
+        <p className="mt-8 border-t border-[#DCE7DF] pt-5 text-center text-[10px] leading-5 text-[#829287]">
           {t("doctorProfile.disclaimer")}
         </p>
       </div>
