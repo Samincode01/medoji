@@ -505,19 +505,19 @@ export const SAMPLE_DOCTORS = [
     booking: {
       online: {
         available: true,
-        sessionFee: 800,
-        firstSessionFee: 800,
+        sessionFee: 1000,
+        firstSessionFee: 1000,
         followUpFee: null,
         packages: [
-          { sessions: 2, fee: 1500 },
-          { sessions: 4, fee: 3000 },
-          { sessions: 6, fee: 4000 },
+          { sessions: 2, fee: 1800 },
+          { sessions: 4, fee: 3500 },
+          { sessions: 6, fee: 4500 },
         ],
       },
       inPerson: {
         available: true,
         sessionFee: 1000,
-        location: "",
+        location: "R.G. Diagnostic Center, Dhap, Rangpur",
         packages: [],
       },
       duration: "50–60 minutes",
@@ -531,7 +531,7 @@ export const SAMPLE_DOCTORS = [
     inPersonFee: 1000,
     followUpFee: null,
     modes: ["Online", "In person"],
-    area: "Dhaka, Bangladesh",
+    area: "R.G. Diagnostic Center, Dhap, Rangpur",
     nextSlot: "",
 
     bio: "",
