@@ -619,7 +619,7 @@ export const SAMPLE_DOCTORS = [
       address: "",
     },
 
-    verified: false,
+    verified: true,
     initials: "AR",
   },
 

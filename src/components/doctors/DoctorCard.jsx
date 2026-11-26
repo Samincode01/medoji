@@ -1,17 +1,22 @@
-
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
-import { useLanguage } from "@/i18n/useLanguage";
+import { translations } from "@/i18n/translations";
 
-export default function DoctorCard({ doctor }) {
-  const { t, isBangla, formatNumber } = useLanguage();
-  const [imgError, setImgError] = useState(false);
+const BENGALI_DIGITS = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
 
+function formatNumber(value, isBangla) {
+  if (value === null || value === undefined) return "";
+  const str = String(value);
+  if (!isBangla) return str;
+  return str.replace(/[0-9]/g, (digit) => BENGALI_DIGITS[parseInt(digit, 10)] ?? digit);
+}
+
+export default function DoctorCard({ doctor, lang = "en" }) {
   if (!doctor) return null;
+
+  const isBangla = lang === "bn";
+  const cardStrings = translations[lang]?.doctorCard || translations.en.doctorCard;
 
   const {
     id,
@@ -43,7 +48,7 @@ export default function DoctorCard({ doctor }) {
 
   if (experienceYears !== null && experienceYears !== undefined) {
     expText = isBangla
-      ? `${formatNumber(experienceYears)}+ বছরের অভিজ্ঞতা`
+      ? `${formatNumber(experienceYears, true)}+ বছরের অভিজ্ঞতা`
       : `${experienceYears}+ years experience`;
   } else if (experienceLabel || experienceDetails) {
     expText = experienceLabel || experienceDetails;
@@ -72,13 +77,12 @@ export default function DoctorCard({ doctor }) {
 
         {/* DOCTOR PORTRAIT */}
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[15px] bg-[#EEF2EF]">
-          {imageUrl && !imgError ? (
+          {imageUrl ? (
             <Image
               src={imageUrl}
               alt={name || "Healthcare professional"}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
-              onError={() => setImgError(true)}
               className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.035]"
             />
           ) : (
@@ -93,7 +97,7 @@ export default function DoctorCard({ doctor }) {
           {verified && (
             <div
               className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border border-white/80 bg-white/95 text-[#198052] shadow-sm"
-              title={t("doctorCard.verified")}
+              title={cardStrings.verified}
             >
               <BadgeCheck size={18} strokeWidth={2} />
             </div>
@@ -122,7 +126,7 @@ export default function DoctorCard({ doctor }) {
 
           {/* VIEW PROFILE */}
           <div className="mt-auto flex items-center gap-1.5 pt-4 text-[11px] font-semibold text-[#26704F]">
-            {t("doctorCard.viewProfile")}
+            {cardStrings.viewProfile}
             <ArrowUpRight
               size={14}
               className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

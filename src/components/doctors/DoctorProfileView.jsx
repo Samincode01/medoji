@@ -1,7 +1,4 @@
 
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,8 +6,6 @@ import {
   ArrowUpRight,
   BriefcaseMedical,
   MapPin,
-  Copy,
-  Check,
   GraduationCap,
   Brain,
   MessageCircle,
@@ -21,7 +16,17 @@ import {
   UserRound,
   BadgeCheck,
 } from "lucide-react";
-import { useLanguage } from "@/i18n/useLanguage";
+import { translations } from "@/i18n/translations";
+import CopyProfileIdButton from "@/components/doctors/CopyProfileIdButton";
+
+const BENGALI_DIGITS = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+
+function toBengaliNum(value, isBangla) {
+  if (value === null || value === undefined) return "";
+  const str = String(value);
+  if (!isBangla) return str;
+  return str.replace(/[0-9]/g, (digit) => BENGALI_DIGITS[parseInt(digit, 10)] ?? digit);
+}
 
 const BOOKING_LINKS = {
   mental: "https://forms.gle/VvRppn73R7TvyoSt8",
@@ -111,9 +116,12 @@ function FeeLine({ label, value, formatNumber }) {
   );
 }
 
-export default function DoctorProfileView({ doctor }) {
-  const { isBangla, formatNumber, t } = useLanguage();
-  const [copied, setCopied] = useState(false);
+export default function DoctorProfileView({ doctor, lang = "en" }) {
+  const isBangla = lang === "bn";
+  const formatNumber = (num) => toBengaliNum(num, isBangla);
+  const disclaimerText =
+    translations[lang]?.doctorProfile?.disclaimer ||
+    translations.en.doctorProfile.disclaimer;
 
   if (!doctor) return null;
 
@@ -269,18 +277,6 @@ const inPersonPackages = toList(inPersonBooking.packages);
     ? bookingLabel || "অ্যাপয়েন্টমেন্ট বুক করুন"
     : "Request an appointment";
 
-  const copyProfileId = async () => {
-    if (!profileId) return;
-
-    try {
-      await navigator.clipboard.writeText(profileId);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
-    }
-  };
-
   return (
     <main className="min-h-screen bg-[#FDFDFD] text-[#132F25]">
       <div className="mx-auto max-w-[1250px] px-5 pb-12 pt-6 sm:px-8 lg:px-10">
@@ -381,18 +377,7 @@ const inPersonPackages = toList(inPersonBooking.packages);
                     {profileId}
                   </span>
 
-                  <button
-                    type="button"
-                    onClick={copyProfileId}
-                    aria-label={isBangla ? "আইডি কপি করুন" : "Copy profile ID"}
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[#17352A] transition hover:bg-white"
-                  >
-                    {copied ? (
-                      <Check size={16} className="text-[#19815C]" />
-                    ) : (
-                      <Copy size={16} />
-                    )}
-                  </button>
+                  <CopyProfileIdButton profileId={profileId} isBangla={isBangla} />
                 </div>
               )}
             </div>
@@ -859,7 +844,7 @@ const inPersonPackages = toList(inPersonBooking.packages);
 
         {/* DISCLAIMER */}
         <p className="mt-7 border-t border-[#DCE7DF] pt-4 text-center text-[10px] leading-5 text-[#829287]">
-          {t("doctorProfile.disclaimer")}
+          {disclaimerText}
         </p>
       </div>
     </main>
