@@ -19,9 +19,9 @@ export const translations = {
     },
     hero: {
       eyebrow: "DESIGNED FOR BANGLADESH",
-      titleLine1: "Healthcare,",
-      titleLine2: "More connected.",
-      banglaTagline: "চিকিৎসা, কাউন্সেলিং ও ফলোআপ—সব এক জায়গায়।",
+      titleLine1: "Care That Feels",
+      titleLine2: "Like Family",
+      banglaTagline: "Affordable healthcare for your family.",
       description:
         "Find a doctor or counsellor, follow up on care, and manage prescriptions in one place.",
       primaryCta: "Find a professional",
@@ -395,11 +395,11 @@ export const translations = {
     },
     hero: {
       eyebrow: "বাংলাদেশের জন্য তৈরি",
-      titleLine1: "চিকিৎসাসেবা,",
-      titleLine2: "আরও সংযুক্ত ও সহজ।",
+      titleLine1: "আপনজনের মত যত্ন",
+      titleLine2: "পরিবারের জন্য সাশ্রয়ী স্বাস্থ্যসেবা",
       banglaTagline: "চিকিৎসা, কাউন্সেলিং ও ফলোআপ—সব এক জায়গায়।",
       description:
-        "ডাক্তার বা মনোবিজ্ঞানী খুঁজুন, নিয়মিত ফলোআপ নিন এবং প্রেসক্রিপশন পরিচালনা করুন এক প্ল্যাটফর্মেই।",
+        "ডাক্তার বা কাউন্সেলর খুঁজুন, নিয়মিত ফলোআপ নিন এবং প্রেসক্রিপশন পরিচালনা করুন এক প্ল্যাটফর্মেই।",
       primaryCta: "বিশেষজ্ঞ খুঁজুন",
       secondaryCta: "মেডোজি এআই জানুন",
       proofVisits: "অনলাইন ও চেম্বার ভিজিট",

@@ -448,7 +448,7 @@ export const SAMPLE_DOCTORS = [
   // =========================================================
   {
     id: "Hosnatul-Ferdous-Zinia",
-    profileId: "P-HFZ-MH-0006",
+    profileId: "P-HFZ-MH-0005",
     name: "Hosnatul Ferdous Zinia",
     title: "Clinical Psychologist",
     specialty: "Mental Health & Counselling",
