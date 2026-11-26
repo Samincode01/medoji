@@ -340,112 +340,112 @@ export const SAMPLE_DOCTORS = [
   // =========================================================
   // 4. NUSRAT JAHAN SUPTI
   // =========================================================
-  {
-    id: "Nusrat-Jahan-Supti",
-    profileId: "P-NJS-MH-0004",
-    name: "Nusrat Jahan Supti",
-    title: "Psychologist",
-    specialty: "Mental Health & Counselling",
-    specialtyId: "mental",
-    category: "mental",
+  // {
+  //   id: "Nusrat-Jahan-Supti",
+  //   profileId: "P-NJS-MH-0004",
+  //   name: "Nusrat Jahan Supti",
+  //   title: "Psychologist",
+  //   specialty: "Mental Health & Counselling",
+  //   specialtyId: "mental",
+  //   category: "mental",
 
-    qualifications:
-      "MSc in Clinical Psychology, BSc in Psychology",
+  //   qualifications:
+  //     "MSc in Clinical Psychology, BSc in Psychology",
 
-    education: [
-      {
-        degree: "MSc in Clinical Psychology",
-        institution: "University of Dhaka",
-      },
-      {
-        degree: "BSc in Psychology",
-        institution: "Jagannath University",
-      },
-    ],
+  //   education: [
+  //     {
+  //       degree: "MSc in Clinical Psychology",
+  //       institution: "University of Dhaka",
+  //     },
+  //     {
+  //       degree: "BSc in Psychology",
+  //       institution: "Jagannath University",
+  //     },
+  //   ],
 
-    selectedTraining: [],
-    additionalTraining: [],
+  //   selectedTraining: [],
+  //   additionalTraining: [],
 
-    experienceYears: 2.5,
-    experienceLabel: "2.5+ years of experience",
-    experienceDetails:
-      "2.5+ years of academic and supervised clinical experience in clinical psychology, including psychological assessment, case formulation, psychotherapy, and treatment planning.",
+  //   experienceYears: 2.5,
+  //   experienceLabel: "2.5+ years of experience",
+  //   experienceDetails:
+  //     "2.5+ years of academic and supervised clinical experience in clinical psychology, including psychological assessment, case formulation, psychotherapy, and treatment planning.",
 
-    whoIWorkWith: "Adolescents and adults.",
+  //   whoIWorkWith: "Adolescents and adults.",
 
-    areasOfPractice: [
-      "Anxiety",
-      "Depression",
-      "Stress-related difficulties",
-      "Difficulties managing emotions",
-      "Interpersonal concerns",
-      "Behavioural challenges",
-    ],
+  //   areasOfPractice: [
+  //     "Anxiety",
+  //     "Depression",
+  //     "Stress-related difficulties",
+  //     "Difficulties managing emotions",
+  //     "Interpersonal concerns",
+  //     "Behavioural challenges",
+  //   ],
 
-    therapeuticApproaches: [
-      "Cognitive Behavioral Therapy (CBT)",
-      "Dialectical Behavior Therapy (DBT)",
-      "Client-Centered Therapy",
-      "Psychological First Aid (PFA)",
-      "Crisis intervention",
-      "Psychoeducation",
-      "Ethical, culturally sensitive, and client-centred approach",
-    ],
+  //   therapeuticApproaches: [
+  //     "Cognitive Behavioral Therapy (CBT)",
+  //     "Dialectical Behavior Therapy (DBT)",
+  //     "Client-Centered Therapy",
+  //     "Psychological First Aid (PFA)",
+  //     "Crisis intervention",
+  //     "Psychoeducation",
+  //     "Ethical, culturally sensitive, and client-centred approach",
+  //   ],
 
-    currentRoles: [],
+  //   currentRoles: [],
 
-    image: null,
-    profileUrl: "",
+  //   image: null,
+  //   profileUrl: "",
 
-    bookingLabel: "অ্যাপয়েন্টমেন্ট বুক করুন",
-    bookingUrl: "",
+  //   bookingLabel: "অ্যাপয়েন্টমেন্ট বুক করুন",
+  //   bookingUrl: "",
 
-    booking: {
-      online: {
-        available: true,
-        sessionFee: 1000,
-        firstSessionFee: 1000,
-        followUpFee: null,
-        packages: [
-          { sessions: 2, fee: 1800 },
-          { sessions: 4, fee: 3500 },
-          { sessions: 6, fee: 5000 },
-        ],
-      },
-      inPerson: {
-        available: true,
-        sessionFee: 1500,
-        location: "266, Senpara Parbata, Mirpur-10, Dhaka",
-        packages: [],
-      },
-      duration: "50–60 minutes",
-      availability: "",
-    },
+  //   booking: {
+  //     online: {
+  //       available: true,
+  //       sessionFee: 1000,
+  //       firstSessionFee: 1000,
+  //       followUpFee: null,
+  //       packages: [
+  //         { sessions: 2, fee: 1800 },
+  //         { sessions: 4, fee: 3500 },
+  //         { sessions: 6, fee: 5000 },
+  //       ],
+  //     },
+  //     inPerson: {
+  //       available: true,
+  //       sessionFee: 1500,
+  //       location: "266, Senpara Parbata, Mirpur-10, Dhaka",
+  //       packages: [],
+  //     },
+  //     duration: "50–60 minutes",
+  //     availability: "",
+  //   },
 
-    affiliation: "University of Dhaka",
-    languages: ["Bangla", "English"],
-    fee: 1000,
-    onlineFee: 1000,
-    inPersonFee: 1500,
-    followUpFee: null,
-    modes: ["Online", "In person"],
-    area: "Mirpur-10, Dhaka",
-    nextSlot: "",
+  //   affiliation: "University of Dhaka",
+  //   languages: ["Bangla", "English"],
+  //   fee: 1000,
+  //   onlineFee: 1000,
+  //   inPersonFee: 1500,
+  //   followUpFee: null,
+  //   modes: ["Online", "In person"],
+  //   area: "Mirpur-10, Dhaka",
+  //   nextSlot: "",
 
-    bio: "",
-    professionalExperience: [],
-    services: [],
-    consultationDetails: "",
+  //   bio: "",
+  //   professionalExperience: [],
+  //   services: [],
+  //   consultationDetails: "",
 
-    contact: {
-      phone: "",
-      email: "",
-      address: "266, Senpara Parbata, Mirpur-10, Dhaka",
-    },
+  //   contact: {
+  //     phone: "",
+  //     email: "",
+  //     address: "266, Senpara Parbata, Mirpur-10, Dhaka",
+  //   },
 
-    verified: true,
-    initials: "NJS",
-  },
+  //   verified: true,
+  //   initials: "NJS",
+  // },
 
   // =========================================================
   // 5. HOSNATUL FERDOUS ZINIA
