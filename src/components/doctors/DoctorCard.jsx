@@ -101,12 +101,12 @@ export default function DoctorCard({ doctor }) {
         <div className="flex flex-1 flex-col items-center px-2 pb-2 pt-4 text-center">
 
           {/* PROFESSIONAL TITLE */}
-          <p className="font-bengali text-[17px] font-semibold leading-[1.6] text-[#174433]">
+          <p className="font-bengali text-[10px] font-semibold leading-[1.6] text-[#2a8965]">
             {displayTitle}
           </p>
 
           {/* NAME */}
-          <h3 className="mt-0.5 text-[15px] font-semibold leading-snug text-[#132F25] transition-colors group-hover:text-[#26704F]">
+          <h3 className="mt-0.5 text-[18px] font-bold leading-snug text-[#132F25] transition-colors group-hover:text-[#26704F]">
             {name}
           </h3>
 
