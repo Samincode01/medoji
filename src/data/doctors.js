@@ -439,7 +439,7 @@ export const SAMPLE_DOCTORS = [
       address: "266, Senpara Parbata, Mirpur-10, Dhaka",
     },
 
-    verified: false,
+    verified: true,
     initials: "NJS",
   },
 
