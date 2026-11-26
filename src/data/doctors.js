@@ -61,7 +61,8 @@ export const SAMPLE_DOCTORS = [
     therapeuticApproaches: [],
     currentRoles: [],
 
-    image: "https://i.ibb.co.com/BH7xnH1y/Healthcare-Portrait-with-Glasses-and-Headscarf-2.png",
+    image:
+      "https://i.ibb.co.com/BH7xnH1y/Healthcare-Portrait-with-Glasses-and-Headscarf-2.png",
     profileUrl:
       "https://montorongo.com/specialist-profile/Mahjareen-Binta-Gaffar",
 
@@ -90,7 +91,6 @@ export const SAMPLE_DOCTORS = [
       availability: "",
     },
 
-    // Legacy fields retained for existing components.
     affiliation: "University of Dhaka",
     languages: ["Bangla", "English"],
     fee: 3000,
@@ -164,7 +164,8 @@ export const SAMPLE_DOCTORS = [
     whoIWorkWith:
       "Adolescents and adults seeking individual psychological counselling.",
 
-    areasOfPractice: [],
+    areasOfPractice:
+      "Anxiety, depression, stress and anger management, emotional regulation, trauma and adjustment difficulties, academic and interpersonal concerns, and coping skills and resilience building.",
 
     therapeuticApproaches: [
       "Psychological assessment",
@@ -181,7 +182,8 @@ export const SAMPLE_DOCTORS = [
       "Psychologist · Asshash Health, Mindspace and Mon Torongo (Online)",
     ],
 
-    image: "https://i.ibb.co.com/5hnCtJdv/Medoji-Psychologist-Portrait-04-Reframed-1.png",
+    image:
+      "https://i.ibb.co.com/5hnCtJdv/Medoji-Psychologist-Portrait-04-Reframed-1.png",
     profileUrl: "",
 
     bookingLabel: "অ্যাপয়েন্টমেন্ট বুক করুন",
@@ -257,7 +259,7 @@ export const SAMPLE_DOCTORS = [
       },
       {
         degree: "M.S.",
-        institution: "",
+        institution: "Internship to commence soon",
       },
     ],
 
@@ -270,15 +272,18 @@ export const SAMPLE_DOCTORS = [
       "2+ years as a clinical psychology intern. Completed a 3-month internship at Pabna Mental Hospital and has more than 1 year of private clinical practice.",
 
     whoIWorkWith: [],
+
     areasOfPractice: [
       "Clinical psychology",
       "Mental health assessment",
       "Psychotherapy",
     ],
+
     therapeuticApproaches: [],
     currentRoles: [],
 
-    image: "https://i.ibb.co.com/wNM6htkh/Healthcare-specialist-portrait-on-sage-green-1.png",
+    image:
+      "https://i.ibb.co.com/wNM6htkh/Healthcare-specialist-portrait-on-sage-green-1.png",
     profileUrl:
       "https://montorongo.com/specialist-profile/Sagor-Chandro-Sarker-Pronob",
 
@@ -288,18 +293,18 @@ export const SAMPLE_DOCTORS = [
     booking: {
       online: {
         available: true,
-        sessionFee: 600,
-        firstSessionFee: 600,
+        sessionFee: 800,
+        firstSessionFee: 800,
         followUpFee: null,
         packages: [
-          { sessions: 2, fee: 1000 },
-          { sessions: 4, fee: 2000 },
-          { sessions: 6, fee: 3000 },
+          { sessions: 2, fee: 1500 },
+          { sessions: 4, fee: 2800 },
+          { sessions: 6, fee: 4200 },
         ],
       },
       inPerson: {
         available: true,
-        sessionFee: 600,
+        sessionFee: 800,
         location: "",
         packages: [],
       },
@@ -309,9 +314,9 @@ export const SAMPLE_DOCTORS = [
 
     affiliation: "",
     languages: ["Bangla", "English"],
-    fee: 600,
-    onlineFee: 600,
-    inPersonFee: 600,
+    fee: 800,
+    onlineFee: 800,
+    inPersonFee: 800,
     followUpFee: null,
     modes: ["Online", "In person"],
     area: "",
@@ -410,8 +415,7 @@ export const SAMPLE_DOCTORS = [
       inPerson: {
         available: true,
         sessionFee: 1500,
-        location:
-          "266, Senpara Parbata, Mirpur-10, Dhaka",
+        location: "266, Senpara Parbata, Mirpur-10, Dhaka",
         packages: [],
       },
       duration: "50–60 minutes",
@@ -470,7 +474,7 @@ export const SAMPLE_DOCTORS = [
     ],
 
     selectedTraining: [
-      "Counselling & Psychotherapy · Dhaka Medical College Hospital and Mental Hospital, Pabna",
+      "Trained in Counselling & Psychotherapy at Dhaka Medical College Hospital and Mental Hospital, Pabna.",
     ],
 
     additionalTraining: [],
@@ -481,14 +485,17 @@ export const SAMPLE_DOCTORS = [
       "3 years of experience in clinical psychology practice (2023 to present).",
 
     whoIWorkWith: [],
+
     areasOfPractice: [
       "Counselling",
       "Psychotherapy",
     ],
+
     therapeuticApproaches: [],
     currentRoles: [],
 
-    image: "https://i.ibb.co.com/qLRxwrCZ/Healthcare-portrait-in-a-blue-sari-3.png",
+    image:
+      "https://i.ibb.co.com/qLRxwrCZ/Healthcare-portrait-in-a-blue-sari-3.png",
     profileUrl:
       "https://montorongo.com/specialist-profile/Hosnatul-Ferdous-Zinia",
 
@@ -541,6 +548,197 @@ export const SAMPLE_DOCTORS = [
     verified: true,
     initials: "HF",
   },
+
+  // =========================================================
+  // 6. MAHARUN NESA TONNI
+  // =========================================================
+  {
+    id: "Maharun-Nesa-Tonni",
+    profileId: "P-MNT-MH-0006",
+    name: "Maharun Nesa Tonni",
+    title: "Psychologist",
+    specialty: "Mental Health & Counselling",
+    specialtyId: "mental",
+    category: "mental",
+
+    qualifications: "BSc in Psychology, University of Dhaka",
+
+    education: [
+      {
+        degree: "Psychology",
+        institution: "University of Dhaka",
+      },
+    ],
+
+    selectedTraining: [],
+    additionalTraining: [],
+
+    experienceYears: null,
+    experienceLabel: "",
+    experienceDetails: "",
+
+    whoIWorkWith: [],
+    areasOfPractice: [],
+    therapeuticApproaches: [],
+
+    currentRoles: [
+      "Intern Psychologist · National Institute of Mental Health",
+    ],
+
+    image: "https://i.ibb.co.com/tPF7XRRf/Woman-in-lavender-sage-green-background-2.png",
+    profileUrl: "",
+
+    bookingLabel: "অ্যাপয়েন্টমেন্ট বুক করুন",
+    bookingUrl: "",
+
+    booking: {
+      online: {
+        available: true,
+        sessionFee: 800,
+        firstSessionFee: 800,
+        followUpFee: null,
+        packages: [
+          { sessions: 2, fee: 1500 },
+          { sessions: 4, fee: 3000 },
+          { sessions: 6, fee: 4500 },
+        ],
+      },
+      inPerson: {
+        available: false,
+        sessionFee: null,
+        location: "",
+        packages: [],
+      },
+      duration: "50 minutes",
+      availability: "",
+    },
+
+    affiliation: "University of Dhaka",
+    languages: [],
+    fee: 800,
+    onlineFee: 800,
+    inPersonFee: null,
+    followUpFee: null,
+    modes: ["Online"],
+    area: "",
+    nextSlot: "",
+
+    bio: "",
+    professionalExperience: [],
+    services: [],
+    consultationDetails: "",
+
+    contact: {
+      phone: "",
+      email: "",
+      address: "",
+    },
+
+    verified: false,
+    initials: "MT",
+  },
+
+  // =========================================================
+  // 7. RAKIBUL HASAN SOURAV
+  // =========================================================
+  {
+    id: "Rakibul-Hasan-Sourav",
+    profileId: "P-RHS-MH-0004",
+    name: "Rakibul Hasan Sourav",
+    title: "Psychologist",
+    specialty: "Mental Health & Counselling",
+    specialtyId: "mental",
+    category: "mental",
+
+    qualifications:
+      "MS in Counselling Psychology, BS in Psychology",
+
+    education: [
+      {
+        degree: "MS in Counselling Psychology",
+        institution: "University of Dhaka",
+      },
+      {
+        degree: "BS in Psychology",
+        institution: "University of Dhaka",
+      },
+    ],
+
+    selectedTraining: [],
+    additionalTraining: [],
+
+    experienceYears: 3,
+    experienceLabel: "3 years of experience",
+    experienceDetails:
+      "3 years of experience in psychotherapy.",
+
+    whoIWorkWith: [],
+    areasOfPractice: [
+      "Psychotherapy",
+    ],
+
+    therapeuticApproaches: [
+      "Transactional Analysis",
+      "Cognitive Behavioural Therapy",
+      "Mindfulness-Based Psychotherapy",
+      "Attachment-Focused Therapy",
+    ],
+
+    currentRoles: [],
+
+    image: "https://i.ibb.co.com/HL3xfX3f/Refined-navy-blazer-portrait-1.png",
+    profileUrl: "",
+
+    bookingLabel: "অ্যাপয়েন্টমেন্ট বুক করুন",
+    bookingUrl: "",
+
+    booking: {
+      online: {
+        available: true,
+        sessionFee: 1000,
+        firstSessionFee: 1000,
+        followUpFee: null,
+        packages: [
+          { sessions: 2, fee: 1800 },
+          { sessions: 4, fee: 3500 },
+          { sessions: 6, fee: 5500 },
+        ],
+      },
+      inPerson: {
+        available: true,
+        sessionFee: 1500,
+        location: "",
+        packages: [],
+      },
+      duration: "60 minutes",
+      availability: "",
+    },
+
+    affiliation: "University of Dhaka",
+    languages: [],
+    fee: 1000,
+    onlineFee: 1000,
+    inPersonFee: 1500,
+    followUpFee: null,
+    modes: ["Online", "In person"],
+    area: "",
+    nextSlot: "",
+
+    bio: "",
+    professionalExperience: [],
+    services: [],
+    consultationDetails: "",
+
+    contact: {
+      phone: "",
+      email: "",
+      address: "",
+    },
+
+    verified: false,
+    initials: "RS",
+  },
+
   // =========================================================
   // 8. DEMO DOCTOR — GENERAL MEDICINE
   // =========================================================
