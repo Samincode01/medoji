@@ -61,7 +61,7 @@ export const SAMPLE_DOCTORS = [
     therapeuticApproaches: [],
     currentRoles: [],
 
-    image: "https://montorongo.com/assets/DR-6-BA_sJBnW.jpeg",
+    image: "https://i.ibb.co.com/BH7xnH1y/Healthcare-Portrait-with-Glasses-and-Headscarf-2.png",
     profileUrl:
       "https://montorongo.com/specialist-profile/Mahjareen-Binta-Gaffar",
 
@@ -278,7 +278,7 @@ export const SAMPLE_DOCTORS = [
     therapeuticApproaches: [],
     currentRoles: [],
 
-    image: "https://montorongo.com/assets/DR-9-BF7tafr-.png",
+    image: "https://i.ibb.co.com/wNM6htkh/Healthcare-specialist-portrait-on-sage-green-1.png",
     profileUrl:
       "https://montorongo.com/specialist-profile/Sagor-Chandro-Sarker-Pronob",
 
@@ -488,7 +488,7 @@ export const SAMPLE_DOCTORS = [
     therapeuticApproaches: [],
     currentRoles: [],
 
-    image: "https://montorongo.com/assets/DR-11-Bm88hrNV.jpg",
+    image: "https://i.ibb.co.com/qLRxwrCZ/Healthcare-portrait-in-a-blue-sari-3.png",
     profileUrl:
       "https://montorongo.com/specialist-profile/Hosnatul-Ferdous-Zinia",
 
