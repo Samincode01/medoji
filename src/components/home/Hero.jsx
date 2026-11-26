@@ -81,13 +81,15 @@ export default function Hero() {
                 ...transition,
                 delay: shouldReduceMotion ? 0 : 0.2,
               }}
-              className="mt-5 text-[36px] sm:text-[46px] lg:text-[56px] font-bold tracking-tight text-[#132F25] leading-[1.06]"
+              className="mt-5 text-[36px] sm:text-[46px] lg:text-[46px] font-bold tracking-tight text-[#132F25] leading-[1.06]"
             >
               {t("hero.titleLine1")}
               <br />
-              <span className="font-editorial-serif italic font-normal text-[#174433]">
+              <div className="mt-4">
+              <span className="font-editorial-serif mb-3.5 italic font-normal text-[#174433]">
                 {t("hero.titleLine2")}
               </span>
+              </div>
             </motion.h1>
 
             {/* Sub-headline / Tagline */}
