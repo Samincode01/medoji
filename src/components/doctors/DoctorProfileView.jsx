@@ -250,7 +250,7 @@ export default function DoctorProfileView({ doctor }) {
     doctor.followUpFee;
 
   const onlinePackages = toList(onlineBooking.packages);
-
+const inPersonPackages = toList(inPersonBooking.packages);
   const inPersonFee =
     inPersonBooking.sessionFee ??
     doctor.inPersonFee;
@@ -745,7 +745,48 @@ export default function DoctorProfileView({ doctor }) {
                       )}
                     </div>
                   </div>
+                        {inPersonAvailable && inPersonPackages.length > 0 && (
+  <div className="mt-3 border-t border-[#DCE7DF] pt-3">
+    <p className="mb-2 text-[12px] font-semibold text-[#52665A]">
+      {isBangla
+        ? "সরাসরি সেশন প্যাকেজ"
+        : "In-person session packages"}
+    </p>
 
+    <div className="space-y-1.5">
+      {inPersonPackages.map((item, index) => {
+        const packageItem =
+          typeof item === "object" && item !== null ? item : {};
+
+        return (
+          <div
+            key={index}
+            className="flex items-center justify-between gap-3 text-[12px]"
+          >
+            <span className="text-[#52665A]">
+              {packageItem.sessions
+                ? `${formatNumber(packageItem.sessions)} ${
+                    isBangla
+                      ? "টি সেশন"
+                      : packageItem.sessions === 1
+                        ? "session"
+                        : "sessions"
+                  }`
+                : packageItem.label || ""}
+            </span>
+
+            <span className="font-bold text-[#174F3B]">
+              {packageItem.fee !== undefined &&
+              packageItem.fee !== null
+                ? `৳${formatNumber(packageItem.fee)}`
+                : ""}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+)}
                   {inPersonAvailable && bookingDestination && (
                     <a
                       href={bookingDestination}
