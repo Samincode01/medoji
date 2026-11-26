@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
@@ -8,6 +9,7 @@ import { useLanguage } from "@/i18n/useLanguage";
 
 export default function DoctorCard({ doctor }) {
   const { t, isBangla, formatNumber } = useLanguage();
+  const [imgError, setImgError] = useState(false);
 
   if (!doctor) return null;
 
@@ -69,14 +71,15 @@ export default function DoctorCard({ doctor }) {
       <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-[#E7ECE8] bg-white p-3.5 shadow-[0_3px_14px_rgba(19,47,37,0.04)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#B8CCBE] group-hover:shadow-[0_14px_35px_rgba(19,47,37,0.10)]">
 
         {/* DOCTOR PORTRAIT */}
-        <div className="relative aspect-[1/1.02] w-full overflow-hidden rounded-[15px] bg-[#EEF2EF]">
-          {imageUrl ? (
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[15px] bg-[#EEF2EF]">
+          {imageUrl && !imgError ? (
             <Image
               src={imageUrl}
               alt={name || "Healthcare professional"}
               fill
-              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 280px"
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.035]"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+              onError={() => setImgError(true)}
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.035]"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">

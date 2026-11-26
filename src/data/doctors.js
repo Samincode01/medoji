@@ -181,7 +181,7 @@ export const SAMPLE_DOCTORS = [
       "Psychologist · Asshash Health, Mindspace and Mon Torongo (Online)",
     ],
 
-    image: null,
+    image: "https://i.ibb.co.com/5hnCtJdv/Medoji-Psychologist-Portrait-04-Reframed-1.png",
     profileUrl: "",
 
     bookingLabel: "অ্যাপয়েন্টমেন্ট বুক করুন",
